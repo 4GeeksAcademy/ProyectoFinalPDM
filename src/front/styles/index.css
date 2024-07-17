@@ -1,3 +1,58 @@
-/* 
-    General Styles used on every website (Don't Repeat Yourself)
-*/
+/* styles.css */
+
+.card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin: 10px;
+    padding: 10px;
+    width: 300px;
+    display: inline-block;
+  }
+  
+  .card-image {
+    width: 100%;
+    border-radius: 8px;
+  }
+  
+  .card-title {
+    margin-top: 0;
+  }
+  
+  .card-description {
+    color: #666;
+  }
+  
+  .card-price {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .card-form {
+    max-width: 300px;
+    margin-bottom: 20px;
+  }
+  
+  .card-form label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  .card-form input {
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 4px;
+  }
+  
+  .card-form button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  

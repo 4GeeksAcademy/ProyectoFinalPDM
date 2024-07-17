@@ -8,8 +8,9 @@ import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
-import Login from "./component/Login.jsx";
-import Register from "./component/Register.jsx";
+import Login from "./pages/Login.jsx";
+import Register from "./pages/Register.jsx";
+import { SelectProduct } from "./pages/SelectProduct.jsx";
 
 //create your first component
 const Layout = () => {
@@ -31,6 +32,7 @@ const Layout = () => {
                         <Route element={<h1>Not found!</h1>} />
                         <Route element={<Login />} path="/Login" />
                         <Route element={<Register />} path="/Register" />
+                        <Route element={<SelectProduct />} path="/SelectProduct" />
                     </Routes>
                     <Footer />
                 </ScrollToTop>

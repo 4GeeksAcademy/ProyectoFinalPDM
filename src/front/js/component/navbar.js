@@ -12,6 +12,13 @@ export const Navbar = () => {
 					<Link to={"/Register"}>
 						<button> register </button>
 					</Link>
+					<Link to={"/SelectProduct"}>
+						<button> SelectProduct </button>
+					</Link>
+					<Link to={"/"}>
+						<button> Home </button>
+					</Link>
+
 				</div>
 			</div>
 		</nav>
