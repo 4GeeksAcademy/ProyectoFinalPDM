@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const CardForm = ({ addCard }) => {
+export const ProductForm = ({ addCard }) => {
   const [image, setImage] = useState('');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -8,14 +8,16 @@ const CardForm = ({ addCard }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Validación básica (puedes añadir más validaciones según tus necesidades)
     if (!image || !title || !description || !price) {
       alert('Por favor completa todos los campos');
       return;
     }
-    // Llamar a la función para agregar la card con los datos ingresados
-    addCard({ image, title, description, price });
-    // Limpiar el formulario después de agregar la card
+    const numericPrice = parseFloat(price);
+    if (isNaN(numericPrice)) {
+      alert('Por favor ingresa un precio válido');
+      return;
+    }
+    addCard({ image, title, description, price: numericPrice });
     setImage('');
     setTitle('');
     setDescription('');
@@ -24,41 +26,44 @@ const CardForm = ({ addCard }) => {
 
   return (
     <form onSubmit={handleSubmit} className="card-form">
-      <label>
-        Imagen URL:
+      <div className="form-group">
+        <label>Imagen URL:</label>
         <input
           type="text"
           value={image}
           onChange={(e) => setImage(e.target.value)}
+          required
         />
-      </label>
-      <label>
-        Título:
+      </div>
+      <div className="form-group">
+        <label>Título:</label>
         <input
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
+          required
         />
-      </label>
-      <label>
-        Descripción:
+      </div>
+      <div className="form-group">
+        <label>Descripción:</label>
         <input
           type="text"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
+          required
         />
-      </label>
-      <label>
-        Precio:
+      </div>
+      <div className="form-group">
+        <label>Precio:</label>
         <input
           type="number"
           value={price}
           onChange={(e) => setPrice(e.target.value)}
+          required
         />
-      </label>
-      <button type="submit">Agregar Card</button>
+      </div>
+      <button type="submit" className="button1">Agregar Card</button>
     </form>
   );
-}
+};
 
-export default CardForm;

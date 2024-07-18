@@ -17,34 +17,37 @@ const Login = () => {
   };
 
   return (
-    <div style={{ maxWidth: '300px', margin: '0 auto' }}>
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        <button type="submit">Login</button>
-        <Link to="/">
-          <button type="button">Cancelar</button>
-        </Link>
-      </form>
+    <div className='login'>
+  <h2>Login</h2>
+  <form onSubmit={handleSubmit}>
+    <div className='form-group'>
+      <label>Email:</label>
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        required
+      />
     </div>
+    <div className='form-group'>
+      <label>Password:</label>
+      <input
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        required
+      />
+    </div>
+    {error && <p className='error'>{error}</p>}
+    <div className='button-container'>
+      <button type="submit" className='button'>Login</button>
+      <Link to="/">
+        <button type="button" className='button'>Cancelar</button>
+      </Link>
+    </div>
+  </form>
+</div>
+
   );
 };
 
