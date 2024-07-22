@@ -10,6 +10,8 @@ import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import Login from "./component/Login.jsx";
 import Register from "./component/Register.jsx";
+import { RegisterDate } from "./component/registerdate.jsx";
+import { DateSelect } from "./component/dateselect.jsx";
 
 //create your first component
 const Layout = () => {
@@ -31,6 +33,9 @@ const Layout = () => {
                         <Route element={<h1>Not found!</h1>} />
                         <Route element={<Login />} path="/Login" />
                         <Route element={<Register />} path="/Register" />
+                        <Route element={<CreateService />} path="/CreateService" />
+                        <Route element={<RegisterDate />} path="/RegisterDate" />
+                        <Route element={<DateSelect />} path="/DateSelect" />
                     </Routes>
                     <Footer />
                 </ScrollToTop>
