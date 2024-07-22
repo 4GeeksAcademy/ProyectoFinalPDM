@@ -8,19 +8,26 @@ export const Navbar = () => {
 			<div className="container d-flex justify-content-end">
 				<div>
 					<Link to={"/Login"}>
-						<button> login </button>
+						<button className="ms-3 me-3"> login </button>
 					</Link>
 					<Link to={"/Register"}>
 						<button> register </button>
 					</Link>
 					<Link to={"/RegisterDate"}>
-		        <		button> RegisterDate </button>
-	       			</Link>
-					   <Link to={"/DateSelect"}>
-		        <		button> DateSelect </button>
-	       			</Link>
+						<		button> RegisterDate </button>
+					</Link>
+					<Link to={"/DateSelect"}>
+						<		button> DateSelect </button>
+					</Link>
+					<Link to={"/CreateService"}>
+						<button className="ms-3 me-3"> CreateService </button>
+					</Link>
+					<Link to={"/"}>
+						<button className="ms-3 me-3"> Home </button>
+					</Link>
+
 				</div>
 			</div>
-		</nav>
+		</nav >
 	);
 };

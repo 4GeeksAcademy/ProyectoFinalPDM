@@ -3,137 +3,110 @@ import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 
 export const RegisterDate = () => {
-    const { store, actions } = useContext(Context);
-    const [formData, setFormData] = useState({
-      nombre: "",
-      apellido: "",
-      telefono: "",
-      email: "",
-      observaciones: "",
+  const { store, actions } = useContext(Context);
+
+  const [form, setForm] = useState({
+    nombre: "",
+    apellido: "",
+    telefono: "",
+    email: "",
+    observaciones: ""
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm({
+      ...form,
+      [name]: value
     });
-  
-    const handleChange = (e) => {
-      const { name, value } = e.target;
-      setFormData({
-        ...formData,
-        [name]: value,
-      });
-    };
-  
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      // Aquí puedes agregar la lógica para enviar el formulario
-      console.log(formData);
-    };
-  
-    const handleCancel = () => {
-      // Reset the form or handle the cancel action
-      setFormData({
-        nombre: "",
-        apellido: "",
-        telefono: "",
-        email: "",
-        observaciones: "",
-      });
-    };
-  
-    return (
-      <div className="container mt-5">
-        <div className="row">
-          <div className="col-md-6">
-            <div className="card">
-              <div className="card-body">
-                <h4 className="card-title">Rellene sus datos</h4>
-                <form onSubmit={handleSubmit}>
-                  <div className="form-group">
-                    <label htmlFor="nombre">Nombre *</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="nombre"
-                      name="nombre"
-                      value={formData.nombre}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="apellido">Apellido *</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="apellido"
-                      name="apellido"
-                      value={formData.apellido}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="telefono">Teléfono *</label>
-                    <input
-                      type="tel"
-                      className="form-control"
-                      id="telefono"
-                      name="telefono"
-                      value={formData.telefono}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="email">Email *</label>
-                    <input
-                      type="email"
-                      className="form-control"
-                      id="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="observaciones">Notas sobre la cita (opcional)</label>
-                    <textarea
-                      className="form-control"
-                      id="observaciones"
-                      name="observaciones"
-                      value={formData.observaciones}
-                      onChange={handleChange}
-                    ></textarea>
-                  </div>
-                  <div className="d-flex justify-content-between">
-                    <button type="submit" className="btn btn-primary">
-                      Enviar
-                    </button>
-                    <button type="button" className="btn btn-secondary" onClick={handleCancel}>
-                      Cancelar
-                    </button>
-                  </div>
-                </form>
-              </div>
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // logica de envio del form
+    console.log(form);
+  };
+
+  return (
+    <div className="container mt-5">
+      <div className="row">
+        <div className="col-md-6">
+          <h2>Formulario de Cita</h2>
+          <form onSubmit={handleSubmit}>
+            <div className="form-group">
+              <label htmlFor="nombre">Nombre</label>
+              <input
+                type="text"
+                className="form-control"
+                id="nombre"
+                name="nombre"
+                value={form.nombre}
+                onChange={handleChange}
+                required
+              />
             </div>
-          </div>
-          <div className="col-md-6">
-            <div className="card">
-              <div className="card-body">
-                <h4 className="card-title">Detalles de la Cita</h4>
-                <ul className="list-group list-group-flush">
-                  <li className="list-group-item">
-                    <strong>Servicio:</strong>
-                  </li>
-                  <li className="list-group-item">
-                    <strong>Fecha:</strong>
-                  </li>
-                  <li className="list-group-item">
-                    <strong>Coste:</strong>
-                  </li>
-                </ul>
-              </div>
+            <div className="form-group">
+              <label htmlFor="apellido">Apellido</label>
+              <input
+                type="text"
+                className="form-control"
+                id="apellido"
+                name="apellido"
+                value={form.apellido}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="telefono">Teléfono</label>
+              <input
+                type="tel"
+                className="form-control"
+                id="telefono"
+                name="telefono"
+                value={form.telefono}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="email">Email</label>
+              <input
+                type="email"
+                className="form-control"
+                id="email"
+                name="email"
+                value={form.email}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="observaciones">Observaciones</label>
+              <textarea
+                className="form-control"
+                id="observaciones"
+                name="observaciones"
+                value={form.observaciones}
+                onChange={handleChange}
+                rows="3"
+              ></textarea>
+            </div>
+            <button type="submit" className="btn btn-primary">Enviar</button>
+          </form>
+        </div>
+        <div className="col-md-6">
+          <div className="card">
+            <div className="card-body">
+              <h1>Detalles de la Cita</h1>
+              <p className="card-text">Fecha:</p>
+              <p className="card-text">Servicio:</p>
+              <p className="card-text">Empleado:</p>
+              <p className="card-text">Total a pagar:</p>
             </div>
           </div>
         </div>
       </div>
-    );
-  };
+    </div>
+  );
+};
