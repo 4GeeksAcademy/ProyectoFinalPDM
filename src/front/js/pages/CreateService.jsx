@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { ProductForm } from '/workspaces/ProyectoFinalPDM/src/front/js/component/ProductForm.jsx';
-import ServiceForm from '/workspaces/ProyectoFinalPDM/src/front/js/component/ServiceForm.jsx';
+import { Link } from 'react-router-dom';
+import { ProductForm } from '../component/perfilUsuario/ProductForm.jsx';
+import ServiceForm from '../component/perfilUsuario/ServiceForm.jsx';
 
 export const CreateService = () => {
     const [cards, setCards] = useState([]);
@@ -60,6 +61,11 @@ export const CreateService = () => {
                 <div className="card-container">
                     {services.map(renderService)}
                 </div>
+            </div>
+            <div className="back-button">
+                <Link to="/PerfilUsuario">
+                    <button className="btn btn-primary">Regresar al Perfil</button>
+                </Link>
             </div>
         </div>
     );

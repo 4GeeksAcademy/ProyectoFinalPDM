@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 const Register = () => {
   const [name, setName] = useState('');
+  const [lastname, setLastname] = useState(''); 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -16,6 +17,7 @@ const Register = () => {
     }
     const userData = {
       name,
+      lastname, 
       email,
       password,
       phone,
@@ -31,6 +33,10 @@ const Register = () => {
         <div>
           <label>Nombre:</label>
           <input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
+        </div>
+        <div>
+          <label>Apellido:</label>
+          <input type="text" value={lastname} onChange={(e) => setLastname(e.target.value)} required /> {/* Campo para apellido */}
         </div>
         <div>
           <label>Email:</label>

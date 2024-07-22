@@ -11,6 +11,11 @@ import { Footer } from "./component/footer";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import { CreateService } from "/workspaces/ProyectoFinalPDM/src/front/js/pages/CreateService.jsx";
+import { PerfilUsuario } from "/workspaces/ProyectoFinalPDM/src/front/js/pages/PerfilUsuario.jsx";
+import { SucursalForm } from "./component/perfilUsuario/SucursalForm.jsx";
+import { ProductForm } from "./component/perfilUsuario/ProductForm.jsx";
+import { EmpleadoForm } from "./component/perfilUsuario/EmpleadoForm.jsx";
+import { EmpresaForm } from "./component/perfilUsuario/EmpresaForm.jsx";
 
 //create your first component
 const Layout = () => {
@@ -33,6 +38,10 @@ const Layout = () => {
                         <Route element={<Login />} path="/Login" />
                         <Route element={<Register />} path="/Register" />
                         <Route element={<CreateService />} path="/CreateService" />
+                        <Route element={<PerfilUsuario />} path="/PerfilUsuario" />
+                        <Route path="/CrearSucursal" element={<SucursalForm />} />
+                        <Route path="/CrearEmpleado" element={<EmpleadoForm />} />
+                        <Route path="/CrearEmpresa" element={<EmpresaForm />} />
                     </Routes>
                     <Footer />
                 </ScrollToTop>
