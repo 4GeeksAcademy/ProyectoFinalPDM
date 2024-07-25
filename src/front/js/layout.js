@@ -16,6 +16,8 @@ import { SucursalForm } from "./component/perfilUsuario/SucursalForm.jsx";
 import { ProductForm } from "./component/perfilUsuario/ProductForm.jsx";
 import { EmpleadoForm } from "./component/perfilUsuario/EmpleadoForm.jsx";
 import { EmpresaForm } from "./component/perfilUsuario/EmpresaForm.jsx";
+import { AgendarCita } from "./pages/AgendarCita.jsx";
+import Agenda from "./pages/Agenda.jsx";
 
 //create your first component
 const Layout = () => {
@@ -39,9 +41,11 @@ const Layout = () => {
                         <Route element={<Register />} path="/Register" />
                         <Route element={<CreateService />} path="/CreateService" />
                         <Route element={<PerfilUsuario />} path="/PerfilUsuario" />
-                        <Route path="/CrearSucursal" element={<SucursalForm />} />
-                        <Route path="/CrearEmpleado" element={<EmpleadoForm />} />
-                        <Route path="/CrearEmpresa" element={<EmpresaForm />} />
+                        <Route element={<SucursalForm />}  path="/CrearSucursal"  />
+                        <Route  element={<EmpleadoForm />} path="/CrearEmpleado" />
+                        <Route element={<EmpresaForm />} path="/CrearEmpresa"  />
+                        <Route element={<AgendarCita />} path="/AgendarCita"  />
+                        <Route element={<Agenda />} path="/Agenda"  />
                     </Routes>
                     <Footer />
                 </ScrollToTop>

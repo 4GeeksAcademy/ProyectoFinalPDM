@@ -344,3 +344,48 @@ h1 {
 .centrar_texto{
   text-align: center;
 }
+
+.card.editing {
+  border: 2px solid #4CAF50; /* Resaltar la tarjeta en modo de edición */
+  background-color: #f0f8ff; /* Cambiar el color de fondo */
+}
+
+/* Estilos generales para la tarjeta */
+.card {
+  border: 1px solid #ddd; /* Borde por defecto */
+  padding: 10px;
+  margin: 10px;
+}
+
+/* Estilo para la tarjeta en modo de edición */
+.card.editing {
+  border: 2px solid #4CAF50; /* Borde resaltado para la tarjeta en edición */
+  background-color: #f0f8ff; /* Fondo ligeramente diferente para resaltar */
+}
+
+/* Estilos para el botón de editar */
+.button1 {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.button1:hover {
+  background-color: #0056b3;
+}
+
+/* Estilos generales para la tarjeta */
+.card {
+  border: 1px solid #ddd; /* Borde por defecto */
+  padding: 10px;
+  margin: 10px;
+  transition: background-color 0.3s ease; /* Transición suave para el cambio de fondo */
+}
+
+/* Estilo para la tarjeta en modo de edición */
+.card.editing {
+  border: 2px solid #4CAF50; /* Borde resaltado para la tarjeta en edición */
+  background-color: #f0f8ff; /* Fondo ligeramente diferente para resaltar */
+}
