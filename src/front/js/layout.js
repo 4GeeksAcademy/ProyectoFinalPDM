@@ -10,6 +10,11 @@ import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import Login from "/workspaces/ProyectoFinalPDM/src/front/js/pages/Login.jsx";
+import Register from "/workspaces/ProyectoFinalPDM/src/front/js/pages/Register.jsx";
+import { DateSelect } from "./component/dateselect.jsx";
+import { RegisterDate } from "./component/registerdate.jsx";
+import { Message } from "./component/Message.jsx";
 
 //create your first component
 const Layout = () => {
@@ -29,6 +34,12 @@ const Layout = () => {
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<h1>Not found!</h1>} />
+                        <Route element={<Login />} path="/Login" />
+                        <Route element={<Register />} path="/Register" />
+                        {/* <Route element={<CreateService />} path="/CreateService" /> */}
+                        <Route element={<DateSelect />} path="/DateSelect" />
+                        <Route element={<RegisterDate />} path="/RegisterDate" />
+                        <Route element={<Message />} path="/Message" />
                     </Routes>
                     <Footer />
                 </ScrollToTop>
