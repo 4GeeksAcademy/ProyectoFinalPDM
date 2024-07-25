@@ -73,13 +73,9 @@
 		]
 	},
 	"dependencies": {
-		"moment": "^2.30.1",
-		"moment-timezone": "^0.5.45",
 		"prop-types": "^15.6.1",
 		"react": "^16.8.4",
-		"react-big-calendar": "^1.13.1",
 		"react-dom": "^16.8.4",
-		"react-modal": "^3.16.1",
 		"react-polyfills": "0.0.1",
 		"react-router-dom": "^6.3.0"
 	}
