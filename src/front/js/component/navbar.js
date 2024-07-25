@@ -25,6 +25,9 @@ export const Navbar = () => {
 					<Link to={"/"}>
 						<button className="ms-3 me-3"> Home </button>
 					</Link>
+					<Link to={"/Message"}>
+						<button className="ms-3 me-3"> Message </button>
+					</Link>
 
 				</div>
 			</div>

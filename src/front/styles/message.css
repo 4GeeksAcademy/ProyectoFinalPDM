@@ -1,0 +1,34 @@
+.message-box {
+    border: 3px solid #83a18b;
+    border-radius: 15px;
+    padding: 30px; 
+    background-color: #f8f9fa;
+    text-align: center; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .message-heading {
+    font-size: 2rem; 
+    color: #28a745; 
+    margin-bottom: 15px; 
+  }
+  
+  .message-text {
+    font-size: 1.2rem; 
+    color: #333;
+    margin-bottom: 30px;
+  }
+  
+  .tick-icon {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+  }
+  
+  .tick-icon svg {
+    font-size: 90px;
+    color: #28a745; 
+  }

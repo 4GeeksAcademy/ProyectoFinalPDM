@@ -6,24 +6,21 @@ export const RegisterDate = () => {
   const { store, actions } = useContext(Context);
 
   const [form, setForm] = useState({
-    nombre: "",
+    nombre: "", 
     apellido: "",
-    telefono: "",
+    telefono: "", 
     email: "",
-    observaciones: ""
+    observaciones: "" 
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setForm({
-      ...form,
-      [name]: value
-    });
+    setForm({...form,[name]: value});
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // logica de envio del form
+    // logica de envio del formulario
     console.log(form);
   };
 
@@ -92,13 +89,15 @@ export const RegisterDate = () => {
                 rows="3"
               ></textarea>
             </div>
-            <button type="submit" className="btn btn-primary">Enviar</button>
+            <Link to={"/Message"}>
+              <button className="ms-3 me-3">Enviar</button>
+            </Link>
           </form>
         </div>
         <div className="col-md-6">
           <div className="card">
             <div className="card-body">
-              <h1>Detalles de la Cita</h1>
+              <h1>Detalles de la Cita</h1> 
               <p className="card-text">Fecha:</p>
               <p className="card-text">Servicio:</p>
               <p className="card-text">Empleado:</p>
