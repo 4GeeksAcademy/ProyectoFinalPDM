@@ -16,9 +16,6 @@ export const Navbar = () => {
 					<Link to={"/RegisterDate"}>
 						<		button> RegisterDate </button>
 					</Link>
-					<Link to={"/DateSelect"}>
-						<		button> DateSelect </button>
-					</Link>
 					<Link to={"/CreateService"}>
 						<button className="ms-3 me-3"> CreateService </button>
 					</Link>
