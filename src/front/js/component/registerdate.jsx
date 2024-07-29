@@ -10,17 +10,18 @@ export const RegisterDate = () => {
     apellido: "",
     telefono: "", 
     email: "",
-    observaciones: "" 
+    observaciones: "",
+    fecha: ""
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setForm({...form,[name]: value});
+    setForm({ ...form, [name]: value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // logica de envio del formulario
+    // Lógica de envío del formulario
     console.log(form);
   };
 
@@ -89,8 +90,22 @@ export const RegisterDate = () => {
                 rows="3"
               ></textarea>
             </div>
+            <div className="form-group">
+              <label htmlFor="fecha">Fecha de la Cita</label>
+              <input
+                type="date"
+                className="form-control"
+                id="fecha"
+                name="fecha"
+                value={form.fecha}
+                onChange={handleChange}
+                min="2024-01-01"
+                max="2025-12-31"
+                required
+              />
+            </div>
             <Link to={"/Message"}>
-              <button className="ms-3 me-3">Enviar</button>
+              <button type="submit" className="ms-3 me-3">Enviar</button>
             </Link>
           </form>
         </div>
@@ -98,9 +113,8 @@ export const RegisterDate = () => {
           <div className="card">
             <div className="card-body">
               <h1>Detalles de la Cita</h1> 
-              <p className="card-text">Fecha:</p>
+              <p className="card-text">Fecha: {form.fecha}</p>
               <p className="card-text">Servicio:</p>
-              <p className="card-text">Empleado:</p>
               <p className="card-text">Total a pagar:</p>
             </div>
           </div>
