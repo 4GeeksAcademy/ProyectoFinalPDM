@@ -120,7 +120,7 @@ export const CreateService = () => {
       </div>
       <div className="back-button">
         <Link to="/PerfilUsuario">
-          <button className="btn btn-primary">Regresar al Perfil</button>
+          <button className="button-service">Regresar al Perfil</button>
         </Link>
       </div>
     </div>

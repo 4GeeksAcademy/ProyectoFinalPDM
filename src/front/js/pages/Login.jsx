@@ -18,35 +18,25 @@ const Login = () => {
 
   return (
     <div className='login'>
-  <h2>Login</h2>
-  <form onSubmit={handleSubmit}>
-    <div className='form-group'>
-      <label>Email:</label>
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        required
-      />
+      <h2>Login</h2>
+      <form onSubmit={handleSubmit}>
+        <div className='form-group-login'>
+          <label>Email:</label>
+          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required/>
+        </div>
+        <div className='form-group-login'>
+          <label>Password:</label>
+          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
+        </div>
+        {error && <p className='error'>{error}</p>}
+        <div className='button-container-login'>
+          <button type="submit" className='button'>Login</button>
+          <Link to="/">
+            <button type="button" className='button'>Cancelar</button>
+          </Link>
+        </div>
+      </form>
     </div>
-    <div className='form-group'>
-      <label>Password:</label>
-      <input
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        required
-      />
-    </div>
-    {error && <p className='error'>{error}</p>}
-    <div className='button-container'>
-      <button type="submit" className='button'>Login</button>
-      <Link to="/">
-        <button type="button" className='button'>Cancelar</button>
-      </Link>
-    </div>
-  </form>
-</div>
 
   );
 };

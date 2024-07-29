@@ -32,14 +32,14 @@ const ServiceForm = ({ addService, serviceToEdit, onEditSave }) => {
     const serviceData = { title, description, price: numericPrice };
 
     if (serviceToEdit) {
-      // Update existing service
+   
       onEditSave({ ...serviceData, id: serviceToEdit.id });
     } else {
-      // Add new service
+   
       addService({ ...serviceData, id: uuidv4() });
     }
 
-    // Clear form fields
+
     setTitle('');
     setDescription('');
     setPrice('');
@@ -76,7 +76,7 @@ const ServiceForm = ({ addService, serviceToEdit, onEditSave }) => {
           />
         </div>
         <div className="button-container">
-          <button type="submit" className="button1">
+          <button type="submit" className="button-service">
             {serviceToEdit ? 'Guardar Cambios' : 'Agregar Servicio'}
           </button>
         </div>

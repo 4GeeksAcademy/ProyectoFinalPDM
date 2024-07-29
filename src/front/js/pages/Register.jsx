@@ -27,7 +27,7 @@ const Register = () => {
   };
 
   return (
-    <div className='registro'>
+    <div className='register'>
       <h2>Registrar Usuario</h2>
       <form onSubmit={handleSubmit}>
         <div>
@@ -36,7 +36,7 @@ const Register = () => {
         </div>
         <div>
           <label>Apellido:</label>
-          <input type="text" value={lastname} onChange={(e) => setLastname(e.target.value)} required /> {/* Campo para apellido */}
+          <input type="text" value={lastname} onChange={(e) => setLastname(e.target.value)} required />
         </div>
         <div>
           <label>Email:</label>
@@ -54,7 +54,7 @@ const Register = () => {
           <label>Teléfono:</label>
           <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} required />
         </div>
-        <div className='div_button'>
+        <div className='button-container-register'>
           <button type="submit" className='button'>Registrar</button>
           <Link to="/"><button type="button" className='button'>Cancelar</button></Link>
         </div>

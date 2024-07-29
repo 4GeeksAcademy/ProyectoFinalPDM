@@ -35,14 +35,14 @@ export const ProductForm = ({ addCard, cardToEdit, onEditSave }) => {
     const cardData = { image, title, description, price: numericPrice };
 
     if (cardToEdit) {
-      // Update existing card
+
       onEditSave({ ...cardData, id: cardToEdit.id });
     } else {
-      // Add new card
+      
       addCard({ ...cardData, id: uuidv4() });
     }
 
-    // Clear form fields
+    
     setImage('');
     setTitle('');
     setDescription('');
@@ -89,7 +89,7 @@ export const ProductForm = ({ addCard, cardToEdit, onEditSave }) => {
           />
         </div>
         <div className="button-container">
-          <button type="submit" className="button1">
+          <button type="submit" className="button-product">
             {cardToEdit ? 'Guardar Cambios' : 'Agregar Producto'}
           </button>
         </div>

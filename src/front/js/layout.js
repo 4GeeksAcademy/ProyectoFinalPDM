@@ -13,7 +13,7 @@ import Register from "./pages/Register.jsx";
 import { CreateService } from "/workspaces/ProyectoFinalPDM/src/front/js/pages/CreateService.jsx";
 import { PerfilUsuario } from "/workspaces/ProyectoFinalPDM/src/front/js/pages/PerfilUsuario.jsx";
 import { SucursalForm } from "./component/perfilUsuario/SucursalForm.jsx";
-import { ProductForm } from "./component/perfilUsuario/ProductForm.jsx";w
+import { ProductForm } from "./component/perfilUsuario/ProductForm.jsx";
 import { EmpleadoForm } from "./component/perfilUsuario/EmpleadoForm.jsx";
 import { EmpresaForm } from "./component/perfilUsuario/EmpresaForm.jsx";
 import { AgendarCita } from "./pages/AgendarCita.jsx";

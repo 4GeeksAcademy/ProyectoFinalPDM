@@ -32,97 +32,45 @@
   .registro label {
     margin-bottom: 5px;
     font-weight: bold;
-    color: #555;
+    color: #555555;
   }
   
-  .registro input,
-  .registro textarea {
-    padding: 10px;
-    width: 100%;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .button-container {
+  .button-container-profile {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
   }
   
-  .button {
-    width: 100px;
+  .button-container-profile {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px; 
+    justify-content: center;
+    width: 100%; 
+  }
+  
+  .button-profile {
+    width: 150px;
     padding: 10px;
     margin-top: 20px;
     border: none;
     border-radius: 5px;
-    background-color: #007BFF;
+    background-color: rgb(82, 109, 130);
     color: white;
     cursor: pointer;
     transition: background-color 0.3s;
   }
   
-  .button:hover {
-    background-color: #0056b3;
+  .button-profile:hover {
+    background-color: rgb(39, 55, 77);
+    transform: scale(1.05); 
   }
   
-  /* Estilos para el contenedor principal */
-.registro {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    font-family: Arial, sans-serif;
+  .logout-button-profile {
+    background-color: #e74c3c; 
   }
   
-  /* Estilos para el título */
-  h2 {
-    margin-bottom: 20px;
+  .logout-button-profile:hover {
+    background-color: #c0392b; 
   }
-  
-  /* Contenedor de botones */
-  .button-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px; /* Espacio entre botones */
-    justify-content: center;
-    width: 100%; /* Asegura que el contenedor ocupa todo el ancho disponible */
-  }
-  
-  /* Estilos comunes para los botones */
-  .button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-    text-align: center;
-  }
-  
-  /* Estilo específico para los botones */
-  .button {
-    background-color: #3498db; /* Azul */
-    color: white;
-  }
-  
-  .button:hover {
-    background-color: #2980b9; /* Azul más oscuro */
-    transform: scale(1.05); /* Efecto de aumento al pasar el ratón */
-  }
-  
-  /* Estilo para el botón de cerrar sesión */
-  .logout-button {
-    background-color: #e74c3c; /* Rojo para indicar una acción de salir */
-  }
-  
-  .logout-button:hover {
-    background-color: #c0392b; /* Rojo más oscuro en hover */
-  }
-  
-  /* Estilo para el botón activo */
-  button:active {
-    transform: scale(0.98); /* Efecto de presionar el botón */
-  }
-  

@@ -12,7 +12,6 @@ export const EmpleadoForm = () => {
   const [editandoEmpleadoId, setEditandoEmpleadoId] = useState(null);
 
   useEffect(() => {
-    // Reset form when editing an employee
     if (editandoEmpleadoId) {
       const empleado = empleados.find(emp => emp.id === editandoEmpleadoId);
       if (empleado) {
@@ -22,7 +21,6 @@ export const EmpleadoForm = () => {
         setHorarioSalida(empleado.horarioSalida);
       }
     } else {
-      // Clear form if not editing
       setNombreEmpleado('');
       setApellidoEmpleado('');
       setHorarioEntrada('');
@@ -51,8 +49,7 @@ export const EmpleadoForm = () => {
     } else {
       setEmpleados([...empleados, nuevoEmpleado]);
     }
-
-    // Clear the form after submission
+    
     setNombreEmpleado('');
     setApellidoEmpleado('');
     setHorarioEntrada('');
