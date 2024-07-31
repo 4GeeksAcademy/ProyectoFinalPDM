@@ -79,6 +79,7 @@
 		"gapi-script": "^1.2.0",
 		"prop-types": "^15.6.1",
 		"react": "^16.8.4",
+		"react-big-calendar": "^1.13.1",
 		"react-dom": "^16.8.4",
 		"react-google-login": "^5.2.2",
 		"react-polyfills": "0.0.1",
