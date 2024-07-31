@@ -2,19 +2,23 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
-
 import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
-
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import Login from "/workspaces/ProyectoFinalPDM/src/front/js/pages/Login.jsx";
 import Register from "/workspaces/ProyectoFinalPDM/src/front/js/pages/Register.jsx";
 import { RegisterDate } from "./component/registerdate.jsx";
 import { Message } from "./component/Message.jsx";
-
+import {CreateService} from "/workspaces/ProyectoFinalPDM/src/front/js/pages/CreateService.jsx"
+import {PerfilUsuario} from "/workspaces/ProyectoFinalPDM/src/front/js/pages/PerfilUsuario.jsx"
+import {SucursalForm} from "/workspaces/ProyectoFinalPDM/src/front/js/component/SucursalForm.jsx"
+import {EmpleadoForm} from "/workspaces/ProyectoFinalPDM/src/front/js/component/EmpleadoForm.jsx"
+import { EmpresaForm } from "/workspaces/ProyectoFinalPDM/src/front/js/component/EmpresaForm.jsx";
+import {AgendarCita} from "/workspaces/ProyectoFinalPDM/src/front/js/pages/AgendarCita.jsx"
+import {Agenda} from "/workspaces/ProyectoFinalPDM/src/front/js/pages/Agenda.jsx"
 //create your first component
 const Layout = () => {
     //the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -29,15 +33,21 @@ const Layout = () => {
                 <ScrollToTop>
                     <Navbar />
                     <Routes>
+                        <Route element={<RegisterDate />} path="/RegisterDate" />
+                        <Route element={<Message />} path="/Message" />
                         <Route element={<Home />} path="/" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<h1>Not found!</h1>} />
                         <Route element={<Login />} path="/Login" />
                         <Route element={<Register />} path="/Register" />
-                        {/* <Route element={<CreateService />} path="/CreateService" /> */}
-                        <Route element={<RegisterDate />} path="/RegisterDate" />
-                        <Route element={<Message />} path="/Message" />
+                        <Route element={<CreateService />} path="/CreateService" />
+                        <Route element={<PerfilUsuario />} path="/PerfilUsuario" />
+                        <Route element={<SucursalForm />}  path="/CrearSucursal"  />
+                        <Route  element={<EmpleadoForm />} path="/CrearEmpleado" />
+                        <Route element={<EmpresaForm />} path="/CrearEmpresa"  />
+                        <Route element={<AgendarCita />} path="/AgendarCita"  />
+                        <Route element={<Agenda />} path="/Agenda"  />
                     </Routes>
                     <Footer />
                 </ScrollToTop>
