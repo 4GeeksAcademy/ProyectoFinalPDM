@@ -1,0 +1,36 @@
+/* Message.css */
+
+.message-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2rem;
+  background: linear-gradient(135deg, #f6f9fc, #e9eff1);
+}
+
+.message-box {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 500px;
+  width: 100%;
+}
+
+.tick-icon {
+  color: #28a745;
+  margin-bottom: 1rem;
+}
+
+.message-heading {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.message-text {
+  font-size: 1rem;
+  color: #555;
+}

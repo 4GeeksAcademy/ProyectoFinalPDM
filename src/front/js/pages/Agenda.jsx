@@ -1,78 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import '/workspaces/ProyectoFinalPDM/src/front/styles/agenda.css'; 
 
 const localizer = momentLocalizer(moment);
 
-const citas = [
-  {
-    id: 0,
-    title: 'Cliente 1',
-    start: new Date(2024, 6, 1, 10, 0, 0),
-    end: new Date(2024, 6, 1, 11, 0, 0),
-    products: ['Producto 1'],
-    services: ['Servicio 1'],
-    employee: 'Empleado 1',
-  },
-  {
-    id: 1,
-    title: 'Cliente 2',
-    start: new Date(2024, 6, 1, 11, 0, 0),
-    end: new Date(2024, 6, 1, 12, 0, 0),
-    products: ['Producto 2'],
-    services: ['Servicio 2'],
-    employee: 'Empleado 2',
-  },
-  {
-    id: 3,
-    title: 'Cliente 1',
-    start: new Date(2024, 6, 1, 10, 0, 0),
-    end: new Date(2024, 6, 1, 11, 0, 0),
-    products: ['Producto 1'],
-    services: ['Servicio 1'],
-    employee: 'Empleado 1',
-  },
-  {
-    id: 4,
-    title: 'Cliente 2',
-    start: new Date(2024, 6, 1, 11, 0, 0),
-    end: new Date(2024, 6, 1, 12, 0, 0),
-    products: ['Producto 2'],
-    services: ['Servicio 2'],
-    employee: 'Empleado 2',
-  },
-  {
-    id: 5,
-    title: 'Cliente 4',
-    start: new Date(2024, 7, 1, 11, 0, 0),
-    end: new Date(2024, 7, 1, 12, 0, 0),
-    products: ['Producto 2'],
-    services: ['Servicio 2'],
-    employee: 'Empleado 2',
-  },
-];
+const fetchEvents = async () => {
+  const response = await fetch('/path-to-your-backend-endpoint'); // Update with actual endpoint
+  const data = await response.json();
+  return data;
+};
 
-const Agenda = () => {
+export const Agenda = () => {
+  const [events, setEvents] = useState([]);
   const [view, setView] = useState('week');
+
+  useEffect(() => {
+    const getEvents = async () => {
+      const eventsFromServer = await fetchEvents();
+      setEvents(eventsFromServer);
+    };
+    getEvents();
+  }, []);
 
   const handleViewChange = (newView) => {
     setView(newView);
   };
 
-
   const Event = ({ event }) => {
     return (
       <div className="rbc-event-content">
-        <strong>{event.title}</strong>
-        {view === 'day' && (
-          <div>
-            <strong>Empleado:</strong> {event.employee}&nbsp; &nbsp; 
-            <strong>Producto:</strong> {event.products}&nbsp; &nbsp;
-            <strong>Servicio:</strong> {event.services}&nbsp; &nbsp;
-          </div>
-        )}
+        <strong>{event.summary}</strong>
       </div>
     );
   };
@@ -83,7 +41,7 @@ const Agenda = () => {
       <div>
         <Calendar
           localizer={localizer}
-          events={citas}
+          events={events}
           style={{ height: '100%' }}
           messages={{
             next: "Sig",
@@ -104,5 +62,3 @@ const Agenda = () => {
     </div>
   );
 };
-
-export default Agenda;

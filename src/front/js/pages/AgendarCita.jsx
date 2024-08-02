@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import '/workspaces/ProyectoFinalPDM/src/front/styles/agendarCitas.css';  // Asegúrate de crear este archivo CSS
+// import '/workspaces/ProyectoFinalPDM/src/front/styles/agendarCitas.css';  // Asegúrate de crear este archivo CSS
 
 const mockProducts = [
   { id: 1, title: "Producto 1", description: "Descripción del producto 1", price: 10, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-leZ2_Oj0jLsQ3c0Zl9kiPDCaNQuGXT06pw&s" },

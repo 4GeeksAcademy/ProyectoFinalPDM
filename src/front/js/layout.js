@@ -8,24 +8,25 @@ import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
-import Login from "./pages/Login.jsx";
-import Register from "./pages/Register.jsx";
-import { CreateService } from "/workspaces/ProyectoFinalPDM/src/front/js/pages/CreateService.jsx";
-import { PerfilUsuario } from "/workspaces/ProyectoFinalPDM/src/front/js/pages/PerfilUsuario.jsx";
-import { SucursalForm } from "./component/perfilUsuario/SucursalForm.jsx";
-import { ProductForm } from "./component/perfilUsuario/ProductForm.jsx";
-import { EmpleadoForm } from "./component/perfilUsuario/EmpleadoForm.jsx";
-import { EmpresaForm } from "./component/perfilUsuario/EmpresaForm.jsx";
-import { AgendarCita } from "./pages/AgendarCita.jsx";
-import Agenda from "./pages/Agenda.jsx";
-
+import Login from "/workspaces/ProyectoFinalPDM/src/front/js/pages/Login.jsx";
+import Register from "/workspaces/ProyectoFinalPDM/src/front/js/pages/Register.jsx";
+import { RegisterDate } from "./component/RegisterDate.jsx";
+import { Message } from "./component/Message.jsx";
+import {AgregarServicio} from "/workspaces/ProyectoFinalPDM/src/front/js/component/AgregarServicio.jsx"
+import {AgregarProducto} from "/workspaces/ProyectoFinalPDM/src/front/js/component/AgregarProducto.jsx"
+import {PerfilUsuario} from "/workspaces/ProyectoFinalPDM/src/front/js/pages/PerfilUsuario.jsx"
+import {SucursalForm} from "/workspaces/ProyectoFinalPDM/src/front/js/component/SucursalForm.jsx"
+import {EmpleadoForm} from "/workspaces/ProyectoFinalPDM/src/front/js/component/EmpleadoForm.jsx"
+import { EmpresaForm } from "/workspaces/ProyectoFinalPDM/src/front/js/component/EmpresaForm.jsx";
+import {AgendarCita} from "/workspaces/ProyectoFinalPDM/src/front/js/pages/AgendarCita.jsx"
+import {Agenda} from "/workspaces/ProyectoFinalPDM/src/front/js/pages/Agenda.jsx"
 //create your first component
 const Layout = () => {
     //the basename is used when your project is published in a subdirectory and not in the root of the domain
     // you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
     const basename = process.env.BASENAME || "";
 
-    if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL />;
+    if(!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL/ >;
 
     return (
         <div>
@@ -33,13 +34,14 @@ const Layout = () => {
                 <ScrollToTop>
                     <Navbar />
                     <Routes>
+                        <Route element={<RegisterDate />} path="/RegisterDate" />
+                        <Route element={<Message />} path="/Message" />
                         <Route element={<Home />} path="/" />
-                        <Route element={<Demo />} path="/demo" />
-                        <Route element={<Single />} path="/single/:theid" />
                         <Route element={<h1>Not found!</h1>} />
                         <Route element={<Login />} path="/Login" />
                         <Route element={<Register />} path="/Register" />
-                        <Route element={<CreateService />} path="/CreateService" />
+                        <Route element={<AgregarServicio />} path="/AgregarServicio" />
+                        <Route element={<AgregarProducto />} path="/AgregarProducto" />
                         <Route element={<PerfilUsuario />} path="/PerfilUsuario" />
                         <Route element={<SucursalForm />}  path="/CrearSucursal"  />
                         <Route  element={<EmpleadoForm />} path="/CrearEmpleado" />

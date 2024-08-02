@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import '/workspaces/ProyectoFinalPDM/src/front/styles/agregarproducto.css'; // Asegúrate de que el import sea correcto
 
 export const ProductForm = ({ addCard, cardToEdit, onEditSave }) => {
   const [image, setImage] = useState('');
@@ -35,14 +36,11 @@ export const ProductForm = ({ addCard, cardToEdit, onEditSave }) => {
     const cardData = { image, title, description, price: numericPrice };
 
     if (cardToEdit) {
-
       onEditSave({ ...cardData, id: cardToEdit.id });
     } else {
-      
       addCard({ ...cardData, id: uuidv4() });
     }
 
-    
     setImage('');
     setTitle('');
     setDescription('');
