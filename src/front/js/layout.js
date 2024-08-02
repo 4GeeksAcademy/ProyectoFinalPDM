@@ -10,9 +10,10 @@ import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import Login from "/workspaces/ProyectoFinalPDM/src/front/js/pages/Login.jsx";
 import Register from "/workspaces/ProyectoFinalPDM/src/front/js/pages/Register.jsx";
-import { RegisterDate } from "./component/registerdate.jsx";
+import { RegisterDate } from "./component/RegisterDate.jsx";
 import { Message } from "./component/Message.jsx";
-import {CreateService} from "/workspaces/ProyectoFinalPDM/src/front/js/pages/CreateService.jsx"
+import {AgregarServicio} from "/workspaces/ProyectoFinalPDM/src/front/js/component/AgregarServicio.jsx"
+import {AgregarProducto} from "/workspaces/ProyectoFinalPDM/src/front/js/component/AgregarProducto.jsx"
 import {PerfilUsuario} from "/workspaces/ProyectoFinalPDM/src/front/js/pages/PerfilUsuario.jsx"
 import {SucursalForm} from "/workspaces/ProyectoFinalPDM/src/front/js/component/SucursalForm.jsx"
 import {EmpleadoForm} from "/workspaces/ProyectoFinalPDM/src/front/js/component/EmpleadoForm.jsx"
@@ -36,12 +37,11 @@ const Layout = () => {
                         <Route element={<RegisterDate />} path="/RegisterDate" />
                         <Route element={<Message />} path="/Message" />
                         <Route element={<Home />} path="/" />
-                        <Route element={<Demo />} path="/demo" />
-                        <Route element={<Single />} path="/single/:theid" />
                         <Route element={<h1>Not found!</h1>} />
                         <Route element={<Login />} path="/Login" />
                         <Route element={<Register />} path="/Register" />
-                        <Route element={<CreateService />} path="/CreateService" />
+                        <Route element={<AgregarServicio />} path="/AgregarServicio" />
+                        <Route element={<AgregarProducto />} path="/AgregarProducto" />
                         <Route element={<PerfilUsuario />} path="/PerfilUsuario" />
                         <Route element={<SucursalForm />}  path="/CrearSucursal"  />
                         <Route  element={<EmpleadoForm />} path="/CrearEmpleado" />

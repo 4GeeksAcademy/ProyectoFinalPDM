@@ -1,0 +1,139 @@
+/* agregarproducto.css */
+
+.create-product {
+    display: flex;
+    flex-direction: column; /* Asegura que el contenido esté en columna */
+    min-height: 100vh; /* Asegura que el contenedor ocupe toda la altura de la ventana */
+    padding: 2rem;
+    background: linear-gradient(135deg, #f6f9fc, #e9eff1);
+  }
+  
+  .form-section-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    max-width: 1200px;
+    gap: 3rem; /* Aumenta el espacio entre el formulario y la lista de productos */
+  }
+  
+  .form-section {
+    background: #fff;
+    padding: 2.5rem; /* Aumenta el padding interno del formulario */
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Aumenta la sombra para un efecto más pronunciado */
+    flex: 1;
+    min-width: 350px; /* Asegura que el formulario no sea demasiado estrecho */
+  }
+  
+  .product-list {
+    flex: 2;
+    margin-top: 2rem; /* Espacio entre el formulario y la lista de productos */
+    width: 100%; /* Asegura que el contenedor ocupe todo el ancho disponible */
+    display: flex;
+    flex-direction: column; /* Organiza los elementos en una columna */
+    align-items: center; /* Centra el contenido horizontalmente */
+  }
+  
+  
+  .center-text {
+    text-align: center;
+    font-size: 1.75rem; /* Aumenta el tamaño del texto del encabezado */
+    color: #333;
+    margin-bottom: 1.5rem; /* Aumenta el espacio debajo del encabezado */
+  }
+  
+  .card-container {
+    display: flex;
+    flex-wrap: wrap; /* Permite que las tarjetas se ajusten en varias filas */
+    gap: 2rem; /* Espacio entre las tarjetas */
+    justify-content: center; /* Centra las tarjetas horizontalmente */
+    width: 100%; /* Asegura que el contenedor ocupe todo el ancho disponible */
+  }
+  
+  
+  .card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Sombra más pronunciada */
+  flex: 1 1 calc(25% - 2rem); /* Ajusta el tamaño de las tarjetas */
+  margin-bottom: 2rem; /* Espacio debajo de cada tarjeta */
+  padding: 1.5rem; /* Padding interno más grande */
+  box-sizing: border-box;
+  border: 2px solid red; /* Borde visible para depuración, ajusta según necesidad */
+  max-width: 300px; /* Ajusta el ancho máximo de las tarjetas */
+}
+
+  
+  
+  .card-image {
+    width: 100%;
+    height: auto;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+  
+  .card-body {
+    padding: 1rem;
+  }
+  
+  .card-title {
+    font-size: 1.5rem; /* Aumenta el tamaño del texto del título */
+    margin-bottom: 0.5rem;
+  }
+  
+  .card-description {
+    font-size: 1.125rem; /* Aumenta el tamaño del texto de la descripción */
+    margin-bottom: 0.5rem;
+  }
+  
+  .card-price {
+    font-size: 1.125rem; /* Aumenta el tamaño del texto del precio */
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+  
+  .button-container {
+    display: flex;
+    gap: 0.75rem; /* Aumenta el espacio entre los botones */
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+  
+  .button {
+    background: #007bff;
+    color: #fff;
+    padding: 0.75rem 1.25rem; /* Aumenta el padding interno de los botones */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    text-align: center;
+  }
+  
+  .button:hover {
+    background: #0056b3;
+  }
+  
+  .delete-button {
+    background: #dc3545;
+    font-size: 1rem; /* Aumenta el tamaño del texto del botón eliminar */
+  }
+  
+  .back-button {
+    margin-top: auto; /* Empuja el botón hacia la parte inferior */
+  }
+  
+  .button-back {
+    background: #28a745;
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  
+  .button-back:hover {
+    background: #218838;
+  }
+  

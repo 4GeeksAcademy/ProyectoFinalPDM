@@ -26,7 +26,7 @@ export const Home = () => {
     };
 
     return (
-        <div className="container mt-5">
+        <div className="container mt-5 container_home">
             <div className="row">
                 <div className="col-md-6 mt-4">
                     <h1><strong>Transforma tu Negocio con Nuestra Agenda Inteligente</strong></h1>
@@ -115,7 +115,7 @@ export const Home = () => {
                 </div>
                 <div className="row mt-5 text-center">
                     <div className="col-md-12 mb-5">
-                        <div className="questions">
+                        <div className="questions container_homeFq pb-5 pt-5">
                             <h1>Preguntas Frecuentes</h1>
                             {frequentQuestionsList.map((item, index) => (
                                 <div key={index} className="fq-item">

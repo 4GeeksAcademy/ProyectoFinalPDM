@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import '/workspaces/ProyectoFinalPDM/src/front/styles/login.css';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -17,27 +18,38 @@ const Login = () => {
   };
 
   return (
-    <div className='login'>
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <div className='form-group-login'>
-          <label>Email:</label>
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required/>
-        </div>
-        <div className='form-group-login'>
-          <label>Password:</label>
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
-        </div>
-        {error && <p className='error'>{error}</p>}
-        <div className='button-container-login'>
-          <button type="submit" className='button'>Login</button>
-          <Link to="/">
-            <button type="button" className='button'>Cancelar</button>
-          </Link>
-        </div>
-      </form>
+    <div className='login-container'>
+      <div className='login-box'>
+        <h2 className='login-title'>Iniciar sesión</h2>
+        <form onSubmit={handleSubmit}>
+          <div className='input-group'>
+            <label htmlFor='email'>Email:</label>
+            <input 
+              type="email" 
+              id='email' 
+              value={email} 
+              onChange={(e) => setEmail(e.target.value)} 
+              required 
+            />
+          </div>
+          <div className='input-group'>
+            <label htmlFor='password'>Contraseña:</label>
+            <input 
+              type="password" 
+              id='password' 
+              value={password} 
+              onChange={(e) => setPassword(e.target.value)} 
+              required 
+            />
+          </div>
+          {error && <p className='error-message'>{error}</p>}
+          <div className='button-group'>
+            <button type="submit" className='btn-submit'>Iniciar sesión</button>
+            <Link to="/" className='btn-cancel'>Cancelar</Link>
+          </div>
+        </form>
+      </div>
     </div>
-
   );
 };
 

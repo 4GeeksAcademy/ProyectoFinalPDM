@@ -1,27 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ProductForm } from '/workspaces/ProyectoFinalPDM/src/front/js/component/ProductForm.jsx';
 import ServiceForm from '/workspaces/ProyectoFinalPDM/src/front/js/component/ServiceForm.jsx';
 
-export const CreateService = () => {
-  const [cards, setCards] = useState([]);
+export const AgregarServicio = () => {
   const [services, setServices] = useState([]);
-  const [editingCard, setEditingCard] = useState(null);
   const [editingService, setEditingService] = useState(null);
-
-  const addCard = (newCard) => {
-    setCards(prevCards => [...prevCards, newCard]);
-  };
 
   const addService = (newService) => {
     setServices(prevServices => [...prevServices, newService]);
-  };
-
-  const handleSaveCard = (updatedCard) => {
-    setCards(prevCards =>
-      prevCards.map(card => (card.id === updatedCard.id ? updatedCard : card))
-    );
-    setEditingCard(null);
   };
 
   const handleSaveService = (updatedService) => {
@@ -31,19 +17,8 @@ export const CreateService = () => {
     setEditingService(null);
   };
 
-  const handleEditCard = (card) => {
-    setEditingCard(card);
-  };
-
   const handleEditService = (service) => {
     setEditingService(service);
-  };
-
-  const handleDeleteCard = (id) => {
-    setCards(prevCards => prevCards.filter(card => card.id !== id));
-    if (editingCard && editingCard.id === id) {
-      setEditingCard(null);
-    }
   };
 
   const handleDeleteService = (id) => {
@@ -54,16 +29,8 @@ export const CreateService = () => {
   };
 
   return (
-    <div className="create-service">
+    <div className="agregar-servicio">
       <div className="form-section-container">
-        <div className="form-section">
-          <h2 className='centrar_texto'>Agregar Producto</h2>
-          <ProductForm 
-            addCard={addCard} 
-            cardToEdit={editingCard} 
-            onEditSave={handleSaveCard} 
-          />
-        </div>
         <div className="form-section">
           <h2 className='centrar_texto'>Agregar Servicio</h2>
           <ServiceForm 
@@ -71,29 +38,6 @@ export const CreateService = () => {
             serviceToEdit={editingService} 
             onEditSave={handleSaveService} 
           />
-        </div>
-      </div>
-      <div className="product-list">
-        <h2 className='centrar_texto'>Productos</h2>
-        <div className="card-container">
-          {cards.map(card => (
-            <div className="card" key={card.id}>
-              <img src={card.image} alt={card.title} className="card-image" />
-              <div className="card-body">
-                <h3 className="card-title">{card.title}</h3>
-                <p className="card-description">{card.description}</p>
-                <p className="card-price">Precio: €{card.price}</p>
-                <div className="button-container">
-                  <button onClick={() => handleEditCard(card)} className="button">
-                    Editar
-                  </button>
-                  <button onClick={() => handleDeleteCard(card.id)} className="button delete-button">
-                    Eliminar
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
         </div>
       </div>
       <div className="service-list">
