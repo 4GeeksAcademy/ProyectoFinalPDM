@@ -38,3 +38,13 @@
 .button2:hover {
     background-color: rgb(0, 204, 255);
 }
+.button-nav {
+    width: 100px;
+    height: 50px;
+    margin-right: 20px;
+    font-size: 18px;
+    background-color:  rgb(6, 167, 207);
+    border-radius: 5px;
+    color: white;
+    border: none;
+}

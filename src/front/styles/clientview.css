@@ -1,0 +1,73 @@
+.company-categories {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 70px;
+}
+
+.card-company {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    width: 70vw; /* Ajusta el tamaño según sea necesario */
+    max-width: 500px; /* Añade un máximo para evitar que se estire demasiado en pantallas grandes */
+    height: auto; /* Permite que la altura se ajuste según el contenido */
+    max-height: 400px; /* Limita la altura máxima de la tarjeta */
+    margin-bottom: 2rem;
+    padding: 2rem;
+    box-sizing: border-box;
+    border: none;
+}
+.additional-cards {
+    display: flex;
+    flex-direction: row; /* Alinea las tarjetas en una fila */
+    justify-content: center; /* Centra las tarjetas horizontalmente */
+    flex-wrap: wrap; /* Permite que las tarjetas se envuelvan en pantallas más pequeñas */
+    gap: 1.5rem; /* Espacio entre tarjetas */
+    width: 90vw; /* Ajusta el tamaño según sea necesario */
+    max-width: 1200px; /* Añade un máximo para el contenedor de tarjetas */
+    margin-top: 3rem; /* Espacio superior antes de las tarjetas */
+}
+
+.card-body {
+    font-size: 26px; /* Aumentar el tamaño de fuente en el cuerpo de la tarjeta */
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-control {
+    border-color: #ced4da;
+    border-width: 1px;
+    font-size: 1.2rem; /* Aumentar el tamaño de fuente del campo de formulario */
+    padding: 1rem; /* Aumentar el padding interno */
+}
+
+.form-control:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25);
+}
+
+.btn {
+    border: none;
+    box-shadow: none;
+    font-size: 1.2rem; /* Aumentar el tamaño de fuente del botón */
+    padding: 1rem 2rem; /* Aumentar el padding interno */
+}
+
+.button-company{
+    margin-top: 15px;
+    margin-bottom: 20px;
+    width: 195px;
+    height: 60px;
+    font-size: 20px;
+    background-color:  rgb(6, 167, 207);
+    border-radius: 5px;
+    color: white;
+    border: none;
+}
+.card{
+    border: none;
+}

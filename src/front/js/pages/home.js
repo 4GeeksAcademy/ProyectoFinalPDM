@@ -28,6 +28,40 @@ export const Home = () => {
     return (
         <div className="container mt-5 container_home">
             <div className="row">
+                <div className="col-md-12 mt-4">
+                    <div className="centered-content">
+                        <h1 className="title1"><strong>Crea gratis tu Agenda Inteligente</strong></h1>
+                        <p className="p1">
+                            Descubre la mejor manera de gestionar tus citas y optimizar tu negocio
+                            <br></br>
+                            Nuestra plataforma te permite tener el control total de tus reservas de forma rápida y sencilla.
+                            <br></br>
+                            ¡Regístrate gratis y aprovecha todas nuestras funcionalidades!
+                        </p>
+                        <Link to="/Register">
+                            <button className="button-landing"><strong>Regístrate Gratis</strong></button>
+                        </Link>
+                    </div>
+                </div>
+            </div>
+            <div className="row">
+                <div className="col-md-12 mt-4">
+                    <div className="centered-content">
+                        <h1 className="title1"><strong>Reserva una Cita</strong></h1>
+                        <p className="p1">
+                            Explora nuestra plataforma para descubrir una amplia gama de empresas y servicios organizados por categorías.
+                            <br></br>
+                            Optimiza tu tiempo al buscar entre opciones relevantes para tus necesidades.
+                            <br></br>
+                            ¡Accede aquí a nuestras empresas registradas, donde puedes buscar, comparar y elegir la mejor opción para ti!
+                        </p>
+                        <Link to="/ClientView">
+                            <button className="button-landing"><strong>Agendar Cita</strong></button>
+                        </Link>
+                    </div>
+                </div>
+            </div>
+            <div className="row">
                 <div className="col-md-6 mt-4">
                     <h1><strong>Transforma tu Negocio con Nuestra Agenda Inteligente</strong></h1>
                     <p>

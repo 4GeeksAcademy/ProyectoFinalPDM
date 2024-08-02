@@ -6,135 +6,86 @@
     height: 100%;
     text-align: center;
     border-radius: 10px;
-    /* Bordes redondeados */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    /* Sombra para tarjetas */
     margin-bottom: 1rem;
-    /* Margen inferior para separarlas más de otros elementos */
 }
 
 .card-body {
     padding: 2rem;
-    /* Espacio dentro de la tarjeta */
 }
 
 .card-icon {
     font-size: 4rem;
-    /* Tamaño más grande del ícono */
     color: rgb(71, 83, 102);
-    /* Color del ícono */
     margin-bottom: 1rem;
-    /* Espacio debajo del ícono */
 }
 
 .card-title {
     margin-bottom: 1.5rem;
-    /* Espacio debajo del título de la tarjeta */
     font-size: 1.25rem;
-    /* Tamaño del texto del título */
 }
 
 .card-text {
     font-size: 1rem;
-    /* Tamaño del texto de la tarjeta */
 }
 
-/* Estilo para los títulos principales */
 h1 {
     margin-bottom: 1.5rem;
-    /* Espacio debajo de los títulos principales */
     font-size: 38px;
-    /* Tamaño del texto del título principal */
 }
 
-/* Estilo para los párrafos */
 p {
     font-size: 20px;
-    /* Tamaño del texto de los párrafos */
     line-height: 1.6;
-    /* Altura de línea para mejor legibilidad */
 }
 
 .row img {
     margin-bottom: 2rem;
-    /* Margen inferior para imágenes */
 }
 
-/* Estilo para el contenedor de preguntas frecuentes */
 .bottom {
     background-color: rgb(245, 245, 245);
-    /* Fondo de la sección de preguntas frecuentes */
     padding: 2rem;
-    /* Espacio interno */
     margin: 0;
-    /* Elimina márgenes para asegurar que cubra todo el ancho */
     width: 100vw;
-    /* Asegura que el fondo cubra todo el ancho de la ventana de visualización */
     position: relative;
-    /* Asegura que los elementos hijos se posicionen respecto a este contenedor */
     left: 50%;
-    /* Ajusta la posición para que comience desde el borde izquierdo */
     right: 50%;
-    /* Ajusta la posición para que termine en el borde derecho */
     margin-left: -50vw;
-    /* Compensa la posición centrada para cubrir todo el ancho */
     margin-right: -50vw;
-    /* Compensa la posición centrada para cubrir todo el ancho */
     box-sizing: border-box;
-    /* Incluye padding y border en el width total */
     text-align: center;
-    /* Alinea el texto al centro */
 }
-
-/* Estilo para los ítems de preguntas frecuentes */
 .fq-item {
     margin: 0 auto 1.5rem;
-    /* Centra el ítem horizontalmente y espacio entre ítems */
     width: 80%;
-    /* Ajusta el ancho según lo necesites */
     max-width: 800px;
-    /* Opcional: Limita el ancho máximo del ítem */
     border-radius: 8px;
-    /* Bordes redondeados */
     border: 1px solid #ddd;
     background-color: #ffffff;
-    /* Fondo blanco para las preguntas */
     box-sizing: border-box;
-    /* Incluye padding y border en el width total */
 }
 
-/* Estilo para las preguntas frecuentes */
 .fq-question {
     cursor: pointer;
     font-weight: bold;
     padding: 1rem;
-    /* Padding para un diseño más espacioso */
     margin-bottom: 0.5rem;
-    /* Espacio debajo de la pregunta */
     font-size: 18px;
     color: rgb(62, 67, 71);
-    /* Color del texto */
     background-color: #ffffff;
-    /* Fondo blanco para la pregunta */
 }
 
-/* Estilo cuando la pregunta está activa */
 .fq-question.active {
     background-color: #dee2e6;
-    /* Fondo cuando la pregunta está activa */
 }
 
-/* Estilo para las respuestas de las preguntas frecuentes */
 .fq-answer {
     padding: 1rem;
-    /* Padding adicional para un diseño más espacioso */
     border-radius: 8px;
-    /* Bordes redondeados */
     background-color: #f1f3f5;
-    /* Fondo gris claro para la respuesta */
     border: 1px solid #ddd;
     margin-top: 0.5rem;
-    /* Espacio encima de la respuesta */
 }
 
 .container_home {
@@ -145,4 +96,29 @@ p {
 .container_homeFq {
     background:rgb(157, 178, 191);
     border-radius: 10%;
+}
+.centered-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.button-landing {
+    margin-top: 15px;
+    margin-bottom: 130px;
+    width: 195px;
+    height: 60px;
+    font-size: 20px;
+    background-color:  rgb(6, 167, 207);
+    border-radius: 5px;
+    color: white;
+    border: none;
+}
+.title1{
+    font-size: 50px;
+}
+.p1{
+    font-size: 20px;
 }

@@ -20,6 +20,7 @@ import {EmpleadoForm} from "/workspaces/ProyectoFinalPDM/src/front/js/component/
 import { EmpresaForm } from "/workspaces/ProyectoFinalPDM/src/front/js/component/EmpresaForm.jsx";
 import {AgendarCita} from "/workspaces/ProyectoFinalPDM/src/front/js/pages/AgendarCita.jsx"
 import {Agenda} from "/workspaces/ProyectoFinalPDM/src/front/js/pages/Agenda.jsx"
+import { ClientView } from "./pages/ClientView.jsx";
 //create your first component
 const Layout = () => {
     //the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -48,6 +49,7 @@ const Layout = () => {
                         <Route element={<EmpresaForm />} path="/CrearEmpresa"  />
                         <Route element={<AgendarCita />} path="/AgendarCita"  />
                         <Route element={<Agenda />} path="/Agenda"  />
+                        <Route element={<ClientView />} path="/ClientView" />
                     </Routes>
                     <Footer />
                 </ScrollToTop>
