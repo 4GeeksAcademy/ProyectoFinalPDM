@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Branch, Company
+from api.models import db, User, Branch, Company, AvailableSlot
 from flask_login import LoginManager
 from config import Config
 from api.utils import generate_sitemap, APIException
@@ -96,6 +96,27 @@ def delete_branch(branch_id):
     db.session.delete(branch)
     db.session.commit()
     return jsonify({'message': 'Branch deleted successfully'}), 200
+
+""" 
+@api.route('/available_slots', methods=['POST'])
+@jwt_required()
+def add_available_slot():
+    data = request.get_json()
+    try:
+        new_slot = AvailableSlot.create_slot(
+            employee_id=data['employee_id'],
+            start_time=data['start_time'],
+            end_time=data['end_time'],
+            available_slot_is_active=data.get('available_slot_is_active', True)
+        )
+        db.session.add(new_slot)
+        db.session.commit()
+        return jsonify(new_slot.serialize()), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 400
+   """ 
+
 
 @api.route('/company', methods=['POST'])
 @jwt_required()
