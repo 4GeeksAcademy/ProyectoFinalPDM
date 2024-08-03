@@ -7,7 +7,7 @@ verify_ssl = true
 
 [packages]
 flask = "*"
-sqlalchemy = "==1.4.46"
+sqlalchemy = "*"
 flask-sqlalchemy = "*"
 flask-migrate = "*"
 flask-swagger = "*"
@@ -18,6 +18,18 @@ gunicorn = "*"
 cloudinary = "*"
 flask-admin = "*"
 typing-extensions = "*"
+flask-mail = "*"
+geopy = "*"
+flask-login = "*"
+config = "*"
+python-form = "*"
+form = "*"
+flask-wtf = "*"
+sqlalchemy-orm = "*"
+wtforms = "*"
+email-validator = "*"
+flask-bcrypt = "*"
+flask-jwt-extended = "*"
 
 [requires]
 python_version = "3.10"
