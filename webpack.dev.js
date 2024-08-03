@@ -24,6 +24,8 @@ module.exports = merge(common, {
     devServer: {
         port,
         hot: true,
+        historyApiFallback: true,
+        watchFiles:['src//.js','src//.jsx'],
         allowedHosts: "all",
         historyApiFallback: true,
         static: {
