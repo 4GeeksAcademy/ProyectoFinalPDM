@@ -92,11 +92,12 @@ class Branch(db.Model):
     company_id = db.Column(db.Integer, db.ForeignKey('company.id'), nullable=False)
     branch_is_active = db.Column(db.Boolean(), unique=False, nullable=False)
 
-    def create_branch(self, branch_name, branch_address, branch_phone, branch_is_active=True):
+    def create_branch(self, branch_name, branch_address, branch_phone, company_id, branch_is_active=True):
         new_branch = Branch(
             branch_name = branch_name,
             branch_address = branch_address,
             branch_phone = branch_phone,
+            company_id = company_id,
             branch_is_active = branch_is_active   
         )
         db.session.add(new_branch)
@@ -108,7 +109,9 @@ class Branch(db.Model):
             "id": self.id,
             "branch_name": self.branch_name,
             "branch_address": self.branch_address,
-            "branch_phone": self.branch_phone
+            "branch_phone": self.branch_phone,
+            "company_id": self.company_id,
+            "branch_is_active": self.branch_is_active
         }
 
 
@@ -234,6 +237,13 @@ class Company(db.Model):
     employee = db.relationship('Employee', backref='company', lazy=True)
     appointment = db.relationship('Appointment', backref='company', lazy=False)
     company_is_active = db.Column(db.Boolean(), unique=False, nullable=False)
+
+    @validates('nif')
+    def validate_nif(self, key, nif):
+        pattern = r'^[ABC]\d{7}[A-Z0-9]$'
+        if not re.match(pattern, nif):
+            raise ValueError("Invalid NIF format. Expected format: One initial letter among 'A', 'B', 'C', followed by 7 digits, and a control character at the end.")
+        return nif
 
     def create_company(self, user_id, name, nif, company_is_active=True):
         new_company = Company(user_id=user_id, name=name, nif=nif, company_is_active=company_is_active)

@@ -58,13 +58,44 @@ def login():
     else:
         return jsonify({"msg": "Invalid email or password"}), 401
 
-@api.route('/branch', methods=['POST'])
-def create_branch():
-    data_branch = request.json
-    if not data_branch or not 'branch_name' in data_branch or not 'branch_address' in data_branch or not 'branch_phone' in data_branch:
-        return jsonify({"msg": "Missing name, address, or phone"}), 400
-    branch = Branch(branch_name=data_branch["branch_name"], branch_address=data_branch["branch_address"], branch_phone=data_branch["branch_phone"])
-    return jsonify({"msg": "Branch created successfully!"}), 201
+@api.route('/branches', methods=['POST'])
+def add_branch():
+    data = request.get_json()
+    if not data:
+        return jsonify({'message': 'No input data provided'}), 400
+
+    new_branch = Branch().create_branch(
+        branch_name=data['branch_name'],
+        branch_address=data['branch_address'],
+        branch_phone=data['branch_phone'],
+        company_id=data['company_id'],
+        branch_is_active=data.get('branch_is_active', True)
+    )
+    return jsonify({'message': 'Branch created successfully', 'branch': new_branch.serialize()}), 201
+
+@api.route('/branches/<int:branch_id>', methods=['PUT'])
+def update_branch(branch_id):
+    data = request.get_json()
+    branch = Branch.query.get_or_404(branch_id)
+    
+    if 'branch_name' in data:
+        branch.branch_name = data['branch_name']
+    if 'branch_address' in data:
+        branch.branch_address = data['branch_address']
+    if 'branch_phone' in data:
+        branch.branch_phone = data['branch_phone']
+    if 'branch_is_active' in data:
+        branch.branch_is_active = data['branch_is_active']
+    
+    db.session.commit()
+    return jsonify({'message': 'Branch updated successfully', 'branch': branch.serialize()}), 200
+
+@api.route('/branches/<int:branch_id>', methods=['DELETE'])
+def delete_branch(branch_id):
+    branch = Branch.query.get_or_404(branch_id)
+    db.session.delete(branch)
+    db.session.commit()
+    return jsonify({'message': 'Branch deleted successfully'}), 200
 
 @api.route('/company', methods=['POST'])
 @jwt_required()
@@ -104,45 +135,5 @@ def manage_company(company_id):
         return jsonify({"message": "Company deleted successfully"}), 200
     
 
-"""
-@api.route('/branch', methods=['GET'])
-def get_branches():
-    branches = Branch.query.all()
-    return jsonify([branch.serialize() for branch in branches]), 200
 
-@api.route('/branch/<int:id>', methods=['GET'])
-def get_branch(id):
-    branch = Branch.query.get_or_404(id)
-    return jsonify(branch.serialize()), 200
-
-@api.route('/branch/<int:id>', methods=['PUT'])
-def update_branch(id):
-    try:
-        data_branch = request.json
-        branch = Branch.query.get_or_404(id)
-
-        if 'branch_name' in data_branch:
-            branch.branch_name = data_branch['branch_name']
-        if 'branch_address' in data_branch:
-            branch.branch_address = data_branch['branch_address']
-        if 'branch_phone' in data_branch:
-            branch.branch_phone = data_branch['branch_phone']
-
-        db.session.commit()
-        return jsonify({"msg": "Branch updated successfully!", "branch": branch.serialize()}), 200
-    except KeyError as e:
-        return jsonify({"msg": f"Missing key: {e.args[0]}"}), 400
-    except Exception as e:
-        return jsonify({"msg": "An error occurred", "error": str(e)}), 500
-
-@api.route('/branch/<int:id>', methods=['DELETE'])
-def delete_branch(id):
-    try:
-        branch = Branch.query.get_or_404(id)
-        db.session.delete(branch)
-        db.session.commit()
-        return jsonify({"msg": "Branch deleted successfully!"}), 200
-    except Exception as e:
-        return jsonify({"msg": "An error occurred", "error": str(e)}), 500
-"""
 
