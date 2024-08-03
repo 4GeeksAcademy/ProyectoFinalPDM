@@ -280,13 +280,20 @@ class Company(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     name = db.Column(db.String(250), nullable=False)
-    nif = db.Column(db.String(9), nullable=False) #UNA LETRA INICIAL A, B, C (EN MAYUSCULA) CON 7 NÚMEROS, UNA CRACTER DE CONTROL Un carácter de control (que puede ser una letra o un número) al final.
+    nif = db.Column(db.String(9), nullable=False)  # UNA LETRA INICIAL A, B, C (EN MAYÚSCULA) CON 7 NÚMEROS, UN CARÁCTER DE CONTROL al final.
     branches = db.relationship('Branch', backref='company', lazy=True)
     service = db.relationship('Service', backref='company', lazy=True)
     product = db.relationship('Product', backref='company', lazy=True)
     employee = db.relationship('Employee', backref='company', lazy=True)
     appointment = db.relationship('Appointment', backref='company', lazy=False)
     company_is_active = db.Column(db.Boolean(), unique=False, nullable=False)
+
+    @validates('nif')
+    def validate_nif(self, key, nif):
+        pattern = r'^[ABC]\d{7}[A-Z0-9]$'
+        if not re.match(pattern, nif):
+            raise ValueError("Invalid NIF format. Expected format: One initial letter among 'A', 'B', 'C', followed by 7 digits, and a control character at the end.")
+        return nif
 
     def create_company(self, user_id, name, nif, company_is_active=True):
         new_company = Company(user_id=user_id, name=name, nif=nif, company_is_active=company_is_active)
