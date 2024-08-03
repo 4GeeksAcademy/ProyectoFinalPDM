@@ -6,7 +6,7 @@ export const Footer = () => (
     <div className="footer-container">
       <p>
         Made with <i className="fa fa-heart" /> by{" "}
-        <span className="text-bold">PDM TeaM In</span> &nbsp;
+        <span className="text-bold"></span> &nbsp;
         <a href="http://www.4geeksacademy.com" target="_blank" rel="noopener noreferrer">
           4Geeks Academy
         </a>

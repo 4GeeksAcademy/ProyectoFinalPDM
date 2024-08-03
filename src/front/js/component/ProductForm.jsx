@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import '/workspaces/ProyectoFinalPDM/src/front/styles/agregarproducto.css'; // Asegúrate de que el import sea correcto
+import '/workspaces/ProyectoFinalPDM/src/front/styles/productform.css'; // Asegúrate de crear este archivo
 
 export const ProductForm = ({ addCard, cardToEdit, onEditSave }) => {
   const [image, setImage] = useState('');
@@ -48,50 +48,57 @@ export const ProductForm = ({ addCard, cardToEdit, onEditSave }) => {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit} className="card-form">
-        <div className="form-group">
-          <label>Imagen URL:</label>
-          <input
-            type="text"
-            value={image}
-            onChange={(e) => setImage(e.target.value)}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label>Título:</label>
-          <input
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label>Descripción:</label>
-          <input
-            type="text"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label>Precio:</label>
-          <input
-            type="number"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-            required
-          />
-        </div>
-        <div className="button-container">
-          <button type="submit" className="button-product">
-            {cardToEdit ? 'Guardar Cambios' : 'Agregar Producto'}
-          </button>
-        </div>
-      </form>
-    </div>
+    
+      <div>
+        <h2 className='form-title'>{cardToEdit ? 'Editar Producto' : 'Agregar Producto'}</h2>
+        <form onSubmit={handleSubmit}>
+          <div className='input-group'>
+            <label htmlFor='image'>Imagen URL:</label>
+            <input
+              type='text'
+              id='image'
+              value={image}
+              onChange={(e) => setImage(e.target.value)}
+              required
+            />
+          </div>
+          <div className='input-group'>
+            <label htmlFor='title'>Título:</label>
+            <input
+              type='text'
+              id='title'
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              required
+            />
+          </div>
+          <div className='input-group'>
+            <label htmlFor='description'>Descripción:</label>
+            <input
+              type='text'
+              id='description'
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              required
+            />
+          </div>
+          <div className='input-group'>
+            <label htmlFor='price'>Precio:</label>
+            <input
+              type='number'
+              id='price'
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+              required
+            />
+          </div>
+          <div className='button-group'>
+            <button type='submit' className='btn-submit'>
+              {cardToEdit ? 'Guardar Cambios' : 'Agregar Producto'}
+            </button>
+          </div>
+        </form>
+      </div>
+    
   );
 };

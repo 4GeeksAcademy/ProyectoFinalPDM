@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
-import "../../styles/home.css";
+import "/workspaces/ProyectoFinalPDM/src/front/styles/home.css";
 import { Link } from "react-router-dom";
 
 export const Home = () => {
@@ -24,9 +24,8 @@ export const Home = () => {
             setOpenIndex(index);
         }
     };
-
     return (
-        <div className="container mt-5 container_home">
+        <div className="container_home p-5">
             <div className="row">
                 <div className="col-md-6 mt-4">
                     <h1><strong>Transforma tu Negocio con Nuestra Agenda Inteligente</strong></h1>
@@ -53,7 +52,7 @@ export const Home = () => {
             </div>
             <div className="row mt-5">
                 <div className="col-md-3 mb-5">
-                    <div className="card">
+                    <div className="card1">
                         <div className="card-body text-center">
                             <i className="fas fa-calendar-check card-icon"></i>
                             <h5 className="card-title">Organización Perfecta</h5>
@@ -62,7 +61,7 @@ export const Home = () => {
                     </div>
                 </div>
                 <div className="col-md-3 mb-5">
-                    <div className="card">
+                    <div className="card1">
                         <div className="card-body text-center">
                             <i className="fas fa-user-friends card-icon"></i>
                             <h5 className="card-title">Interfaz Intuitiva</h5>
@@ -71,7 +70,7 @@ export const Home = () => {
                     </div>
                 </div>
                 <div className="col-md-3 mb-5">
-                    <div className="card">
+                    <div className="card1">
                         <div className="card-body text-center">
                             <i className="fas fa-laptop-house card-icon"></i>
                             <h5 className="card-title">Acceso en Línea</h5>
@@ -80,7 +79,7 @@ export const Home = () => {
                     </div>
                 </div>
                 <div className="col-md-3 mb-5">
-                    <div className="card">
+                    <div className="card1">
                         <div className="card-body text-center">
                             <i className="fas fa-bell card-icon"></i>
                             <h5 className="card-title">Notificaciones Automáticas</h5>

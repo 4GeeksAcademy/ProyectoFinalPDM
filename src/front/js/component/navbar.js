@@ -13,15 +13,15 @@ export const Navbar = () => {
       </div>
       <div>
         <Link to="/RegisterDate">
-          <button className="button2 ms-2">Pide tu Cita</button>
+          <button className="button2N ms-2">Pide tu Cita</button>
         </Link>
       </div>
       <div>
         <Link to="/Login">
-          <button className="button">Login</button>
+          <button className="buttonN">Login</button>
         </Link>
         <Link to="/Register">
-          <button className="button ms-2">Register</button>
+          <button className="buttonN ms-2">Register</button>
         </Link>
       </div>
     </nav>
