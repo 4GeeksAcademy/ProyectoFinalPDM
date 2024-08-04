@@ -1,22 +1,3 @@
-/* productForm.css */
-
-.form-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background: linear-gradient(135deg, #f6f9fc, #e9eff1);
-}
-
-.form-box {
-  background: #fff;
-  padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 400px;
-  width: 100%;
-}
-
 .form-title {
   font-family: 'Merriweather', serif;
   font-size: 2.2rem;
@@ -30,25 +11,6 @@
   text-transform: uppercase;
   line-height: 1.4;
   position: relative;
-}
-
-.input-group {
-  margin-bottom: 1rem;
-}
-
-.input-group label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-  color: #555;
-}
-
-.input-group input {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 1rem;
 }
 
 .button-group {

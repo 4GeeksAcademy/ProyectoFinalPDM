@@ -1,0 +1,267 @@
+
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+.card-icon {
+    font-size: 4rem;
+    color: rgb(71, 83, 102);
+    margin-bottom: 1rem;
+}
+
+.card-title {
+    margin-bottom: 1.5rem;
+    font-size: 1.25rem;
+}
+
+.card-text {
+    font-size: 1rem;
+}
+
+h1 {
+    margin-bottom: 1.5rem;
+    font-size: 38px; 
+}
+
+p {
+    font-size: 20px;
+    line-height: 1.6;
+}
+.row img {
+    margin-bottom: 2rem;
+}
+
+.bottom {
+    background-color: rgb(245, 245, 245); 
+    padding: 2rem;
+    margin: 0;
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%; 
+    margin-left: -50vw; 
+    margin-right: -50vw; 
+    box-sizing: border-box;
+    text-align: center; 
+}
+
+.fq-item {
+    margin: 0 auto 1.5rem; 
+    width: 80%;
+    max-width: 800px;
+    border-radius: 8px; 
+    border: 1px solid #ddd;
+    background-color: #ffffff; 
+    box-sizing: border-box;
+}
+
+
+.fq-question {
+    cursor: pointer;
+    font-weight: bold;
+    padding: 1rem;
+    margin-bottom: 0.5rem; 
+    font-size: 18px;
+    color: rgb(62, 67, 71);
+    background-color: #ffffff;
+}
+
+.fq-question.active {
+    background-color: #dee2e6;
+}
+
+.fq-answer {
+    padding: 1rem; 
+    border-radius: 8px;
+    background-color: #f1f3f5;
+    border: 1px solid #ddd;
+    margin-top: 0.5rem; 
+}
+
+
+
+
+
+
+
+
+.home-container {
+    padding: 2rem;
+    background: #f5f5f5;
+}
+
+.hero-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+
+.hero-text {
+    flex: 1;
+    padding-right: 2rem;
+}
+
+.hero-text h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.hero-text p {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: #555;
+}
+
+.hero-image img {
+    max-width: 100%;
+    border-radius: 10px;
+}
+
+.features-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+
+.feature-text {
+    flex: 1;
+    padding-right: 2rem;
+}
+
+.feature-text h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.feature-text p {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: #555;
+}
+
+.feature-image img {
+    max-width: 100%;
+    border-radius: 10px;
+}
+
+.cards-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+
+.card {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+    flex: 1 1 22%;
+    margin-right: 1rem;
+    text-align: center;
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+.card-icon {
+    font-size: 3rem;
+    color: #007bff;
+    margin-bottom: 1rem;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.card-text {
+    font-size: 1rem;
+    color: #555;
+}
+
+.info-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+
+.info-text {
+    flex: 1;
+    padding-right: 2rem;
+}
+
+.info-text h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.info-text p {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: #555;
+}
+
+.info-image img {
+    max-width: 100%;
+    border-radius: 10px;
+}
+
+.faq-section {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.faq-section h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    color: #333;
+}
+
+.fq-item {
+    margin-bottom: 1rem;
+}
+
+.fq-question {
+    cursor: pointer;
+    font-weight: bold;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #f8f9fa;
+    color: #333;
+}
+
+.fq-question.active {
+    background: #e9ecef;
+}
+
+.fq-answer {
+    padding: 1rem;
+    border-radius: 8px;
+    background: #f1f3f5;
+    border: 1px solid #ddd;
+    margin-top: 0.5rem;
+}
