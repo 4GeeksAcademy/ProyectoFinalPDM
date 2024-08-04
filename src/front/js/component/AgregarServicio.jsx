@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
-// import { ServiceForm } from './ServiceForm';
+import ServiceForm from '/workspaces/ProyectoFinalPDM/src/front/js/component/ServiceForm.jsx';
+import '/workspaces/ProyectoFinalPDM/src/front/styles/agregarservicio.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+
 // Botones personalizados para el carrusel
 const PrevArrow = ({ onClick }) => (
   <button className="slick-prev" onClick={onClick}>
@@ -74,11 +76,11 @@ export const AgregarServicio = () => {
     <div className="containerAs">
       <div className="aAs">
         <h2 className='perfil-titleAs'>Agregar Servicio</h2>
-        {/* <ServiceForm 
+        <ServiceForm 
           addService={addService} 
           serviceToEdit={editingService} 
           onEditSave={handleSaveService} 
-        /> */}
+        />
       </div>
       <div className="product-listAs">
         <h2 className=''>Servicios</h2>
