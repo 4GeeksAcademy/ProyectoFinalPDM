@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Branch, Company, AvailableSlot
+from api.models import db, User, Branch, AvailableSlot, Appointment, Service, Product, Employee, Company
 from flask_login import LoginManager
 from config import Config
 from api.utils import generate_sitemap, APIException
@@ -142,6 +142,105 @@ def delete_available_slot(id):
         db.session.delete(slot)
         db.session.commit()
         return jsonify({'message': 'Available slot deleted successfully'}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 400
+    
+
+@api.route('/appointments', methods=['POST'])
+@jwt_required()
+def add_appointment():
+    data = request.get_json()
+    try:
+        new_appointment = Appointment.create_appointment(
+            company_id=data['company_id'],
+            available_slot_id=data['available_slot_id'],
+            appointment_time=data['appointment_time'],
+            first_name_customer=data['first_name_customer'],
+            last_name_customer=data['last_name_customer'],
+            phone_customer=data['phone_customer'],
+            email_customer=data['email_customer'],
+            observation_customer=data.get('observation_customer', '')
+        )
+        db.session.add(new_appointment)
+        db.session.commit()
+        return jsonify(new_appointment.serialize()), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 400
+
+@api.route('/appointments/<int:id>', methods=['PUT'])
+@jwt_required()
+def update_appointment(id):
+    appointment = Appointment.query.get_or_404(id)
+    data = request.get_json()
+    try:
+        appointment.update(data)
+        db.session.commit()
+        return jsonify(appointment.serialize()), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 400
+
+@api.route('/appointments/<int:id>', methods=['DELETE'])
+@jwt_required()
+def delete_appointment(id):
+    appointment = Appointment.query.get_or_404(id)
+    try:
+        db.session.delete(appointment)
+        db.session.commit()
+        return jsonify({'message': 'Appointment deleted successfully'}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 400
+
+
+@api.route('/services', methods=['POST'])
+@jwt_required()
+def create_service():
+    data = request.get_json()
+    try:
+        new_service = Service.create_service(
+            service_name=data['service_name'],
+            service_price=data['service_price'],
+            image_url=data.get('image_url', None),
+            company_id=data['company_id'],
+            appointment_id=data['appointment_id'],
+            service_is_active=data.get('service_is_active', True)
+        )
+        return jsonify(new_service.serialize()), 201
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
+
+@api.route('/services/<int:service_id>', methods=['PUT'])
+@jwt_required()
+def update_service(service_id):
+    service = Service.query.get_or_404(service_id)
+    data = request.get_json()
+    try:
+        if 'service_name' in data:
+            service.service_name = data['service_name']
+        if 'service_price' in data:
+            service.service_price = data['service_price']
+        if 'image_url' in data:
+            service.image_url = data['image_url']
+        if 'service_is_active' in data:
+            service.service_is_active = data['service_is_active']
+        
+        db.session.commit()
+        return jsonify(service.serialize()), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 400
+
+@api.route('/services/<int:service_id>', methods=['DELETE'])
+@jwt_required()
+def delete_service(service_id):
+    service = Service.query.get_or_404(service_id)
+    try:
+        db.session.delete(service)
+        db.session.commit()
+        return jsonify({'message': 'Service successfully deleted'}), 200
     except Exception as e:
         db.session.rollback()
         return jsonify({'error': str(e)}), 400
