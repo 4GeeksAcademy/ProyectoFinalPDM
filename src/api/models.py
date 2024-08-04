@@ -5,7 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, render_template, redirect, url_for, flash, abort
 from flask_mail import Mail, Message
 from sqlalchemy.orm import validates
-from datetime import datetime
+from datetime import datetime, timedelta
 from itsdangerous import URLSafeTimedSerializer
 from geopy.geocoders import Nominatim
 from flask_bcrypt import Bcrypt
@@ -135,16 +135,8 @@ class AvailableSlot(db.Model):
     employee_id = db.Column(db.Integer, db.ForeignKey('employee.id'), nullable=False)
     start_time = db.Column(db.DateTime, nullable=False)
     end_time = db.Column(db.DateTime, nullable=False)
-    #appointments = db.relationship('Appointment', backref='available_slot', lazy=True)
+    appointments = db.relationship('Appointment', backref='available_slot', lazy=True)
     available_slot_is_active = db.Column(db.Boolean(), unique=False, nullable=False)
-
-    @validates('start_time', 'end_time')
-    def validate_times(self, key, value):
-        if key == 'start_time' and value < datetime.now():
-            raise ValueError("La hora de inicio debe estar en el futuro")
-        if key == 'end_time' and value <= self.start_time:
-            raise ValueError("La hora de fin debe ser posterior a la hora de inicio")
-        return value
 
     @classmethod
     def create_slot(cls, employee_id, start_time, end_time, available_slot_is_active=True):
@@ -176,10 +168,10 @@ class Appointment(db.Model):
     phone_customer = db.Column(db.String(15), nullable=False)
     email_customer = db.Column(db.String(120), nullable=False)
     observation_customer = db.Column(db.String(500), nullable=True)
-    company_id = db.Column(db.Integer, db.ForeignKey('company.id'), nullable=False)
+    company_id = db.Column(db.Integer, db.ForeignKey('company.id'), nullable=True)
     employee_id = db.Column(db.Integer, db.ForeignKey('employee.id'), nullable=True)
-    service_id = db.Column(db.Integer, db.ForeignKey('service.id'), nullable=False)
-    #available_slot_id = db.Column(db.Integer, db.ForeignKey('available_slot.id'), nullable=False)
+    service_id = db.Column(db.Integer, db.ForeignKey('service.id'), nullable=True)
+    available_slot_id = db.Column(db.Integer, db.ForeignKey('available_slot.id'), nullable=False)
     product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=True)
     appointment_is_active = db.Column(db.Boolean(), unique=False, nullable=False, default=True)  
 
@@ -189,12 +181,13 @@ class Appointment(db.Model):
             raise ValueError("La fecha y hora de la cita deben estar en el futuro")
         return appointment_time
 
-    def create_appointment(self, company_id, employee_id, service_id, product_id, appointment_time, first_name_customer, last_name_customer, phone_customer, email_customer, observation_customer, appointment_is_active=True):
+    def create_appointment(self, company_id, employee_id, service_id, product_id, available_slot_id, appointment_time, first_name_customer, last_name_customer, phone_customer, email_customer, observation_customer, appointment_is_active=True):
         new_appointment = Appointment(
             company_id=company_id,
             employee_id=employee_id,
             service_id=service_id,
             product_id=product_id,
+            available_slot_id=available_slot_id,
             appointment_time=appointment_time,
             first_name_customer=first_name_customer,
             last_name_customer=last_name_customer,
@@ -220,6 +213,7 @@ class Appointment(db.Model):
             'employee_id': self.employee_id,
             'service_id': self.service_id,
             'product_id': self.product_id,
+            'appointment_time':self.appointment_time,
             'appointment_is_active': self.appointment_is_active
         }
 
@@ -257,8 +251,9 @@ class Service(db.Model):
             raise ValueError("The service price must be a digit.")
         return value
     
-    def create_service(self, service_name, service_price, company_id, image_url=None, service_is_active=True):
-        new_service = Service(
+    @classmethod
+    def create_service(cls, service_name, service_price, company_id, image_url=None, service_is_active=True):
+        new_service = cls(
             service_name=service_name,
             service_price=service_price,
             company_id=company_id,
@@ -358,17 +353,10 @@ class WorkingHours(db.Model):
     start_time = db.Column(db.DateTime, nullable=False)
     end_time = db.Column(db.DateTime, nullable=False)
     workinghours_is_active = db.Column(db.Boolean(), unique=False, nullable=False, default=False)
-
-    @validates('start_time', 'end_time')
-    def validate_times(self, key, value):
-        if key == 'start_time' and value < datetime.now():
-            raise ValueError("La hora de inicio debe estar en el futuro")
-        if key == 'end_time' and value <= self.start_time:
-            raise ValueError("La hora de fin debe ser posterior a la hora de inicio")
-        return value
     
-    def create_working_hours(self, employee_id, start_time, end_time, workinghours_is_active=True):
-        new_working_hours = WorkingHours(
+    @classmethod
+    def create_working_hours(cls, employee_id, start_time, end_time, workinghours_is_active=True):
+        new_working_hours = cls(
             employee_id=employee_id,
             start_time=start_time,
             end_time=end_time,

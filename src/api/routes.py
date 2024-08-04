@@ -12,7 +12,7 @@ from flask import render_template, redirect, url_for, flash
 from flask_login import login_user
 from flask_migrate import Migrate
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
-from datetime import datetime
+from datetime import datetime, timedelta
 
  
 #app = create_app()
@@ -100,22 +100,17 @@ def delete_branch(branch_id):
 
 
 @api.route('/available_slots', methods=['POST'])
-@jwt_required()
 def add_available_slot():
     data = request.get_json()
-    try:
-        new_slot = AvailableSlot.create_slot(
-            employee_id=data['employee_id'],
-            start_time=data['start_time'],
-            end_time=data['end_time'],
-            available_slot_is_active=data.get('available_slot_is_active', True)
-        )
-        db.session.add(new_slot)
-        db.session.commit()
-        return jsonify(new_slot.serialize()), 201
-    except Exception as e:
-        db.session.rollback()
-        return jsonify({'error': str(e)}), 400
+    new_slot = AvailableSlot.create_slot(
+        employee_id=data['employee_id'],
+        start_time=data['start_time'],
+        end_time=data['end_time'],
+        available_slot_is_active=data.get('available_slot_is_active', True)
+    )
+    db.session.add(new_slot)
+    db.session.commit()
+    return jsonify(new_slot.serialize()), 201
     
 @api.route('/available_slots/<int:id>', methods=['PUT'])
 @jwt_required()
@@ -197,21 +192,19 @@ def delete_appointment(id):
 
 
 @api.route('/services', methods=['POST'])
-@jwt_required()
 def create_service():
     data = request.get_json()
-    try:
-        new_service = Service.create_service(
-            service_name=data['service_name'],
-            service_price=data['service_price'],
-            image_url=data.get('image_url', None),
-            company_id=data['company_id'],
-            appointment_id=data['appointment_id'],
-            service_is_active=data.get('service_is_active', True)
-        )
-        return jsonify(new_service.serialize()), 201
-    except Exception as e:
-        return jsonify({'error': str(e)}), 400
+    new_service = Service.create_service(
+        service_name=data['service_name'],
+        service_price=data['service_price'],
+        image_url=data.get('image_url', None),
+        company_id=data['company_id'],
+        service_is_active=data.get('service_is_active', True)
+    )
+    db.session.add(new_service)
+    db.session.commit()
+    return jsonify(new_service.serialize()), 201
+
 
 @api.route('/services/<int:service_id>', methods=['PUT'])
 @jwt_required()
@@ -247,24 +240,18 @@ def delete_service(service_id):
         return jsonify({'error': str(e)}), 400
     
 @api.route('/products', methods=['POST'])
-@jwt_required()
 def add_product():
     data = request.get_json()
-    try:
-        new_product = Product(
-            product_name=data['product_name'],
-            product_price=data['product_price'],
-            image_url=data.get('image_url', None),
-            company_id=data['company_id'],
-            appointment_id=data['appointment_id'],
-            product_is_active=data.get('product_is_active', True)
-        )
-        db.session.add(new_product)
-        db.session.commit()
-        return jsonify(new_product.serialize()), 201
-    except Exception as e:
-        db.session.rollback()
-        return jsonify({'error': str(e)}), 400
+    new_product = Product(
+        product_name=data['product_name'],
+        product_price=data['product_price'],
+        image_url=data.get('image_url', None),
+        company_id=data['company_id'],
+        product_is_active=data.get('product_is_active', True)
+    )
+    db.session.add(new_product)
+    db.session.commit()
+    return jsonify(new_product.serialize()), 201
 
 @api.route('/products/<int:product_id>', methods=['PUT'])
 @jwt_required()
@@ -344,20 +331,17 @@ def delete_employee(employee_id):
         return jsonify({'error': str(e)}), 400
     
 @api.route('/workinghours', methods=['POST'])
-@jwt_required()
 def add_working_hours():
     data = request.get_json()
-    try:
-        new_working_hours = WorkingHours.create_working_hours(
-            employee_id=data['employee_id'],
-            start_time=data['start_time'],
-            end_time=data['end_time'],
-            workinghours_is_active=data.get('workinghours_is_active', True)
-        )
-        return jsonify(new_working_hours.serialize()), 201
-    except Exception as e:
-        db.session.rollback()
-        return jsonify({'error': str(e)}), 400
+    new_working_hours = WorkingHours.create_working_hours(
+        employee_id=data['employee_id'],
+        start_time=data['start_time'],
+        end_time=data['end_time'],
+        workinghours_is_active=data.get('workinghours_is_active', True)
+    )
+    db.session.add(new_working_hours)
+    db.session.commit()
+    return jsonify(new_working_hours.serialize()), 201
 
 @api.route('/workinghours/<int:working_hours_id>', methods=['PUT'])
 @jwt_required()
