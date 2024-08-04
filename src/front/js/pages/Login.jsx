@@ -44,8 +44,8 @@ const Login = () => {
           </div>
           {error && <p className='error-message'>{error}</p>}
           <div className='button-group'>
-            <button type="submit" className='btn-submit'>Iniciar sesión</button>
-            <Link to="/" className='btn-cancel'>Cancelar</Link>
+            <Link to="/PerfilUsuario"><button type="submit" className='btn-submitL'>Iniciar sesión</button></Link>
+            <Link to="/" className='btn-cancelL'>Cancelar</Link>
           </div>
         </form>
       </div>

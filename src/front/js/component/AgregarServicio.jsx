@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import ServiceForm from '/workspaces/ProyectoFinalPDM/src/front/js/component/ServiceForm.jsx';
+import "/workspaces/ProyectoFinalPDM/src/front/styles/agregarproducto.css"
 
 export const AgregarServicio = () => {
   const [services, setServices] = useState([]);

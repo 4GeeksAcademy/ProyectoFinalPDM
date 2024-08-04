@@ -12,11 +12,16 @@ export const Navbar = () => {
         </a>
       </div>
       <div>
+        <Link to="/RegisterDate">
+          <button className="button2N ms-2">Pide tu Cita</button>
+        </Link>
+      </div>
+      <div>
         <Link to="/Login">
-          <button className="button-nav"><strong>Acceder</strong></button>
+          <button className="buttonN">Login</button>
         </Link>
         <Link to="/Register">
-          <button className="button-nav ms-2"><strong>Registrar</strong></button>
+          <button className="buttonN ms-2">Register</button>
         </Link>
         
 <Link to={"/RegisterDate"}>
@@ -69,3 +74,4 @@ export const Navbar = () => {
 <Link to={"/Agenda"}>
 <button className="ms-3 me-3"> Agenda</button>
 </Link> */}
+
