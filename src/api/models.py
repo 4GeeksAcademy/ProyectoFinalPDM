@@ -179,7 +179,7 @@ class Appointment(db.Model):
     service = db.relationship('Service', backref='appointment', lazy=True)
     product = db.relationship('Product', backref='appointment', lazy=True)
     employee = db.relationship('Employee', backref='appointment', lazy=True)
-    #appointment_is_active = db.Column(db.Boolean(), unique=False, nullable=False, default=True)  
+    appointment_is_active = db.Column(db.Boolean(), unique=False, nullable=False, default=True)  
 
     @validates('appointment_time')
     def validate_appointment_time(self, key, appointment_time):
@@ -188,8 +188,8 @@ class Appointment(db.Model):
         return appointment_time
 
     @classmethod
-    def create_appointment(cls, company_id, available_slot_id, appointment_time, first_name_customer, last_name_customer, phone_customer, email_customer, observation_customer):
-        new_appointment = cls(
+    def create_appointment(self, company_id, available_slot_id, appointment_time, first_name_customer, last_name_customer, phone_customer, email_customer, observation_customer, appointment_is_active=True):
+        new_appointment = Appointment(
             company_id=company_id,
             available_slot_id=available_slot_id,
             appointment_time=appointment_time,
@@ -198,7 +198,7 @@ class Appointment(db.Model):
             phone_customer=phone_customer,
             email_customer=email_customer,
             observation_customer=observation_customer,
-            # appointment_is_active=appointment_is_active
+            appointment_is_active=appointment_is_active
         )
         db.session.add(new_appointment)
         db.session.commit()
@@ -213,9 +213,9 @@ class Appointment(db.Model):
             'phone_customer': self.phone_customer,
             'email_customer': self.email_customer,
             'observation_customer': self.observation_customer,
-            'company_id': self.company_id,
             'available_slot_id': self.available_slot_id,
-            # 'appointment_is_active': self.appointment_is_active
+            'company_id': self.company_id,
+            'appointment_is_active': self.appointment_is_active
         }
 
     @validates('first_name_customer', 'last_name_customer')
