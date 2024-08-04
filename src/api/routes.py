@@ -59,7 +59,7 @@ def login():
     else:
         return jsonify({"msg": "Invalid email or password"}), 401
 
-@api.route('/branches', methods=['POST'])
+@api.route('/branch', methods=['POST'])
 def add_branch():
     data = request.get_json()
     if not data:
@@ -74,7 +74,7 @@ def add_branch():
     )
     return jsonify({'message': 'Branch created successfully', 'branch': new_branch.serialize()}), 201
 
-@api.route('/branches/<int:branch_id>', methods=['PUT'])
+@api.route('/branch/<int:branch_id>', methods=['PUT'])
 def update_branch(branch_id):
     data = request.get_json()
     branch = Branch.query.get_or_404(branch_id)
@@ -91,7 +91,7 @@ def update_branch(branch_id):
     db.session.commit()
     return jsonify({'message': 'Branch updated successfully', 'branch': branch.serialize()}), 200
 
-@api.route('/branches/<int:branch_id>', methods=['DELETE'])
+@api.route('/branch/<int:branch_id>', methods=['DELETE'])
 def delete_branch(branch_id):
     branch = Branch.query.get_or_404(branch_id)
     db.session.delete(branch)
@@ -300,21 +300,17 @@ def delete_product(product_id):
         return jsonify({'error': str(e)}), 400
     
 @api.route('/employees', methods=['POST'])
-@jwt_required()
 def add_employee():
     data = request.get_json()
-    try:
-        new_employee = Employee.create_employee(
-            name=data['name'],
-            last_name=data['last_name'],
-            company_id=data['company_id'],
-            appointment_id=data['appointment_id'],
-            employee_is_active=data.get('employee_is_active', True)
-        )
-        return jsonify(new_employee.serialize()), 201
-    except Exception as e:
-        db.session.rollback()
-        return jsonify({'error': str(e)}), 400
+    new_employee = Employee(
+        name=data['name'],
+        last_name=data['last_name'],
+        company_id=data['company_id'],
+        employee_is_active=data.get('employee_is_active', True)
+    )
+    db.session.add(new_employee)
+    db.session.commit()
+    return jsonify(new_employee.serialize()), 201
 
 @api.route('/employees/<int:employee_id>', methods=['PUT'])
 @jwt_required()

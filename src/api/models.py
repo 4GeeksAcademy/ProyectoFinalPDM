@@ -92,11 +92,12 @@ class Branch(db.Model):
     company_id = db.Column(db.Integer, db.ForeignKey('company.id'), nullable=False)
     branch_is_active = db.Column(db.Boolean(), unique=False, nullable=False)
 
-    def create_branch(self, branch_name, branch_address, branch_phone, branch_is_active=True):
+    def create_branch(self, branch_name, branch_address, branch_phone, company_id, branch_is_active=True):
         new_branch = Branch(
             branch_name = branch_name,
             branch_address = branch_address,
             branch_phone = branch_phone,
+            company_id=company_id,
             branch_is_active = branch_is_active   
         )
         db.session.add(new_branch)
@@ -108,6 +109,7 @@ class Branch(db.Model):
             "id": self.id,
             "branch_name": self.branch_name,
             "branch_address": self.branch_address,
+            "company_id": self.company_id,
             "branch_phone": self.branch_phone
         }
 
@@ -175,10 +177,10 @@ class Appointment(db.Model):
     email_customer = db.Column(db.String(120), nullable=False)
     observation_customer = db.Column(db.String(500), nullable=True)
     company_id = db.Column(db.Integer, db.ForeignKey('company.id'), nullable=False)
+    employee_id = db.Column(db.Integer, db.ForeignKey('employee.id'), nullable=True)
+    service_id = db.Column(db.Integer, db.ForeignKey('service.id'), nullable=False)
     #available_slot_id = db.Column(db.Integer, db.ForeignKey('available_slot.id'), nullable=False)
-    service = db.relationship('Service', backref='appointment', lazy=True)
-    product = db.relationship('Product', backref='appointment', lazy=True)
-    employee = db.relationship('Employee', backref='appointment', lazy=True)
+    product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=True)
     appointment_is_active = db.Column(db.Boolean(), unique=False, nullable=False, default=True)  
 
     @validates('appointment_time')
@@ -187,22 +189,23 @@ class Appointment(db.Model):
             raise ValueError("La fecha y hora de la cita deben estar en el futuro")
         return appointment_time
 
-    @classmethod
-    def create_appointment(self, company_id, available_slot_id, appointment_time, first_name_customer, last_name_customer, phone_customer, email_customer, observation_customer, appointment_is_active=True):
+    def create_appointment(self, company_id, employee_id, service_id, product_id, appointment_time, first_name_customer, last_name_customer, phone_customer, email_customer, observation_customer, appointment_is_active=True):
         new_appointment = Appointment(
             company_id=company_id,
-            available_slot_id=available_slot_id,
+            employee_id=employee_id,
+            service_id=service_id,
+            product_id=product_id,
             appointment_time=appointment_time,
             first_name_customer=first_name_customer,
             last_name_customer=last_name_customer,
             phone_customer=phone_customer,
             email_customer=email_customer,
             observation_customer=observation_customer,
-            appointment_is_active=appointment_is_active
+            ppointment_is_active=appointment_is_active
         )
         db.session.add(new_appointment)
         db.session.commit()
-        return new_appointment
+        return new_appointment    
 
     def serialize(self):
         return {
@@ -213,8 +216,10 @@ class Appointment(db.Model):
             'phone_customer': self.phone_customer,
             'email_customer': self.email_customer,
             'observation_customer': self.observation_customer,
-            'available_slot_id': self.available_slot_id,
             'company_id': self.company_id,
+            'employee_id': self.employee_id,
+            'service_id': self.service_id,
+            'product_id': self.product_id,
             'appointment_is_active': self.appointment_is_active
         }
 
@@ -243,8 +248,8 @@ class Service(db.Model):
     service_price = db.Column(db.String(50), nullable=False)
     image_url = db.Column(db.String(255), nullable=True)
     company_id = db.Column(db.Integer, db.ForeignKey('company.id'), nullable=False)
-    appointment_id = db.Column(db.Integer, db.ForeignKey('appointment.id'), nullable=False)
-    service_is_active = db.Column(db.Boolean(), unique=False, nullable=False, default=False)
+    appointments = db.relationship('Appointment', backref='service', lazy=True)
+    service_is_active = db.Column(db.Boolean(), default=True, nullable=False)
 
     @validates('service_price')
     def validate_service_price(self, key, value):
@@ -252,19 +257,18 @@ class Service(db.Model):
             raise ValueError("The service price must be a digit.")
         return value
     
-    def create_service(self, service_name, service_price, image_url, company_id, appointment_id, service_is_active=True):
+    def create_service(self, service_name, service_price, company_id, image_url=None, service_is_active=True):
         new_service = Service(
             service_name=service_name,
             service_price=service_price,
-            image_url=image_url,
             company_id=company_id,
-            appointment_id=appointment_id,
+            image_url=image_url,
             service_is_active=service_is_active
         )
         db.session.add(new_service)
         db.session.commit()
         return new_service
-    
+
     def serialize(self):
         return {
             'id': self.id,
@@ -272,8 +276,8 @@ class Service(db.Model):
             'service_price': self.service_price,
             'image_url': self.image_url if self.image_url else "No image provided",
             'company_id': self.company_id,
-            'appointment_id': self.appointment_id,
-            'service_is_active': self.service_is_active
+            'service_is_active': self.service_is_active,
+            'appointments': [appointment.id for appointment in self.appointments]
         }
    
     
@@ -283,8 +287,8 @@ class Product(db.Model):
     product_price = db.Column(db.String(50), nullable=False)
     image_url = db.Column(db.String(255), nullable=True)
     company_id = db.Column(db.Integer, db.ForeignKey('company.id'), nullable=False)
-    appointment_id = db.Column(db.Integer, db.ForeignKey('appointment.id'), nullable=False)
-    product_is_active = db.Column(db.Boolean(), unique=False, nullable=False, default=False)
+    appointments = db.relationship('Appointment', backref='product', lazy='dynamic')
+    product_is_active = db.Column(db.Boolean(), default=True, nullable=False)
 
     @validates('product_price')
     def validate_product_price(self, key, value):
@@ -292,13 +296,12 @@ class Product(db.Model):
             raise ValueError("The product price must be a digit.")
         return value
 
-    def create_product(self, product_name, product_price, image_url, company_id, appointment_id, product_is_active=True):
+    def create_product(self, product_name, product_price, company_id, image_url=None, product_is_active=True):
         new_product = Product(
             product_name=product_name,
             product_price=product_price,
-            image_url=image_url,
             company_id=company_id,
-            appointment_id=appointment_id,
+            image_url=image_url,
             product_is_active=product_is_active
         )
         db.session.add(new_product)
@@ -312,8 +315,8 @@ class Product(db.Model):
             'product_price': self.product_price,
             'image_url': self.image_url if self.image_url else "No image provided",
             'company_id': self.company_id,
-            'appointment_id': self.appointment_id,
-            'product_is_active': self.product_is_active
+            'product_is_active': self.product_is_active,
+            'appointments': [appointment.id for appointment in self.appointments]
         }
 
 class Employee(db.Model):
@@ -323,31 +326,30 @@ class Employee(db.Model):
     company_id = db.Column(db.Integer, db.ForeignKey('company.id'), nullable=False)
     available_slots = db.relationship('AvailableSlot', backref='employee', lazy=True) 
     working_hours = db.relationship('WorkingHours', backref='employee', lazy=True)
-    appointment_id = db.Column(db.Integer, db.ForeignKey('appointment.id'), nullable=False)
+    appointments = db.relationship('Appointment', backref='employee', lazy=True)
     employee_is_active = db.Column(db.Boolean(), unique=False, nullable=False, default=False)
 
-    def create_employee(self, name, last_name, company_id, appointment_id, employee_is_active=True):
-        new_employee = Employee(
+    @classmethod
+    def create_employee(cls, name, last_name, company_id, employee_is_active=True):
+        new_employee = cls(
             name=name,
             last_name=last_name,
             company_id=company_id,
-            appointment_id=appointment_id,
             employee_is_active=employee_is_active
         )
         db.session.add(new_employee)
         db.session.commit()
         return new_employee
 
+
     def serialize(self):
         return {
-            'id': self.id,
-            'name': self.name,
-            'last_name': self.last_name,
-            'company_id': self.company_id,
-            'appointment_id': self.appointment_id,
-            'employee_is_active': self.employee_is_active,
-            'available_slots': [slot.serialize() for slot in self.available_slots],
-            'working_hours': [hours.serialize() for hours in self.working_hours]
+            "id": self.id,
+            "name": self.name,
+            "last_name": self.last_name,
+            "company_id": self.company_id,
+            "employee_is_active": self.employee_is_active,
+            "appointments": [appointment.serialize() for appointment in self.appointments]  
         }
 
 class WorkingHours(db.Model):
