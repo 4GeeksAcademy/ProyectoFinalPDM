@@ -244,7 +244,7 @@ class Service(db.Model):
     image_url = db.Column(db.String(255), nullable=True)
     company_id = db.Column(db.Integer, db.ForeignKey('company.id'), nullable=False)
     appointment_id = db.Column(db.Integer, db.ForeignKey('appointment.id'), nullable=False)
-    Service_is_active = db.Column(db.Boolean(), unique=False, nullable=False, default=False)
+    service_is_active = db.Column(db.Boolean(), unique=False, nullable=False, default=False)
 
     @validates('service_price')
     def validate_service_price(self, key, value):
@@ -284,6 +284,37 @@ class Product(db.Model):
     image_url = db.Column(db.String(255), nullable=True)
     company_id = db.Column(db.Integer, db.ForeignKey('company.id'), nullable=False)
     appointment_id = db.Column(db.Integer, db.ForeignKey('appointment.id'), nullable=False)
+    product_is_active = db.Column(db.Boolean(), unique=False, nullable=False, default=False)
+
+    @validates('product_price')
+    def validate_product_price(self, key, value):
+        if not value.isdigit():
+            raise ValueError("The product price must be a digit.")
+        return value
+
+    def create_product(self, product_name, product_price, image_url, company_id, appointment_id, product_is_active=True):
+        new_product = Product(
+            product_name=product_name,
+            product_price=product_price,
+            image_url=image_url,
+            company_id=company_id,
+            appointment_id=appointment_id,
+            product_is_active=product_is_active
+        )
+        db.session.add(new_product)
+        db.session.commit()
+        return new_product
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'product_name': self.product_name,
+            'product_price': self.product_price,
+            'image_url': self.image_url if self.image_url else "No image provided",
+            'company_id': self.company_id,
+            'appointment_id': self.appointment_id,
+            'product_is_active': self.product_is_active
+        }
 
 class Employee(db.Model):
     id = db.Column(db.Integer, primary_key=True)
