@@ -129,6 +129,79 @@ class Branch(db.Model):
         if not location:
             raise ValueError("La dirección no es válida")
         return address
+    
+class Appointment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    appointment_time = db.Column(db.DateTime, nullable=False)
+    first_name_customer = db.Column(db.String(80), nullable=False)
+    last_name_customer = db.Column(db.String(80), nullable=False)
+    phone_customer = db.Column(db.String(15), nullable=False)
+    email_customer = db.Column(db.String(120), nullable=False)
+    observation_customer = db.Column(db.String(500), nullable=True)
+    company_id = db.Column(db.Integer, db.ForeignKey('company.id'), nullable=True)
+    employee_id = db.Column(db.Integer, db.ForeignKey('employee.id'), nullable=True)
+    service_id = db.Column(db.Integer, db.ForeignKey('service.id'), nullable=True)
+    available_slot_id = db.Column(db.Integer, db.ForeignKey('available_slot.id'), nullable=True)
+    product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=True)
+    appointment_is_active = db.Column(db.Boolean(), unique=False, nullable=False, default=True) 
+    appointment_is_active = db.Column(db.Boolean(), unique=False, nullable=False) 
+
+    @classmethod
+    def create_appointment(cls, company_id, appointment_time, first_name_customer, last_name_customer, phone_customer, email_customer, observation_customer, employee_id=None, service_id=None, product_id=None, available_slot_id=None, appointment_is_active=True):
+        new_appointment = cls(
+            company_id=company_id,
+            employee_id=employee_id if employee_id is not None else None,
+            service_id=service_id if service_id is not None else None,
+            product_id=product_id if product_id is not None else None,
+            available_slot_id=available_slot_id if available_slot_id is not None else None,
+            appointment_time=appointment_time,
+            first_name_customer=first_name_customer,
+            last_name_customer=last_name_customer,
+            phone_customer=phone_customer,
+            email_customer=email_customer,
+            observation_customer=observation_customer,
+            appointment_is_active=appointment_is_active
+        )
+        db.session.add(new_appointment)
+        db.session.commit()
+        return new_appointment    
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'appointment_time': self.appointment_time.isoformat(),
+            'first_name_customer': self.first_name_customer,
+            'last_name_customer': self.last_name_customer,
+            'phone_customer': self.phone_customer,
+            'email_customer': self.email_customer,
+            'observation_customer': self.observation_customer,
+            'company_id': self.company_id,
+            'employee_id': self.employee_id,
+            'service_id': self.service_id,
+            'product_id': self.product_id,
+            'available_slot_id': self.available_slot_id,
+            'appointment_time':self.appointment_time,
+            'appointment_is_active': self.appointment_is_active
+        }
+
+    @validates('first_name_customer', 'last_name_customer')
+    def validate_not_empty(self, key, value):
+        if not value:
+            raise ValueError(f"El campo {key} no puede estar vacío")
+        return value
+
+    @validates('phone_customer', 'email_customer')
+    def validate_contact_details(self, key, value):
+        if key == 'phone_customer':
+            country_code = "+34"
+            if not value.startswith(country_code):
+                value = country_code + value
+        elif key == 'email_customer':
+            email_regex = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
+            if not re.match(email_regex, value):
+                raise ValueError("El correo electrónico no es válido")
+        return value
+    
 
 class AvailableSlot(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -159,83 +232,8 @@ class AvailableSlot(db.Model):
             'available_slot_is_active': self.available_slot_is_active,
             'appointments': [appointment.serialize() for appointment in self.appointments]
         }
-    
-class Appointment(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    appointment_time = db.Column(db.DateTime, nullable=False)
-    first_name_customer = db.Column(db.String(80), nullable=False)
-    last_name_customer = db.Column(db.String(80), nullable=False)
-    phone_customer = db.Column(db.String(15), nullable=False)
-    email_customer = db.Column(db.String(120), nullable=False)
-    observation_customer = db.Column(db.String(500), nullable=True)
-    company_id = db.Column(db.Integer, db.ForeignKey('company.id'), nullable=True)
-    employee_id = db.Column(db.Integer, db.ForeignKey('employee.id'), nullable=True)
-    service_id = db.Column(db.Integer, db.ForeignKey('service.id'), nullable=True)
-    available_slot_id = db.Column(db.Integer, db.ForeignKey('available_slot.id'), nullable=False)
-    product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=True)
-    appointment_is_active = db.Column(db.Boolean(), unique=False, nullable=False, default=True)  
-
-    @validates('appointment_time')
-    def validate_appointment_time(self, key, appointment_time):
-        if appointment_time < datetime.now():
-            raise ValueError("La fecha y hora de la cita deben estar en el futuro")
-        return appointment_time
-
-    def create_appointment(self, company_id, employee_id, service_id, product_id, available_slot_id, appointment_time, first_name_customer, last_name_customer, phone_customer, email_customer, observation_customer, appointment_is_active=True):
-        new_appointment = Appointment(
-            company_id=company_id,
-            employee_id=employee_id,
-            service_id=service_id,
-            product_id=product_id,
-            available_slot_id=available_slot_id,
-            appointment_time=appointment_time,
-            first_name_customer=first_name_customer,
-            last_name_customer=last_name_customer,
-            phone_customer=phone_customer,
-            email_customer=email_customer,
-            observation_customer=observation_customer,
-            ppointment_is_active=appointment_is_active
-        )
-        db.session.add(new_appointment)
-        db.session.commit()
-        return new_appointment    
-
-    def serialize(self):
-        return {
-            'id': self.id,
-            'appointment_time': self.appointment_time.isoformat(),
-            'first_name_customer': self.first_name_customer,
-            'last_name_customer': self.last_name_customer,
-            'phone_customer': self.phone_customer,
-            'email_customer': self.email_customer,
-            'observation_customer': self.observation_customer,
-            'company_id': self.company_id,
-            'employee_id': self.employee_id,
-            'service_id': self.service_id,
-            'product_id': self.product_id,
-            'appointment_time':self.appointment_time,
-            'appointment_is_active': self.appointment_is_active
-        }
-
-    @validates('first_name_customer', 'last_name_customer')
-    def validate_not_empty(self, key, value):
-        if not value:
-            raise ValueError(f"El campo {key} no puede estar vacío")
-        return value
-
-    @validates('phone_customer', 'email_customer')
-    def validate_contact_details(self, key, value):
-        if key == 'phone_customer':
-            country_code = "+34"
-            if not value.startswith(country_code):
-                value = country_code + value
-        elif key == 'email_customer':
-            email_regex = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
-            if not re.match(email_regex, value):
-                raise ValueError("El correo electrónico no es válido")
-        return value
       
-    
+  
 class Service(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     service_name = db.Column(db.String(100), nullable=False)
