@@ -1,8 +1,93 @@
+/* Estilo para el contenedor del calendario */
 .calendario-citas {
-    margin: 20px;
-    padding: 10px;
-}
-
-.rbc-calendar {
+    padding: 20px;
+    background: #f4f4f4;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    height: 100%;
+  }
+  
+  /* Estilo para el título del calendario */
+  .centrar_texto {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #2c3e50;
+    font-family: 'Merriweather', serif;
+  }
+  
+  /* Estilo para el calendario */
+  .rbc-calendar {
     border: 1px solid #ddd;
-}
+    border-radius: 8px;
+    background: #fff;
+  }
+  
+  /* Estilo para la cabecera de la vista del calendario */
+  .rbc-header {
+    background-color: rgb(157, 178, 191);
+    color: white;
+    font-weight: bold;
+  }
+  
+  /* Estilo para los días de la semana en la vista de mes */
+  .rbc-month-view .rbc-header {
+    text-align: center;
+    padding: 10px 0;
+  }
+  
+  /* Estilo para los eventos */
+  .rbc-event {
+    font-size: 1rem;
+    color: #ffffff;
+    cursor: pointer;
+  }
+  
+  .rbc-event:hover {
+    background-color: rgb(39, 55, 77);
+    color: rgb(255, 255, 255);
+  }
+  
+  /* Estilo para los eventos cuando están en la vista de día */
+  .rbc-day-view .rbc-event {
+    padding: 10px;
+  }
+  
+  /* Estilo para los eventos cuando están en la vista de semana */
+  .rbc-week-view .rbc-event {
+    padding: 10px;
+  }
+  
+  /* Estilo para los tooltips */
+  .react-tooltip-lite {
+    background-color: rgb(157, 178, 191);
+    color: white;
+  }
+  
+  /* Estilo para el header del calendario */
+  .rbc-toolbar {
+    background-color: rgb(39, 55, 77);
+    color: rgb(255, 255, 255);
+    border-bottom: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 8px 8px 0 0;
+  }
+  
+  .rbc-toolbar button {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    margin: 0 5px;
+  }
+  
+  .rbc-toolbar button:hover {
+    color: rgb(39, 55, 77);
+  }
+  
+  /* Estilo para la vista de hoy */
+  .rbc-today {
+    background-color: rgba(157, 178, 191, 0.247);
+    color: rgb(39, 55, 77);
+  }
+  
