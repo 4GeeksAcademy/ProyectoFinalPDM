@@ -1,139 +1,215 @@
-/* agregarproducto.css */
-
-.create-product {
-    display: flex;
-    flex-direction: column; /* Asegura que el contenido esté en columna */
-    min-height: 100vh; /* Asegura que el contenedor ocupe toda la altura de la ventana */
-    padding: 2rem;
-    background: linear-gradient(135deg, #f6f9fc, #e9eff1);
-  }
-  
-  .form-section-container {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    max-width: 1200px;
-    gap: 3rem; /* Aumenta el espacio entre el formulario y la lista de productos */
-  }
-  
-  .form-section {
-    background: #fff;
-    padding: 2.5rem; /* Aumenta el padding interno del formulario */
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Aumenta la sombra para un efecto más pronunciado */
-    flex: 1;
-    min-width: 350px; /* Asegura que el formulario no sea demasiado estrecho */
-  }
-  
-  .product-list {
-    flex: 2;
-    margin-top: 2rem; /* Espacio entre el formulario y la lista de productos */
-    width: 100%; /* Asegura que el contenedor ocupe todo el ancho disponible */
-    display: flex;
-    flex-direction: column; /* Organiza los elementos en una columna */
-    align-items: center; /* Centra el contenido horizontalmente */
-  }
-  
-  
-  .center-text {
-    text-align: center;
-    font-size: 1.75rem; /* Aumenta el tamaño del texto del encabezado */
-    color: #333;
-    margin-bottom: 1.5rem; /* Aumenta el espacio debajo del encabezado */
-  }
-  
-  .card-container {
-    display: flex;
-    flex-wrap: wrap; /* Permite que las tarjetas se ajusten en varias filas */
-    gap: 2rem; /* Espacio entre las tarjetas */
-    justify-content: center; /* Centra las tarjetas horizontalmente */
-    width: 100%; /* Asegura que el contenedor ocupe todo el ancho disponible */
-  }
-  
-  
-  .card {
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Sombra más pronunciada */
-  flex: 1 1 calc(25% - 2rem); /* Ajusta el tamaño de las tarjetas */
-  margin-bottom: 2rem; /* Espacio debajo de cada tarjeta */
-  padding: 1.5rem; /* Padding interno más grande */
-  box-sizing: border-box;
-  border: 2px solid red; /* Borde visible para depuración, ajusta según necesidad */
-  max-width: 300px; /* Ajusta el ancho máximo de las tarjetas */
+.containerA {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  margin-left: 0;
+  margin-right: 0;
+  background: linear-gradient(135deg, #f6f9fc, #e9eff1);
 }
 
-  
-  
-  .card-image {
-    width: 100%;
-    height: auto;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-  }
-  
-  .card-body {
-    padding: 1rem;
-  }
-  
-  .card-title {
-    font-size: 1.5rem; /* Aumenta el tamaño del texto del título */
-    margin-bottom: 0.5rem;
-  }
-  
-  .card-description {
-    font-size: 1.125rem; /* Aumenta el tamaño del texto de la descripción */
-    margin-bottom: 0.5rem;
-  }
-  
-  .card-price {
-    font-size: 1.125rem; /* Aumenta el tamaño del texto del precio */
-    font-weight: bold;
-    margin-bottom: 1rem;
-  }
-  
-  .button-container {
-    display: flex;
-    gap: 0.75rem; /* Aumenta el espacio entre los botones */
-    justify-content: center;
-    margin-top: 0.5rem;
-  }
-  
-  .button {
-    background: #007bff;
-    color: #fff;
-    padding: 0.75rem 1.25rem; /* Aumenta el padding interno de los botones */
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1rem;
-    text-align: center;
-  }
-  
-  .button:hover {
-    background: #0056b3;
-  }
-  
-  .delete-button {
-    background: #dc3545;
-    font-size: 1rem; /* Aumenta el tamaño del texto del botón eliminar */
-  }
-  
-  .back-button {
-    margin-top: auto; /* Empuja el botón hacia la parte inferior */
-  }
-  
-  .button-back {
-    background: #28a745;
-    color: #fff;
-    padding: 0.75rem 1.5rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1rem;
-  }
-  
-  .button-back:hover {
-    background: #218838;
-  }
-  
+
+.form-section-container {
+  margin-bottom: 40px;
+}
+
+.form-section {
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.center-text {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.product-list {
+  margin-top: 40px;
+  width: 100%;
+}
+
+.product-list h2 {
+  font-family: 'Merriweather', serif;
+  font-size: 2.2rem;
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-weight: 700;
+  border-bottom: 1px solid #bdc3c7;
+  padding-bottom: 0.75rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  line-height: 1.4;
+  position: relative;
+}
+
+.product-carousel {
+  position: relative;
+}
+
+.product-carousel .card {
+  margin: 0 10px;
+}
+
+.slick-slide {
+  padding: 0 10px;
+}
+
+.slick-prev,
+.slick-next {
+  z-index: 1;
+  background-color: #ffffff;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  font-size: 24px;
+  height: 40px;
+  width: 40px;
+  line-height: 40px;
+  text-align: center;
+}
+
+.slick-prev {
+  left: 10px;
+}
+
+.slick-next {
+  right: 10px;
+}
+
+.slick-prev:hover,
+.slick-next:hover {
+  background-color: #2196F3;
+  color: #ffffff;
+}
+
+.slick-prev:before,
+.slick-next:before {
+  font-family: "slick";
+  font-size: 24px;
+  color: #000;
+}
+
+.card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  min-width: 250px;
+  max-width: 400px;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.card-title {
+  font-size: 1.4em;
+  margin: 0 0 10px;
+}
+
+.card-description {
+  font-size: 1em;
+  margin: 0 0 10px;
+}
+
+.card-price {
+  font-weight: bold;
+  margin: 0 0 20px;
+}
+
+.button-container {
+  display: flex;
+  gap: 10px;
+}
+
+.button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: background-color 0.3s ease;
+}
+
+.edit-button {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  color: rgb(82, 109, 130);
+  text-decoration: none;
+  border: 1px solid rgb(82, 109, 130);
+  border-radius: 5px;
+  font-size: 1rem;
+  text-align: center;
+  line-height: 1.5;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.edit-button:hover {
+  background: rgb(39, 55, 77);
+  color: #fff;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.delete-button {
+  background-color: rgb(82, 109, 130);
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.delete-button:hover {
+  background: rgb(39, 55, 77);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.button-back {
+  width: 220px;
+  padding: 10px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: rgb(6, 167, 207);
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.3s ease;
+}
+
+.button-back:hover {
+  background-color: rgb(0, 204, 255);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.3s ease;
+}
+
+.a {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 100%;
+}

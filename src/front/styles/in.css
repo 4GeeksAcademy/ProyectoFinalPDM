@@ -175,11 +175,6 @@ body {
   border: 1px solid #ccc;
   border-radius: 5px;
 }
-.form-group label {
-  margin-bottom: 5px;
-  font-weight: bold;
-  color: #555;
-}
 
 .form-group label {
   margin-bottom: 5px;
@@ -285,6 +280,5 @@ body {
   font-weight: bold;
   margin: 5px 0;
 }
-
 
 
