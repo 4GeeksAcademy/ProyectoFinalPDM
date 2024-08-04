@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import "/workspaces/ProyectoFinalPDM/src/front/styles/serviceform.css"
 
 const ServiceForm = ({ addService, serviceToEdit, onEditSave }) => {
   const [title, setTitle] = useState('');
@@ -75,7 +76,7 @@ const ServiceForm = ({ addService, serviceToEdit, onEditSave }) => {
             required
           />
         </div>
-        <div className="button-container">
+        <div className="button-containerAs">
           <button type="submit" className="button-service">
             {serviceToEdit ? 'Guardar Cambios' : 'Agregar Servicio'}
           </button>
