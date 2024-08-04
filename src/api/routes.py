@@ -97,7 +97,7 @@ def delete_branch(branch_id):
     db.session.commit()
     return jsonify({'message': 'Branch deleted successfully'}), 200
 
-""" 
+
 @api.route('/available_slots', methods=['POST'])
 @jwt_required()
 def add_available_slot():
@@ -115,7 +115,36 @@ def add_available_slot():
     except Exception as e:
         db.session.rollback()
         return jsonify({'error': str(e)}), 400
-   """ 
+    
+@api.route('/available_slots/<int:id>', methods=['PUT'])
+@jwt_required()
+def update_available_slot(id):
+    slot = AvailableSlot.query.get_or_404(id)
+    data = request.get_json()
+    try:
+        if 'start_time' in data:
+            slot.start_time = data['start_time']
+        if 'end_time' in data:
+            slot.end_time = data['end_time']
+        if 'available_slot_is_active' in data:
+            slot.available_slot_is_active = data['available_slot_is_active']
+        db.session.commit()
+        return jsonify(slot.serialize()), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 400
+
+@api.route('/available_slots/<int:id>', methods=['DELETE'])
+@jwt_required()
+def delete_available_slot(id):
+    slot = AvailableSlot.query.get_or_404(id)
+    try:
+        db.session.delete(slot)
+        db.session.commit()
+        return jsonify({'message': 'Available slot deleted successfully'}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 400
 
 
 @api.route('/company', methods=['POST'])
