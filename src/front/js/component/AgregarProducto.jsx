@@ -109,7 +109,7 @@ export const AgregarProducto = () => {
           ))}
         </Slider>
       </div>
-      <div className="back-button">
+      <div>
         <Link to="/PerfilUsuario">
           <button className="button button-back">Regresar al Perfil</button>
         </Link>

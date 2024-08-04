@@ -99,7 +99,7 @@ export const SucursalForm = () => {
               {editandoSucursalId ? 'Guardar Cambios' : 'Crear Sucursal'}
             </button>
             <Link to="/PerfilUsuario">
-              <button type="button" className="button cancel-button">Cancelar</button>
+              <button type="button" className="button buttonB">Cancelar</button>
             </Link>
           </div>
         </form>
@@ -118,6 +118,11 @@ export const SucursalForm = () => {
           </ul>
         </div>
       </div>
+      <div className='button-b'>
+        <Link to="/PerfilUsuario">
+          <button className="button button-back">Regresar al Perfil</button>
+        </Link>
+      </div>
     </div>
   );
-};
+}; 

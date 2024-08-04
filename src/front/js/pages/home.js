@@ -136,7 +136,7 @@ export const Home = () => {
                         <img src="https://www.sesamehr.mx/wp-content/uploads/2023/06/base-datos-recursos-humanos-empresa.webp" className="img-fluid" alt="Business Management" />
                     </div>
                 </div>
-            </div> {/* Fin del nuevo contenedor */}
+            </div>
             <div className="bottom">
                 <div className="row mt-5 text-center">
                     <div className="col-md-12 mt-5 mb-5">

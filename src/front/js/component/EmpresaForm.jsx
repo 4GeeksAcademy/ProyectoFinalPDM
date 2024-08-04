@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-// import "/workspaces/ProyectoFinalPDM/src/front/styles/perfilUsuario.css";
 import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
+import "/workspaces/ProyectoFinalPDM/src/front/styles/EmpresaForm.css";
 
 export const EmpresaForm = () => {
   const [nombreEmpresa, setNombreEmpresa] = useState('');
@@ -64,8 +64,8 @@ export const EmpresaForm = () => {
 
   return (
     <div className="registro">
-      <h2>{editandoEmpresaId ? 'Editar Empresa' : 'Crear Empresa'}</h2>
-      <form onSubmit={handleSubmit}>
+      <form className="form-section" onSubmit={handleSubmit}>
+        <h2 className="title2">{editandoEmpresaId ? 'Editar Empresa' : 'Agregar Empresa'}</h2>
         <div className="form-group">
           <label>Nombre de la Empresa:</label>
           <input
@@ -95,23 +95,22 @@ export const EmpresaForm = () => {
             required
           >
             <option value="">Selecciona una sucursal</option>
-            {/* Aquí puedes agregar las sucursales disponibles */}
             <option value="Sucursal A">Sucursal A</option>
             <option value="Sucursal B">Sucursal B</option>
             <option value="Sucursal C">Sucursal C</option>
           </select>
         </div>
         <div className="button-container">
-          <button type="submit" className="button">
+          <button type="submit" className="create-company">
             {editandoEmpresaId ? 'Guardar Cambios' : 'Crear Empresa'}
           </button>
           <Link to="/PerfilUsuario">
-            <button type="button" className="button">Cancelar</button>
+            <button type="button" className="button buttonB">Cancelar</button>
           </Link>
         </div>
       </form>
       <div className="empresa-list">
-        <h2>Lista de Empresas</h2>
+        <h2 className="title2">Lista de Empresas</h2>
         <ul>
           {empresas.map((empresa) => (
             <li key={empresa.id}>
@@ -121,6 +120,11 @@ export const EmpresaForm = () => {
             </li>
           ))}
         </ul>
+      </div>
+      <div>
+        <Link to="/PerfilUsuario">
+          <button className="button button-back">Regresar al Perfil</button>
+        </Link>
       </div>
     </div>
   );
