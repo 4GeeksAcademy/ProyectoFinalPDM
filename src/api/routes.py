@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Branch, AvailableSlot, Appointment, Service, Product, Employee, Company
+from api.models import db, User, Branch, AvailableSlot, Appointment, Service, Product, Employee, WorkingHours, Company
 from flask_login import LoginManager
 from config import Config
 from api.utils import generate_sitemap, APIException
@@ -12,6 +12,7 @@ from flask import render_template, redirect, url_for, flash
 from flask_login import login_user
 from flask_migrate import Migrate
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
+from datetime import datetime
 
  
 #app = create_app()
@@ -342,6 +343,53 @@ def delete_employee(employee_id):
         db.session.delete(employee)
         db.session.commit()
         return jsonify({'message': 'Employee successfully deleted'}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 400
+    
+@api.route('/workinghours', methods=['POST'])
+@jwt_required()
+def add_working_hours():
+    data = request.get_json()
+    try:
+        new_working_hours = WorkingHours.create_working_hours(
+            employee_id=data['employee_id'],
+            start_time=data['start_time'],
+            end_time=data['end_time'],
+            workinghours_is_active=data.get('workinghours_is_active', True)
+        )
+        return jsonify(new_working_hours.serialize()), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 400
+
+@api.route('/workinghours/<int:working_hours_id>', methods=['PUT'])
+@jwt_required()
+def update_working_hours(working_hours_id):
+    working_hours = WorkingHours.query.get_or_404(working_hours_id)
+    data = request.get_json()
+    try:
+        if 'start_time' in data:
+            working_hours.start_time = datetime.fromisoformat(data['start_time'])
+        if 'end_time' in data:
+            working_hours.end_time = datetime.fromisoformat(data['end_time'])
+        if 'workinghours_is_active' in data:
+            working_hours.workinghours_is_active = data['workinghours_is_active']
+        
+        db.session.commit()
+        return jsonify(working_hours.serialize()), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 400
+
+@api.route('/workinghours/<int:working_hours_id>', methods=['DELETE'])
+@jwt_required()
+def delete_working_hours(working_hours_id):
+    working_hours = WorkingHours.query.get_or_404(working_hours_id)
+    try:
+        db.session.delete(working_hours)
+        db.session.commit()
+        return jsonify({'message': 'Working hours successfully deleted'}), 200
     except Exception as e:
         db.session.rollback()
         return jsonify({'error': str(e)}), 400
