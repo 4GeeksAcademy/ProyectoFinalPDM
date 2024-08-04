@@ -244,6 +244,38 @@ class Service(db.Model):
     image_url = db.Column(db.String(255), nullable=True)
     company_id = db.Column(db.Integer, db.ForeignKey('company.id'), nullable=False)
     appointment_id = db.Column(db.Integer, db.ForeignKey('appointment.id'), nullable=False)
+    Service_is_active = db.Column(db.Boolean(), unique=False, nullable=False, default=False)
+
+    @validates('service_price')
+    def validate_service_price(self, key, value):
+        if not value.isdigit():
+            raise ValueError("The service price must be a digit.")
+        return value
+    
+    def create_service(self, service_name, service_price, image_url, company_id, appointment_id, service_is_active=True):
+        new_service = Service(
+            service_name=service_name,
+            service_price=service_price,
+            image_url=image_url,
+            company_id=company_id,
+            appointment_id=appointment_id,
+            service_is_active=service_is_active
+        )
+        db.session.add(new_service)
+        db.session.commit()
+        return new_service
+    
+    def serialize(self):
+        return {
+            'id': self.id,
+            'service_name': self.service_name,
+            'service_price': self.service_price,
+            'image_url': self.image_url if self.image_url else "No image provided",
+            'company_id': self.company_id,
+            'appointment_id': self.appointment_id,
+            'service_is_active': self.service_is_active
+        }
+   
     
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
