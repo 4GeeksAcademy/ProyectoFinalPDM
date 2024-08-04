@@ -7,8 +7,8 @@ export const ClientView = () => {
     const { store, actions } = useContext(Context);
 
     return (
-        <div className="company-categories container">
-            <h1 className="text-center mb-4">Explora nuestras empresas registradas</h1>
+        <div className="container_home">
+            <h1 className="text-center mb-5">Explora nuestras empresas registradas</h1>
             <div className="card card-company">
                 <div className="card-body">
                     <div className="form-group">
@@ -20,9 +20,11 @@ export const ClientView = () => {
                             <option value="empresa3">Empresa 3</option>
                         </select>
                     </div>
-                    <button className="button-company mt-3">
-                        Buscar
-                    </button>
+                    <div className="d-flex justify-content-center">
+                        <button className="button-company mt-3">
+                            Buscar
+                        </button>
+                    </div>
                 </div>
             </div>
             <div className="additional-cards mt-5">
@@ -31,7 +33,7 @@ export const ClientView = () => {
                         <div className="card text-center">
                             <div className="card-body">
                                 <i className="fas fa-search card-icon mb-3"></i>
-                                <h5 className="card-title">Encuentra Empresas</h5>
+                                <h5 className="card-title1">Encuentra Empresas</h5>
                                 <p className="card-text">Explora las empresas y encuentra la que mejor se ajuste a tus necesidades.</p>
                             </div>
                         </div>
@@ -40,7 +42,7 @@ export const ClientView = () => {
                         <div className="card text-center">
                             <div className="card-body">
                                 <i className="fas fa-calendar-alt card-icon mb-3"></i>
-                                <h5 className="card-title">Agenda Citas</h5>
+                                <h5 className="card-title1">Agenda Citas</h5>
                                 <p className="card-text">Programa tus citas con la empresa elegida de manera rápida y sencilla.</p>
                             </div>
                         </div>
@@ -49,7 +51,7 @@ export const ClientView = () => {
                         <div className="card text-center">
                             <div className="card-body">
                                 <i className="fas fa-cogs card-icon mb-3"></i>
-                                <h5 className="card-title">Elige Servicios</h5>
+                                <h5 className="card-title1">Elige Servicios</h5>
                                 <p className="card-text">Selecciona los servicios que necesitas para recibir atención personalizada.</p>
                             </div>
                         </div>

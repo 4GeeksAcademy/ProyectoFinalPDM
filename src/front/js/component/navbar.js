@@ -12,11 +12,6 @@ export const Navbar = () => {
         </a>
       </div>
       <div>
-        <Link to="/RegisterDate">
-          <button className="button2N ms-2">Pide tu Cita</button>
-        </Link>
-      </div>
-      <div>
         <Link to="/Login">
           <button className="buttonN">Login</button>
         </Link>

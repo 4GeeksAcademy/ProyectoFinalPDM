@@ -24,116 +24,119 @@ export const Home = () => {
             setOpenIndex(index);
         }
     };
+
     return (
         <div className="container_home p-5">
-            <div className="row">
-                <div className="col-md-12 mt-4">
-                    <div className="centered-content">
-                        <h1 className="title1"><strong>Crea gratis tu Agenda Inteligente</strong></h1>
-                        <p className="p1">
-                            Descubre la mejor manera de gestionar tus citas y optimizar tu negocio
-                            <br></br>
-                            Nuestra plataforma te permite tener el control total de tus reservas de forma rápida y sencilla.
-                            <br></br>
-                            ¡Regístrate gratis y aprovecha todas nuestras funcionalidades!
+            <div className="content-container">
+                <div className="row">
+                    <div className="col-md-12 mt-4">
+                        <div className="centered-content">
+                            <h1 className="title1"><strong>Crea gratis tu Agenda Inteligente</strong></h1>
+                            <p className="p1">
+                                Descubre la mejor manera de gestionar tus citas y optimizar tu negocio
+                                <br></br>
+                                Nuestra plataforma te permite tener el control total de tus reservas de forma rápida y sencilla.
+                                <br></br>
+                                ¡Regístrate gratis y aprovecha todas nuestras funcionalidades!
+                            </p>
+                            <Link to="/Register">
+                                <button className="button-landing"><strong>Regístrate Gratis</strong></button>
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-12 mt-4">
+                        <div className="centered-content">
+                            <h1 className="title1"><strong>Reserva una Cita</strong></h1>
+                            <p className="p1">
+                                Explora nuestra plataforma para descubrir una amplia gama de empresas y servicios organizados por categorías.
+                                <br></br>
+                                Optimiza tu tiempo al buscar entre opciones relevantes para tus necesidades.
+                                <br></br>
+                                ¡Accede aquí a nuestras empresas registradas, donde puedes buscar, comparar y elegir la mejor opción para ti!
+                            </p>
+                            <Link to="/ClientView">
+                                <button className="button-landing"><strong>Agendar Cita</strong></button>
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-6 mt-4">
+                        <h1><strong>Transforma tu Negocio con Nuestra Agenda Inteligente</strong></h1>
+                        <p>
+                            Descubre cómo puedes simplificar la gestión de tu empresa con nuestra aplicación. Registra tu negocio, personaliza tu página de reservas y permite que tus clientes programen citas de manera fácil y rápida.
+                            Olvídate de las herramientas anticuadas y difíciles de usar, y da el salto hacia una solución moderna y eficiente.
                         </p>
-                        <Link to="/Register">
-                            <button className="button-landing"><strong>Regístrate Gratis</strong></button>
-                        </Link>
+                    </div>
+                    <div className="col-md-6 mb-5 mt-4">
+                        <img src="https://assets.setmore.com/website/v2/images/landing-pages/online-agenda-software/lady-checking-agenda.webp" className="img-fluid" alt="Smart Scheduling" />
                     </div>
                 </div>
-            </div>
-            <div className="row">
-                <div className="col-md-12 mt-4">
-                    <div className="centered-content">
-                        <h1 className="title1"><strong>Reserva una Cita</strong></h1>
-                        <p className="p1">
-                            Explora nuestra plataforma para descubrir una amplia gama de empresas y servicios organizados por categorías.
-                            <br></br>
-                            Optimiza tu tiempo al buscar entre opciones relevantes para tus necesidades.
-                            <br></br>
-                            ¡Accede aquí a nuestras empresas registradas, donde puedes buscar, comparar y elegir la mejor opción para ti!
+                <div className="row mt-5">
+                    <div className="col-md-6 mb-5 mt-3">
+                        <img src="https://ecope.es/wp-content/uploads/2020/05/reservas-online-cita-previa-wordpress-1024x675.png" className="img-fluid" alt="Easy Setup" />
+                    </div>
+                    <div className="col-md-6 mt-3">
+                        <h1><strong>Facilidad y Flexibilidad en la Gestión de Reservas</strong></h1>
+                        <p>
+                            Nuestra aplicación te permite agregar tus servicios para que tus clientes puedan hacer reservas online.
+                            Ofrece una experiencia de usuario sin fricciones, gestionando todo el proceso de manera intuitiva.
                         </p>
-                        <Link to="/ClientView">
-                            <button className="button-landing"><strong>Agendar Cita</strong></button>
-                        </Link>
                     </div>
                 </div>
-            </div>
-            <div className="row">
-                <div className="col-md-6 mt-4">
-                    <h1><strong>Transforma tu Negocio con Nuestra Agenda Inteligente</strong></h1>
-                    <p>
-                        Descubre cómo puedes simplificar la gestión de tu empresa con nuestra aplicación. Registra tu negocio, personaliza tu página de reservas y permite que tus clientes programen citas de manera fácil y rápida.
-                        Olvídate de las herramientas anticuadas y difíciles de usar, y da el salto hacia una solución moderna y eficiente.
-                    </p>
-                </div>
-                <div className="col-md-6 mb-5 mt-4">
-                    <img src="https://assets.setmore.com/website/v2/images/landing-pages/online-agenda-software/lady-checking-agenda.webp" className="img-fluid" alt="Smart Scheduling" />
-                </div>
-            </div>
-            <div className="row mt-5">
-                <div className="col-md-6 mb-5 mt-3">
-                    <img src="https://ecope.es/wp-content/uploads/2020/05/reservas-online-cita-previa-wordpress-1024x675.png" className="img-fluid" alt="Easy Setup" />
-                </div>
-                <div className="col-md-6 mt-3">
-                    <h1><strong>Facilidad y Flexibilidad en la Gestión de Reservas</strong></h1>
-                    <p>
-                        Nuestra aplicación te permite agregar tus servicios para que tus clientes puedan hacer reservas online.
-                        Ofrece una experiencia de usuario sin fricciones, gestionando todo el proceso de manera intuitiva.
-                    </p>
-                </div>
-            </div>
-            <div className="row mt-5">
-                <div className="col-md-3 mb-5">
-                    <div className="card1">
-                        <div className="card-body text-center">
-                            <i className="fas fa-calendar-check card-icon"></i>
-                            <h5 className="card-title">Organización Perfecta</h5>
-                            <p className="card-text">Mantén un control total sobre tus citas y servicios con nuestra herramienta de gestión. Todo en un solo lugar.</p>
+                <div className="row mt-5">
+                    <div className="col-md-3 mb-5">
+                        <div className="card1">
+                            <div className="card-body text-center">
+                                <i className="fas fa-calendar-check card-icon"></i>
+                                <h5 className="card-title1">Organización Perfecta</h5>
+                                <p className="card-text">Mantén un control total sobre tus citas y servicios con nuestra herramienta de gestión. Todo en un solo lugar.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-md-3 mb-5">
+                        <div className="card1">
+                            <div className="card-body text-center">
+                                <i className="fas fa-user-friends card-icon"></i>
+                                <h5 className="card-title1">Interfaz Intuitiva</h5>
+                                <p className="card-text">Disfruta de una interfaz fácil de usar que simplifica la programación de citas para ti y tus clientes.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-md-3 mb-5">
+                        <div className="card1">
+                            <div className="card-body text-center">
+                                <i className="fas fa-laptop-house card-icon"></i>
+                                <h5 className="card-title1">Acceso en Línea</h5>
+                                <p className="card-text">Tus clientes pueden hacer reservas online desde cualquier lugar, en cualquier momento.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-md-3 mb-5">
+                        <div className="card1">
+                            <div className="card-body text-center">
+                                <i className="fas fa-bell card-icon"></i>
+                                <h5 className="card-title1">Notificaciones Automáticas</h5>
+                                <p className="card-text">Recibe notificaciones automáticas de nuevas reservas y recordatorios de citas.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div className="col-md-3 mb-5">
-                    <div className="card1">
-                        <div className="card-body text-center">
-                            <i className="fas fa-user-friends card-icon"></i>
-                            <h5 className="card-title">Interfaz Intuitiva</h5>
-                            <p className="card-text">Disfruta de una interfaz fácil de usar que simplifica la programación de citas para ti y tus clientes.</p>
-                        </div>
+                <div className="row mt-5">
+                    <div className="col-md-6 mt-4">
+                        <h1><strong>Optimiza la Gestión de tu Empresa</strong></h1>
+                        <p>
+                            Con nuestra aplicación, tendrás una visión clara y organizada de tus reservas, empleados y servicios.
+                            Aumenta la eficiencia de tu negocio y ofrece un servicio de calidad superior a tus clientes con herramientas avanzadas de gestión.
+                        </p>
+                    </div>
+                    <div className="col-md-6 mb-5 mt-4">
+                        <img src="https://www.sesamehr.mx/wp-content/uploads/2023/06/base-datos-recursos-humanos-empresa.webp" className="img-fluid" alt="Business Management" />
                     </div>
                 </div>
-                <div className="col-md-3 mb-5">
-                    <div className="card1">
-                        <div className="card-body text-center">
-                            <i className="fas fa-laptop-house card-icon"></i>
-                            <h5 className="card-title">Acceso en Línea</h5>
-                            <p className="card-text">Tus clientes pueden hacer reservas online desde cualquier lugar, en cualquier momento.</p>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-md-3 mb-5">
-                    <div className="card1">
-                        <div className="card-body text-center">
-                            <i className="fas fa-bell card-icon"></i>
-                            <h5 className="card-title">Notificaciones Automáticas</h5>
-                            <p className="card-text">Recibe notificaciones automáticas de nuevas reservas y recordatorios de citas.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="row mt-5">
-                <div className="col-md-6 mt-4">
-                    <h1><strong>Optimiza la Gestión de tu Empresa</strong></h1>
-                    <p>
-                        Con nuestra aplicación, tendrás una visión clara y organizada de tus reservas, empleados y servicios.
-                        Aumenta la eficiencia de tu negocio y ofrece un servicio de calidad superior a tus clientes con herramientas avanzadas de gestión.
-                    </p>
-                </div>
-                <div className="col-md-6 mb-5 mt-4">
-                    <img src="https://www.sesamehr.mx/wp-content/uploads/2023/06/base-datos-recursos-humanos-empresa.webp" className="img-fluid" alt="Business Management" />
-                </div>
-            </div>
+            </div> {/* Fin del nuevo contenedor */}
             <div className="bottom">
                 <div className="row mt-5 text-center">
                     <div className="col-md-12 mt-5 mb-5">
