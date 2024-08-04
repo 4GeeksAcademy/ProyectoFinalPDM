@@ -355,6 +355,7 @@ class WorkingHours(db.Model):
     employee_id = db.Column(db.Integer, db.ForeignKey('employee.id'), nullable=False)
     start_time = db.Column(db.DateTime, nullable=False)
     end_time = db.Column(db.DateTime, nullable=False)
+    workinghours_is_active = db.Column(db.Boolean(), unique=False, nullable=False, default=False)
 
     @validates('start_time', 'end_time')
     def validate_times(self, key, value):
@@ -363,6 +364,26 @@ class WorkingHours(db.Model):
         if key == 'end_time' and value <= self.start_time:
             raise ValueError("La hora de fin debe ser posterior a la hora de inicio")
         return value
+    
+    def create_working_hours(self, employee_id, start_time, end_time, workinghours_is_active=True):
+        new_working_hours = WorkingHours(
+            employee_id=employee_id,
+            start_time=start_time,
+            end_time=end_time,
+            workinghours_is_active=workinghours_is_active
+        )
+        db.session.add(new_working_hours)
+        db.session.commit()
+        return new_working_hours
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'employee_id': self.employee_id,
+            'start_time': self.start_time.isoformat(),
+            'end_time': self.end_time.isoformat(),
+            'workinghours_is_active': self.workinghours_is_active
+        }
 
 class Company(db.Model):
     id = db.Column(db.Integer, primary_key=True)
