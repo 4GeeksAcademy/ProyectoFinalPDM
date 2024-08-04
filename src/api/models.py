@@ -324,6 +324,31 @@ class Employee(db.Model):
     available_slots = db.relationship('AvailableSlot', backref='employee', lazy=True) 
     working_hours = db.relationship('WorkingHours', backref='employee', lazy=True)
     appointment_id = db.Column(db.Integer, db.ForeignKey('appointment.id'), nullable=False)
+    employee_is_active = db.Column(db.Boolean(), unique=False, nullable=False, default=False)
+
+    def create_employee(self, name, last_name, company_id, appointment_id, employee_is_active=True):
+        new_employee = Employee(
+            name=name,
+            last_name=last_name,
+            company_id=company_id,
+            appointment_id=appointment_id,
+            employee_is_active=employee_is_active
+        )
+        db.session.add(new_employee)
+        db.session.commit()
+        return new_employee
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'last_name': self.last_name,
+            'company_id': self.company_id,
+            'appointment_id': self.appointment_id,
+            'employee_is_active': self.employee_is_active,
+            'available_slots': [slot.serialize() for slot in self.available_slots],
+            'working_hours': [hours.serialize() for hours in self.working_hours]
+        }
 
 class WorkingHours(db.Model):
     id = db.Column(db.Integer, primary_key=True)
