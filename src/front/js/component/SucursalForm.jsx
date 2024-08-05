@@ -97,7 +97,7 @@ export const SucursalForm = () => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/sucursales/${id}`, {
+      const response = await fetch(process.env.BACKEND_URL + "/api/branch", {
         method: 'DELETE',
       });
       if (!response.ok) throw new Error('Error al eliminar sucursal');
