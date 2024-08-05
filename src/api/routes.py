@@ -113,7 +113,6 @@ def add_available_slot():
     return jsonify(new_slot.serialize()), 201
     
 @api.route('/available_slots/<int:id>', methods=['PUT'])
-@jwt_required()
 def update_available_slot(id):
     slot = AvailableSlot.query.get_or_404(id)
     data = request.get_json()
@@ -131,7 +130,6 @@ def update_available_slot(id):
         return jsonify({'error': str(e)}), 400
 
 @api.route('/available_slots/<int:id>', methods=['DELETE'])
-@jwt_required()
 def delete_available_slot(id):
     slot = AvailableSlot.query.get_or_404(id)
     try:
@@ -144,7 +142,6 @@ def delete_available_slot(id):
     
 
 @api.route('/appointments', methods=['POST'])
-@jwt_required()
 def add_appointment():
     data = request.get_json()
     try:
@@ -166,20 +163,30 @@ def add_appointment():
         return jsonify({'error': str(e)}), 400
 
 @api.route('/appointments/<int:id>', methods=['PUT'])
-@jwt_required()
 def update_appointment(id):
     appointment = Appointment.query.get_or_404(id)
     data = request.get_json()
-    try:
-        appointment.update(data)
-        db.session.commit()
-        return jsonify(appointment.serialize()), 200
-    except Exception as e:
-        db.session.rollback()
-        return jsonify({'error': str(e)}), 400
+    if 'company_id' in data:
+        appointment.company_id= data['company_id']
+    if 'available_slot_id' in data:
+        appointment.available_slot_id = data['available_slot_id']
+    if 'appointment_time' in data:
+        appointment.appointment_time = data['appointment_time']
+    if 'first_name_customer' in data:
+        appointment.first_name_customer = data['first_name_customer']
+    if 'last_name_customer' in data:
+        appointment.last_name_customer = data['last_name_customer']
+    if 'phone_customer' in data:
+        appointment.phone_customer = data['phone_customer']
+    if 'email_customer' in data:
+        appointment.email_customer = data['email_customer']
+    if 'observation_customer' in data:
+        appointment.observation_customer = data['observation_customer']
+    
+    db.session.commit()
+    return jsonify({'message': 'Appointment updated successfully', 'branch': appointment.serialize()}), 200
 
 @api.route('/appointments/<int:id>', methods=['DELETE'])
-@jwt_required()
 def delete_appointment(id):
     appointment = Appointment.query.get_or_404(id)
     try:
@@ -207,7 +214,6 @@ def create_service():
 
 
 @api.route('/services/<int:service_id>', methods=['PUT'])
-@jwt_required()
 def update_service(service_id):
     service = Service.query.get_or_404(service_id)
     data = request.get_json()
@@ -228,7 +234,6 @@ def update_service(service_id):
         return jsonify({'error': str(e)}), 400
 
 @api.route('/services/<int:service_id>', methods=['DELETE'])
-@jwt_required()
 def delete_service(service_id):
     service = Service.query.get_or_404(service_id)
     try:
@@ -254,7 +259,6 @@ def add_product():
     return jsonify(new_product.serialize()), 201
 
 @api.route('/products/<int:product_id>', methods=['PUT'])
-@jwt_required()
 def update_product(product_id):
     product = Product.query.get_or_404(product_id)
     data = request.get_json()
@@ -275,7 +279,6 @@ def update_product(product_id):
         return jsonify({'error': str(e)}), 400
 
 @api.route('/products/<int:product_id>', methods=['DELETE'])
-@jwt_required()
 def delete_product(product_id):
     product = Product.query.get_or_404(product_id)
     try:
@@ -300,7 +303,6 @@ def add_employee():
     return jsonify(new_employee.serialize()), 201
 
 @api.route('/employees/<int:employee_id>', methods=['PUT'])
-@jwt_required()
 def update_employee(employee_id):
     employee = Employee.query.get_or_404(employee_id)
     data = request.get_json()
@@ -319,7 +321,6 @@ def update_employee(employee_id):
         return jsonify({'error': str(e)}), 400
 
 @api.route('/employees/<int:employee_id>', methods=['DELETE'])
-@jwt_required()
 def delete_employee(employee_id):
     employee = Employee.query.get_or_404(employee_id)
     try:
@@ -344,7 +345,6 @@ def add_working_hours():
     return jsonify(new_working_hours.serialize()), 201
 
 @api.route('/workinghours/<int:working_hours_id>', methods=['PUT'])
-@jwt_required()
 def update_working_hours(working_hours_id):
     working_hours = WorkingHours.query.get_or_404(working_hours_id)
     data = request.get_json()
@@ -363,7 +363,6 @@ def update_working_hours(working_hours_id):
         return jsonify({'error': str(e)}), 400
 
 @api.route('/workinghours/<int:working_hours_id>', methods=['DELETE'])
-@jwt_required()
 def delete_working_hours(working_hours_id):
     working_hours = WorkingHours.query.get_or_404(working_hours_id)
     try:
@@ -376,7 +375,6 @@ def delete_working_hours(working_hours_id):
 
 
 @api.route('/company', methods=['POST'])
-@jwt_required()
 def add_company():
     data = request.get_json()
     user_id = data.get('user_id')
@@ -392,7 +390,6 @@ def add_company():
     return jsonify({"message": "Company added successfully", "company": new_company.serialize()}), 201
 
 @api.route('/company/<int:company_id>', methods=['PUT', 'DELETE'])
-@jwt_required()
 def manage_company(company_id):
     company = Company.query.get_or_404(company_id)
 
