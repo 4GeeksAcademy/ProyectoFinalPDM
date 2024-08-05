@@ -58,6 +58,12 @@ def login():
         return jsonify({"token": access_token, "msg": "WELCOME!"})
     else:
         return jsonify({"msg": "Invalid email or password"}), 401
+    
+@api.route('/branch', methods=['GET'])
+def get_branch():
+    branch = Branch.query.all()
+    branch = list(map(lambda branch: branch.serialize(), branch))
+    return jsonify(branch), 200    
 
 @api.route('/branch', methods=['POST'])
 def add_branch():
@@ -98,6 +104,11 @@ def delete_branch(branch_id):
     db.session.commit()
     return jsonify({'message': 'Branch deleted successfully'}), 200
 
+@api.route('/available_slots', methods=['GET'])
+def get_available_slots():
+    available_slots = AvailableSlot.query.all()
+    available_slots = list(map(lambda available_slots: available_slots.serialize(), available_slots))
+    return jsonify(available_slots), 200 
 
 @api.route('/available_slots', methods=['POST'])
 def add_available_slot():
@@ -139,7 +150,12 @@ def delete_available_slot(id):
     except Exception as e:
         db.session.rollback()
         return jsonify({'error': str(e)}), 400
-    
+
+@api.route('/appointments', methods=['GET'])
+def get_appointments():
+    appointments = Appointment.query.all()
+    appointments = list(map(lambda appointments: appointments.serialize(), appointments))
+    return jsonify(appointments), 200     
 
 @api.route('/appointments', methods=['POST'])
 def add_appointment():
@@ -197,6 +213,11 @@ def delete_appointment(id):
         db.session.rollback()
         return jsonify({'error': str(e)}), 400
 
+@api.route('/services', methods=['GET'])
+def get_services():
+    services = Service.query.all()
+    services = list(map(lambda services: services.serialize(), services))
+    return jsonify(services), 200  
 
 @api.route('/services', methods=['POST'])
 def create_service():
@@ -244,6 +265,12 @@ def delete_service(service_id):
         db.session.rollback()
         return jsonify({'error': str(e)}), 400
     
+@api.route('/products', methods=['GET'])
+def get_products():
+    products = Product.query.all()
+    products = list(map(lambda products: products.serialize(), products))
+    return jsonify(products), 200  
+    
 @api.route('/products', methods=['POST'])
 def add_product():
     data = request.get_json()
@@ -289,6 +316,12 @@ def delete_product(product_id):
         db.session.rollback()
         return jsonify({'error': str(e)}), 400
     
+@api.route('/employees', methods=['GET'])
+def get_employees():
+    employees = Employee.query.all()
+    employees = list(map(lambda employees: employees.serialize(), employees))
+    return jsonify(employees), 200  
+    
 @api.route('/employees', methods=['POST'])
 def add_employee():
     data = request.get_json()
@@ -330,6 +363,12 @@ def delete_employee(employee_id):
     except Exception as e:
         db.session.rollback()
         return jsonify({'error': str(e)}), 400
+    
+@api.route('/workinghours', methods=['GET'])
+def get_workinghours():
+    workinghours = WorkingHours.query.all()
+    workinghours = list(map(lambda workinghours: workinghours.serialize(), workinghours))
+    return jsonify(workinghours), 200 
     
 @api.route('/workinghours', methods=['POST'])
 def add_working_hours():
@@ -373,6 +412,11 @@ def delete_working_hours(working_hours_id):
         db.session.rollback()
         return jsonify({'error': str(e)}), 400
 
+@api.route('/company', methods=['GET'])
+def get_company():
+    company = Company.query.all()
+    company = list(map(lambda company: company.serialize(), company))
+    return jsonify(company), 200 
 
 @api.route('/company', methods=['POST'])
 def add_company():
