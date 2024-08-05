@@ -41,6 +41,37 @@ def get_users():
     users = list(map(lambda user: user.serialize(), users))
     return jsonify(users), 200
 
+@api.route('/user/<int:id>', methods=['PUT'])
+def edit_user(id):
+    request_body = request.json
+    user = User.query.get(id)
+    if user is None:
+        return jsonify({"msg": "User not found"}), 404
+
+    if "name" in request_body:
+        user.name = request_body["name"]
+    if "last_name" in request_body:
+        user.last_name = request_body["last_name"]
+    if "phone" in request_body:
+        user.phone = request_body["phone"]
+    if "companies" in request_body:
+        user.companies = request_body["companies"]
+
+    db.session.commit()
+
+    return jsonify({"msg": "User updated", "user": user.serialize()}), 200
+
+@api.route('/user/<int:id>', methods=['DELETE'])
+def delete_user():
+    user = User.query.get(id)
+    if user is None:
+        return jsonify({"msg": "User not found"}), 404
+
+    db.session.delete(user)
+    db.session.commit()
+
+    return jsonify({"msg": "User deleted"}), 200
+
 @api.route('/register', methods=['POST'])
 def register():
     data_user = request.json
