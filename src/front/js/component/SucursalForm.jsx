@@ -11,6 +11,22 @@ export const SucursalForm = () => {
   const [editandoSucursalId, setEditandoSucursalId] = useState(null);
 
   useEffect(() => {
+    // Fetch inicial de sucursales
+    const fetchSucursales = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/sucursales');
+        if (!response.ok) throw new Error('Error al obtener sucursales');
+        const data = await response.json();
+        setSucursales(data);
+      } catch (error) {
+        console.error('Error al obtener sucursales:', error);
+      }
+    };
+
+    fetchSucursales();
+  }, []);
+
+  useEffect(() => {
     if (editandoSucursalId) {
       const sucursal = sucursales.find(suc => suc.id === editandoSucursalId);
       if (sucursal) {
@@ -25,7 +41,7 @@ export const SucursalForm = () => {
     }
   }, [editandoSucursalId, sucursales]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!nombreSucursal || !direccion || !telefono) {
       alert('Por favor completa todos los campos');
@@ -39,26 +55,58 @@ export const SucursalForm = () => {
       telefono
     };
 
-    if (editandoSucursalId) {
-      setSucursales(sucursales.map(suc => suc.id === editandoSucursalId ? nuevaSucursal : suc));
-      setEditandoSucursalId(null);
-    } else {
-      setSucursales([...sucursales, nuevaSucursal]);
-    }
+    try {
+      if (editandoSucursalId) {
+        // Actualizar sucursal existente
+        const response = await fetch(`http://localhost:5000/api/sucursales/${editandoSucursalId}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(nuevaSucursal),
+        });
+        if (!response.ok) throw new Error('Error al actualizar sucursal');
+        const data = await response.json();
+        setSucursales(sucursales.map(suc => suc.id === editandoSucursalId ? data : suc));
+      } else {
+        // Crear nueva sucursal
+        const response = await fetch('http://localhost:5000/api/sucursales', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(nuevaSucursal),
+        });
+        if (!response.ok) throw new Error('Error al crear sucursal');
+        const data = await response.json();
+        setSucursales([...sucursales, data]);
+      }
 
-    setNombreSucursal('');
-    setDireccion('');
-    setTelefono('');
+      setNombreSucursal('');
+      setDireccion('');
+      setTelefono('');
+      setEditandoSucursalId(null);
+    } catch (error) {
+      console.error('Error en la solicitud:', error);
+    }
   };
 
   const handleEdit = (id) => {
     setEditandoSucursalId(id);
   };
 
-  const handleDelete = (id) => {
-    setSucursales(sucursales.filter(suc => suc.id !== id));
-    if (editandoSucursalId === id) {
-      setEditandoSucursalId(null);
+  const handleDelete = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:5000/api/sucursales/${id}`, {
+        method: 'DELETE',
+      });
+      if (!response.ok) throw new Error('Error al eliminar sucursal');
+      setSucursales(sucursales.filter(suc => suc.id !== id));
+      if (editandoSucursalId === id) {
+        setEditandoSucursalId(null);
+      }
+    } catch (error) {
+      console.error('Error al eliminar sucursal:', error);
     }
   };
 
@@ -125,4 +173,4 @@ export const SucursalForm = () => {
       </div>
     </div>
   );
-}; 
+};

@@ -15,9 +15,6 @@ export const ClientView = () => {
                         <label htmlFor="companySelect">Selecciona una empresa</label>
                         <select id="companySelect" className="form-control">
                             <option value="">-- Selecciona --</option>
-                            <option value="empresa1">Empresa 1</option>
-                            <option value="empresa2">Empresa 2</option>
-                            <option value="empresa3">Empresa 3</option>
                         </select>
                     </div>
                     <div className="d-flex justify-content-center">

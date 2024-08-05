@@ -15,15 +15,32 @@ export const RegisterDate = () => {
     fecha: ""
   });
 
+  const [citaDetails, setCitaDetails] = useState(null);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Lógica de envío del formulario
-    console.log(form);
+    try {
+      const response = await fetch('http://localhost:5000/api/citas', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(form),
+      });
+      if (!response.ok) {
+        throw new Error('Error en el envío del formulario');
+      }
+      const data = await response.json();
+      setCitaDetails(data); 
+      console.log('Cita registrada:', data);
+    } catch (error) {
+      console.error('Error al registrar la cita:', error);
+    }
   };
 
   return (
@@ -104,16 +121,20 @@ export const RegisterDate = () => {
           </div>
         </form>
       </div>
-      <div className="card-container">
-        <div className="card">
-          <div className="card-body">
-            <h3>Detalles de la Cita</h3> 
-            <p className="card-text">Fecha: {form.fecha}</p>
-            <p className="card-text">Servicio:</p>
-            <p className="card-text">Total a pagar:</p>
+      {citaDetails && (
+        <div className="card-container">
+          <div className="card">
+            <div className="card-body">
+              <h3>Detalles de la Cita</h3> 
+              <p className="card-text">Fecha: {citaDetails.fecha}</p>
+              <p className="card-text">Nombre: {citaDetails.nombre} {citaDetails.apellido}</p>
+              <p className="card-text">Teléfono: {citaDetails.telefono}</p>
+              <p className="card-text">Email: {citaDetails.email}</p>
+              <p className="card-text">Observaciones: {citaDetails.observaciones}</p>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-// import "/workspaces/ProyectoFinalPDM/src/front/styles/perfilUsuario.css";
 import "/workspaces/ProyectoFinalPDM/src/front/styles/EmpleadoForm.css";
 import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
@@ -11,6 +10,20 @@ export const EmpleadoForm = () => {
   const [horarioSalida, setHorarioSalida] = useState('');
   const [empleados, setEmpleados] = useState([]);
   const [editandoEmpleadoId, setEditandoEmpleadoId] = useState(null);
+
+  useEffect(() => {
+    const fetchEmpleados = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/empleados');
+        const data = await response.json();
+        setEmpleados(data);
+      } catch (error) {
+        console.error('Error fetching empleados:', error);
+      }
+    };
+
+    fetchEmpleados();
+  }, []);
 
   useEffect(() => {
     if (editandoEmpleadoId) {
@@ -29,7 +42,7 @@ export const EmpleadoForm = () => {
     }
   }, [editandoEmpleadoId, empleados]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!nombreEmpleado || !apellidoEmpleado || !horarioEntrada || !horarioSalida) {
       alert('Por favor completa todos los campos');
@@ -37,34 +50,61 @@ export const EmpleadoForm = () => {
     }
 
     const nuevoEmpleado = {
-      id: editandoEmpleadoId || uuidv4(),
       nombre: nombreEmpleado,
       apellido: apellidoEmpleado,
       horarioEntrada,
       horarioSalida
     };
 
-    if (editandoEmpleadoId) {
-      setEmpleados(empleados.map(emp => emp.id === editandoEmpleadoId ? nuevoEmpleado : emp));
-      setEditandoEmpleadoId(null);
-    } else {
-      setEmpleados([...empleados, nuevoEmpleado]);
-    }
+    try {
+      if (editandoEmpleadoId) {
+        await fetch(`http://localhost:5000/api/empleados/${editandoEmpleadoId}`, { 
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(nuevoEmpleado),
+        });
+        setEmpleados(prevEmpleados =>
+          prevEmpleados.map(emp => emp.id === editandoEmpleadoId ? { ...emp, ...nuevoEmpleado } : emp)
+        );
+        setEditandoEmpleadoId(null);
+      } else {
+        const response = await fetch('http://localhost:5000/api/empleados', { 
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(nuevoEmpleado),
+        });
+        const addedEmpleado = await response.json();
+        setEmpleados(prevEmpleados => [...prevEmpleados, addedEmpleado]);
+      }
 
-    setNombreEmpleado('');
-    setApellidoEmpleado('');
-    setHorarioEntrada('');
-    setHorarioSalida('');
+      setNombreEmpleado('');
+      setApellidoEmpleado('');
+      setHorarioEntrada('');
+      setHorarioSalida('');
+    } catch (error) {
+      console.error('Error saving empleado:', error);
+    }
   };
 
   const handleEdit = (id) => {
     setEditandoEmpleadoId(id);
   };
 
-  const handleDelete = (id) => {
-    setEmpleados(empleados.filter(emp => emp.id !== id));
-    if (editandoEmpleadoId === id) {
-      setEditandoEmpleadoId(null);
+  const handleDelete = async (id) => {
+    try {
+      await fetch(`http://localhost:5000/api/empleados/${id}`, { 
+        method: 'DELETE',
+      });
+      setEmpleados(prevEmpleados => prevEmpleados.filter(emp => emp.id !== id));
+      if (editandoEmpleadoId === id) {
+        setEditandoEmpleadoId(null);
+      }
+    } catch (error) {
+      console.error('Error deleting empleado:', error);
     }
   };
 

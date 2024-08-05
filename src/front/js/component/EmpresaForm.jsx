@@ -11,6 +11,20 @@ export const EmpresaForm = () => {
   const [editandoEmpresaId, setEditandoEmpresaId] = useState(null);
 
   useEffect(() => {
+    const fetchEmpresas = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/empresas');
+        const data = await response.json();
+        setEmpresas(data);
+      } catch (error) {
+        console.error('Error fetching empresas:', error);
+      }
+    };
+
+    fetchEmpresas();
+  }, []);
+
+  useEffect(() => {
     if (editandoEmpresaId) {
       const empresa = empresas.find(emp => emp.id === editandoEmpresaId);
       if (empresa) {
@@ -25,7 +39,7 @@ export const EmpresaForm = () => {
     }
   }, [editandoEmpresaId, empresas]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!nombreEmpresa || !nif || !sucursal) {
       alert('Por favor completa todos los campos');
@@ -33,32 +47,59 @@ export const EmpresaForm = () => {
     }
 
     const nuevaEmpresa = {
-      id: editandoEmpresaId || uuidv4(),
       nombre: nombreEmpresa,
       nif,
       sucursal
     };
 
-    if (editandoEmpresaId) {
-      setEmpresas(empresas.map(emp => emp.id === editandoEmpresaId ? nuevaEmpresa : emp));
-      setEditandoEmpresaId(null);
-    } else {
-      setEmpresas([...empresas, nuevaEmpresa]);
-    }
+    try {
+      if (editandoEmpresaId) {
+        await fetch(`http://localhost:5000/api/empresas/${editandoEmpresaId}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(nuevaEmpresa),
+        });
+        setEmpresas(prevEmpresas =>
+          prevEmpresas.map(emp => emp.id === editandoEmpresaId ? { ...emp, ...nuevaEmpresa } : emp)
+        );
+        setEditandoEmpresaId(null);
+      } else {
+        const response = await fetch('http://localhost:5000/api/empresas', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(nuevaEmpresa),
+        });
+        const addedEmpresa = await response.json();
+        setEmpresas(prevEmpresas => [...prevEmpresas, addedEmpresa]);
+      }
 
-    setNombreEmpresa('');
-    setNif('');
-    setSucursal('');
+      setNombreEmpresa('');
+      setNif('');
+      setSucursal('');
+    } catch (error) {
+      console.error('Error saving empresa:', error);
+    }
   };
 
   const handleEdit = (id) => {
     setEditandoEmpresaId(id);
   };
 
-  const handleDelete = (id) => {
-    setEmpresas(empresas.filter(emp => emp.id !== id));
-    if (editandoEmpresaId === id) {
-      setEditandoEmpresaId(null);
+  const handleDelete = async (id) => {
+    try {
+      await fetch(`http://localhost:5000/api/empresas/${id}`, {
+        method: 'DELETE',
+      });
+      setEmpresas(prevEmpresas => prevEmpresas.filter(emp => emp.id !== id));
+      if (editandoEmpresaId === id) {
+        setEditandoEmpresaId(null);
+      }
+    } catch (error) {
+      console.error('Error deleting empresa:', error);
     }
   };
 

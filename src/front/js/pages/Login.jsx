@@ -7,13 +7,32 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (email === 'user@example.com' && password === 'password') {
-      alert('Inicio de sesión exitoso');
-      setError('');
-    } else {
-      setError('Credenciales incorrectas');
+
+    try {
+      const response = await fetch('http://localhost:5000/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // Asumiendo que la respuesta contiene un token y un mensaje
+        localStorage.setItem('token', data.token); // Almacena el token en localStorage (o en algún estado global)
+        alert('Inicio de sesión exitoso');
+        setError('');
+        window.location.href = '/PerfilUsuario';
+      } else {
+        setError(data.msg || 'Credenciales incorrectas');
+      }
+    } catch (error) {
+      console.error('Error en la solicitud:', error);
+      setError('Hubo un problema al intentar iniciar sesión');
     }
   };
 
@@ -44,7 +63,7 @@ const Login = () => {
           </div>
           {error && <p className='error-message'>{error}</p>}
           <div className='button-group'>
-            <Link to="/PerfilUsuario"><button type="submit" className='btn-submitL'>Iniciar sesión</button></Link>
+            <button type="submit" className='btn-submitL'>Iniciar sesión</button>
             <Link to="/" className='btn-cancelL'>Cancelar</Link>
           </div>
         </form>
