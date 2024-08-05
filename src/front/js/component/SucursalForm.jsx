@@ -14,7 +14,7 @@ export const SucursalForm = () => {
     // Fetch inicial de sucursales
     const fetchSucursales = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/sucursales');
+        const response = await fetch(process.env.BACKEND_URL + "/api/branch");
         if (!response.ok) throw new Error('Error al obtener sucursales');
         const data = await response.json();
         setSucursales(data);
@@ -58,7 +58,7 @@ export const SucursalForm = () => {
     try {
       if (editandoSucursalId) {
         // Actualizar sucursal existente
-        const response = await fetch(`http://localhost:5000/api/sucursales/${editandoSucursalId}`, {
+        const response = await fetch(process.env.BACKEND_URL + `/branch/<int:branch_id>/${editandoSucursalId}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -70,7 +70,7 @@ export const SucursalForm = () => {
         setSucursales(sucursales.map(suc => suc.id === editandoSucursalId ? data : suc));
       } else {
         // Crear nueva sucursal
-        const response = await fetch('http://localhost:5000/api/sucursales', {
+        const response = await fetch(process.env.BACKEND_URL + "/api/branch", {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -97,7 +97,7 @@ export const SucursalForm = () => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(process.env.BACKEND_URL + "/api/branch", {
+      const response = await fetch(process.env.BACKEND_URL + `/branch/<int:branch_id>/${id}`, {
         method: 'DELETE',
       });
       if (!response.ok) throw new Error('Error al eliminar sucursal');
