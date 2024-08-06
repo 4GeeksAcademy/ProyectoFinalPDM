@@ -36,12 +36,14 @@ def load_user(user_id):
 
 # Allow CORS requests to this API
 @api.route('/users', methods=['GET'])
+@jwt_required()
 def get_users():
     users = User.query.all()
     users = list(map(lambda user: user.serialize(), users))
     return jsonify(users), 200
 
 @api.route('/user/<int:id>', methods=['PUT'])
+@jwt_required()
 def edit_user(id):
     request_body = request.json
     user = User.query.get(id)
@@ -62,6 +64,7 @@ def edit_user(id):
     return jsonify({"msg": "User updated", "user": user.serialize()}), 200
 
 @api.route('/user/<int:id>', methods=['DELETE'])
+@jwt_required()
 def delete_user():
     user = User.query.get(id)
     if user is None:
@@ -73,6 +76,7 @@ def delete_user():
     return jsonify({"msg": "User deleted"}), 200
 
 @api.route('/register', methods=['POST'])
+@jwt_required()
 def register():
     data_user = request.json
     user = User()
@@ -81,6 +85,7 @@ def register():
     return jsonify({"msg": "Your registration has been successful, congratulations!"})
  
 @api.route('/login', methods=['POST'])
+@jwt_required()
 def login(): 
     data_user = request.json
     user = User.query.filter_by(email=data_user["email"]).first()
@@ -91,12 +96,14 @@ def login():
         return jsonify({"msg": "Invalid email or password"}), 401
     
 @api.route('/branch', methods=['GET'])
+@jwt_required()
 def get_branch():
     branch = Branch.query.all()
     branch = list(map(lambda branch: branch.serialize(), branch))
     return jsonify(branch), 200    
 
 @api.route('/branch', methods=['POST'])
+@jwt_required()
 def add_branch():
     data = request.get_json()
     if not data:
@@ -112,6 +119,7 @@ def add_branch():
     return jsonify({'message': 'Branch created successfully', 'branch': new_branch.serialize()}), 201
 
 @api.route('/branch/<int:branch_id>', methods=['PUT'])
+@jwt_required()
 def update_branch(branch_id):
     data = request.get_json()
     branch = Branch.query.get_or_404(branch_id)
@@ -129,6 +137,7 @@ def update_branch(branch_id):
     return jsonify({'message': 'Branch updated successfully', 'branch': branch.serialize()}), 200
 
 @api.route('/branch/<int:branch_id>', methods=['DELETE'])
+@jwt_required()
 def delete_branch(branch_id):
     branch = Branch.query.get_or_404(branch_id)
     db.session.delete(branch)
@@ -136,12 +145,14 @@ def delete_branch(branch_id):
     return jsonify({'message': 'Branch deleted successfully'}), 200
 
 @api.route('/available_slots', methods=['GET'])
+@jwt_required()
 def get_available_slots():
     available_slots = AvailableSlot.query.all()
     available_slots = list(map(lambda available_slots: available_slots.serialize(), available_slots))
     return jsonify(available_slots), 200 
 
 @api.route('/available_slots', methods=['POST'])
+@jwt_required()
 def add_available_slot():
     data = request.get_json()
     new_slot = AvailableSlot.create_slot(
@@ -155,6 +166,7 @@ def add_available_slot():
     return jsonify(new_slot.serialize()), 201
     
 @api.route('/available_slots/<int:id>', methods=['PUT'])
+@jwt_required()
 def update_available_slot(id):
     slot = AvailableSlot.query.get_or_404(id)
     data = request.get_json()
@@ -172,6 +184,7 @@ def update_available_slot(id):
         return jsonify({'error': str(e)}), 400
 
 @api.route('/available_slots/<int:id>', methods=['DELETE'])
+@jwt_required()
 def delete_available_slot(id):
     slot = AvailableSlot.query.get_or_404(id)
     try:
@@ -183,12 +196,14 @@ def delete_available_slot(id):
         return jsonify({'error': str(e)}), 400
 
 @api.route('/appointments', methods=['GET'])
+@jwt_required()
 def get_appointments():
     appointments = Appointment.query.all()
     appointments = list(map(lambda appointments: appointments.serialize(), appointments))
     return jsonify(appointments), 200     
 
 @api.route('/appointments', methods=['POST'])
+@jwt_required()
 def add_appointment():
     data = request.get_json()
     try:
@@ -210,6 +225,7 @@ def add_appointment():
         return jsonify({'error': str(e)}), 400
 
 @api.route('/appointments/<int:id>', methods=['PUT'])
+@jwt_required()
 def update_appointment(id):
     appointment = Appointment.query.get_or_404(id)
     data = request.get_json()
@@ -234,6 +250,7 @@ def update_appointment(id):
     return jsonify({'message': 'Appointment updated successfully', 'branch': appointment.serialize()}), 200
 
 @api.route('/appointments/<int:id>', methods=['DELETE'])
+@jwt_required()
 def delete_appointment(id):
     appointment = Appointment.query.get_or_404(id)
     try:
@@ -245,12 +262,14 @@ def delete_appointment(id):
         return jsonify({'error': str(e)}), 400
 
 @api.route('/services', methods=['GET'])
+@jwt_required()
 def get_services():
     services = Service.query.all()
     services = list(map(lambda services: services.serialize(), services))
     return jsonify(services), 200  
 
 @api.route('/services', methods=['POST'])
+@jwt_required()
 def create_service():
     data = request.get_json()
     new_service = Service.create_service(
@@ -266,6 +285,7 @@ def create_service():
 
 
 @api.route('/services/<int:service_id>', methods=['PUT'])
+@jwt_required()
 def update_service(service_id):
     service = Service.query.get_or_404(service_id)
     data = request.get_json()
@@ -286,6 +306,7 @@ def update_service(service_id):
         return jsonify({'error': str(e)}), 400
 
 @api.route('/services/<int:service_id>', methods=['DELETE'])
+@jwt_required()
 def delete_service(service_id):
     service = Service.query.get_or_404(service_id)
     try:
@@ -297,12 +318,14 @@ def delete_service(service_id):
         return jsonify({'error': str(e)}), 400
     
 @api.route('/products', methods=['GET'])
+@jwt_required()
 def get_products():
     products = Product.query.all()
     products = list(map(lambda products: products.serialize(), products))
     return jsonify(products), 200  
     
 @api.route('/products', methods=['POST'])
+@jwt_required()
 def add_product():
     data = request.get_json()
     new_product = Product(
@@ -317,6 +340,7 @@ def add_product():
     return jsonify(new_product.serialize()), 201
 
 @api.route('/products/<int:product_id>', methods=['PUT'])
+@jwt_required()
 def update_product(product_id):
     product = Product.query.get_or_404(product_id)
     data = request.get_json()
@@ -337,6 +361,7 @@ def update_product(product_id):
         return jsonify({'error': str(e)}), 400
 
 @api.route('/products/<int:product_id>', methods=['DELETE'])
+@jwt_required()
 def delete_product(product_id):
     product = Product.query.get_or_404(product_id)
     try:
@@ -348,12 +373,14 @@ def delete_product(product_id):
         return jsonify({'error': str(e)}), 400
     
 @api.route('/employees', methods=['GET'])
+@jwt_required()
 def get_employees():
     employees = Employee.query.all()
     employees = list(map(lambda employees: employees.serialize(), employees))
     return jsonify(employees), 200  
     
 @api.route('/employees', methods=['POST'])
+@jwt_required()
 def add_employee():
     data = request.get_json()
     new_employee = Employee(
@@ -367,6 +394,7 @@ def add_employee():
     return jsonify(new_employee.serialize()), 201
 
 @api.route('/employees/<int:employee_id>', methods=['PUT'])
+@jwt_required()
 def update_employee(employee_id):
     employee = Employee.query.get_or_404(employee_id)
     data = request.get_json()
@@ -385,6 +413,7 @@ def update_employee(employee_id):
         return jsonify({'error': str(e)}), 400
 
 @api.route('/employees/<int:employee_id>', methods=['DELETE'])
+@jwt_required()
 def delete_employee(employee_id):
     employee = Employee.query.get_or_404(employee_id)
     try:
@@ -396,12 +425,14 @@ def delete_employee(employee_id):
         return jsonify({'error': str(e)}), 400
     
 @api.route('/workinghours', methods=['GET'])
+@jwt_required()
 def get_workinghours():
     workinghours = WorkingHours.query.all()
     workinghours = list(map(lambda workinghours: workinghours.serialize(), workinghours))
     return jsonify(workinghours), 200 
     
 @api.route('/workinghours', methods=['POST'])
+@jwt_required()
 def add_working_hours():
     data = request.get_json()
     new_working_hours = WorkingHours.create_working_hours(
@@ -415,6 +446,7 @@ def add_working_hours():
     return jsonify(new_working_hours.serialize()), 201
 
 @api.route('/workinghours/<int:working_hours_id>', methods=['PUT'])
+@jwt_required()
 def update_working_hours(working_hours_id):
     working_hours = WorkingHours.query.get_or_404(working_hours_id)
     data = request.get_json()
@@ -433,6 +465,7 @@ def update_working_hours(working_hours_id):
         return jsonify({'error': str(e)}), 400
 
 @api.route('/workinghours/<int:working_hours_id>', methods=['DELETE'])
+@jwt_required()
 def delete_working_hours(working_hours_id):
     working_hours = WorkingHours.query.get_or_404(working_hours_id)
     try:
@@ -444,12 +477,14 @@ def delete_working_hours(working_hours_id):
         return jsonify({'error': str(e)}), 400
 
 @api.route('/company', methods=['GET'])
+@jwt_required()
 def get_company():
     company = Company.query.all()
     company = list(map(lambda company: company.serialize(), company))
     return jsonify(company), 200 
 
 @api.route('/company', methods=['POST'])
+@jwt_required()
 def add_company():
     data = request.get_json()
     user_id = data.get('user_id')
@@ -465,6 +500,7 @@ def add_company():
     return jsonify({"message": "Company added successfully", "company": new_company.serialize()}), 201
 
 @api.route('/company/<int:company_id>', methods=['PUT', 'DELETE'])
+@jwt_required()
 def manage_company(company_id):
     company = Company.query.get_or_404(company_id)
 
