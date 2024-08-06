@@ -82,6 +82,7 @@
 .empresa-list {
     margin-top: 40px;
     width: 100%;
+    max-width: 600px; /* Igual que el formulario */
     text-align: center;
 }
 
@@ -117,22 +118,36 @@
     text-align: center;
 }
 
+/* Estilo de los botones de editar y eliminar */
 .empresa-list button {
     margin-left: 10px;
-    padding: 5px 10px;
-    font-size: 0.9rem;
+    padding: 5px 8px; /* Ajustado para hacerlo más pequeño */
+    font-size: 0.8rem; /* Ajustado para hacerlo más pequeño */
     border-radius: 5px;
     border: none;
     cursor: pointer;
     transition: background-color 0.3s ease;
+}
+
+.empresa-list .edit-button {
+    background-color: #06A7CF; /* Color especificado */
+    color: white;
+}
+
+.empresa-list .edit-button:hover {
+    background-color: #05a0c8;
+}
+
+.empresa-list .delete-button {
     background-color: rgb(82, 109, 130);
     color: white;
 }
 
-.empresa-list button:hover {
-    background-color: rgb(82, 109, 130);
+.empresa-list .delete-button:hover {
+    background-color: rgb(55, 76, 92);
 }
-.create-company{
+
+.create-company {
     background-color: rgb(82, 109, 130); /* Mismo color que el botón de cancelar */
     color: white;
     padding: 8px 12px; /* Ajusta el tamaño a lo que desees */
@@ -145,11 +160,13 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     font-size: 1rem;
 }
+
 .create-company:hover {
     background-color: rgb(55, 76, 92);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
-.buttonB{
+
+.buttonB {
     background-color: rgb(82, 109, 130); /* Mismo color que el botón de cancelar */
     color: white;
     padding: 8px 12px; /* Ajusta el tamaño a lo que desees */
@@ -162,8 +179,8 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     font-size: 1rem;
 }
+
 .buttonB:hover {
     background-color: rgb(55, 76, 92);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
-
