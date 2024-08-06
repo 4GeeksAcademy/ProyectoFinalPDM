@@ -47,9 +47,9 @@ export const EmpresaForm = () => {
     }
 
     const nuevaEmpresa = {
-      nombre: nombreEmpresa,
+      name: nombreEmpresa,
       nif,
-      sucursal
+      sucursal,
     };
 
     try {

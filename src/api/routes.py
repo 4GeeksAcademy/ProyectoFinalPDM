@@ -11,7 +11,7 @@ from geopy.geocoders import Nominatim
 from flask import render_template, redirect, url_for, flash
 from flask_login import login_user
 from flask_migrate import Migrate
-from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
+from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, JWTManager
 from datetime import datetime, timedelta
 
  
@@ -20,6 +20,7 @@ api = Blueprint('api', __name__)
 #app = Flask(__name__)
 #migrate = Migrate(app, db) 
 CORS(api)
+# jwt = JWTManager(api)
 
 """
 app.config.from_object(Config)
@@ -87,13 +88,24 @@ def register():
 @api.route('/login', methods=['POST'])
 @jwt_required()
 def login(): 
-    data_user = request.json
-    user = User.query.filter_by(email=data_user["email"]).first()
-    if user and user.check_password(password=data_user["password"]):
-        access_token = create_access_token(identity=user.serialize())
-        return jsonify({"token": access_token, "msg": "WELCOME!"})
-    else:
+    data_user = request.json  
+    user = User.query.filter_by(email=data_user["email"]).first()    
+    if user and user.check_password(password=data_user["password"]): 
+        access_token = create_access_token(identity=user.id)        
+        return jsonify({"token": access_token, "user_id": user.id}), 200    
+    else:        
         return jsonify({"msg": "Invalid email or password"}), 401
+    
+@api.route('/verify_identity', methods=['GET'])
+@jwt_required()
+def verify_identity(): 
+    print("Verify identity route accessed")
+    current_user_id = get_jwt_identity() 
+    user = User.query.get(current_user_id)    
+    if user:        
+        return jsonify({"verified": True, "user": user.serialize()}), 200    
+    else:
+        return jsonify({"verified": False, "msg": "User not found"}), 404
     
 @api.route('/branch', methods=['GET'])
 @jwt_required()

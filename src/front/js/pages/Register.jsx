@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import '/workspaces/ProyectoFinalPDM/src/front/styles/register.css';
+import { Context } from "../store/appContext";
 
 const Register = () => {
   const [email, setEmail] = useState('');
@@ -8,6 +9,7 @@ const Register = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+  const { store, actions } = useContext(Context);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,31 +22,12 @@ const Register = () => {
       setError('La contraseña debe tener al menos 6 caracteres');
       return;
     }
+    actions.register(password, email)
+          setEmail('');
+					setPassword('');
+					setConfirmPassword('');
+          setError('');
 
-    setError('');
-
-    try {
-      const response = await fetch(process.env.BACKEND_URL + "/api/register", {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Error en la solicitud');
-      }
-
-      const result = await response.json();
-      setSuccessMessage(result.msg);
-      setEmail('');
-      setPassword('');
-      setConfirmPassword('');
-    } catch (error) {
-      console.error('Registration Error:', error);
-      setError('No se pudo registrar el usuario. Inténtalo de nuevo.');
-    }
   };
 
   return (
