@@ -2,20 +2,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			message: null,
-			token: localStorage.getItem("token"),
+			// token: localStorage.getItem("token"),
 			user :{},
 			empresa: {},
 			
 		},
 		actions: {
-			createCompany: async () =>{
+			createCompany: async (name, nif) =>{
+				const store = getStore();
+				console.log(store.user)
+				console.log(store)
 				try {
+					let user_id = store.user.id
+					let company_is_active = store.user.is_active
 					const response = await fetch(process.env.BACKEND_URL + "/api/company",{
 						method: 'POST',
 						headers: {
 						  'Content-Type': 'application/json',
 						},
-						body: JSON.stringify({ email, password }),
+						body: JSON.stringify({ nif: nif, company_is_active: company_is_active, name: name, user_id: user_id }),
 					  },
 					);
 					const data = await response.json();
@@ -40,6 +45,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			verifyIdentity: async () =>{
 				let token = localStorage.getItem("token");
+				const store = getStore();
 				if (token){
 					try {
 						const response = await fetch(process.env.BACKEND_URL + "/api/verify_identity", {
@@ -54,9 +60,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  
 						if (response.ok) {
 							console.log("verified identity", data)
-							localStorage.setItem('token', data.token);
+							// localStorage.setItem('token', token);
+							// localStorage.setItem('user', data.user);
 							setStore({
-								user: data.user,
+								...store, user: data.user,
 							  });
 						} else {
 							console.log(data.msg)
@@ -68,7 +75,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					  }
 				}
 			},
-			login: async (password, email) =>{
+			login: async (password, email, navigate) =>{
 				try {
 					const response = await fetch(process.env.BACKEND_URL + "/api/login", {
 					  method: 'POST',
@@ -87,7 +94,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					// Almacena el token en localStorage (o en algún estado global)
 					//   alert('Inicio de sesión exitoso');
 					//   setError('');
-					  window.location.href = '/PerfilUsuario';
+					  navigate();
 					} else {
 						console.log(data.msg)
 					//   setError(data.msg || 'Credenciales incorrectas');
