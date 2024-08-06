@@ -8,108 +8,42 @@ export const EmpresaForm = () => {
   const [nombreEmpresa, setNombreEmpresa] = useState('');
   const [nif, setNif] = useState('');
   const [sucursal, setSucursal] = useState('');
-  // const [empresas, setEmpresas] = useState([]);
   const [editandoEmpresaId, setEditandoEmpresaId] = useState(null);
   const { store, actions } = useContext(Context);
 
   useEffect(() => {
-    actions.getCompanies()
+    actions.getCompanies();
   }, []);
-
-  // useEffect(() => {
-  //   if (editandoEmpresaId) {
-  //     const empresa = empresas.find(emp => emp.id === editandoEmpresaId);
-  //     if (empresa) {
-  //       setNombreEmpresa(empresa.nombre);
-  //       setNif(empresa.nif);
-  //       setSucursal(empresa.sucursal);
-  //     }
-  //   } else {
-  //     setNombreEmpresa('');
-  //     setNif('');
-  //     setSucursal('');
-  //   }
-  // }, [editandoEmpresaId]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (editandoEmpresaId){
-      console.log(editandoEmpresaId)
+    if (editandoEmpresaId) {
       const newCompany = {
         id: editandoEmpresaId,
         name: nombreEmpresa,
         nif
-      }
-    actions.updateCompany(newCompany)
-    }else {
-    actions.createCompany(nombreEmpresa, nif)
-
-    const nuevaEmpresa = {
-      name: nombreEmpresa,
-      nif,
-      sucursal,
-    };
+      };
+      actions.updateCompany(newCompany);
+    } else {
+      actions.createCompany(nombreEmpresa, nif);
     }
-    // if (!nombreEmpresa || !nif || !sucursal) {
-    //   alert('Por favor completa todos los campos');
-    //   return;
-    // }
-
-    // try {
-    //   if (editandoEmpresaId) {
-    //     await fetch(process.env.BACKEND_URL + `/api/company/${editandoEmpresaId}`, {
-    //       method: 'PUT',
-    //       headers: {
-    //         'Content-Type': 'application/json',
-    //       },
-    //       body: JSON.stringify(nuevaEmpresa),
-    //     });
-    //     setEmpresas(prevEmpresas =>
-    //       prevEmpresas.map(emp => emp.id === editandoEmpresaId ? { ...emp, ...nuevaEmpresa } : emp)
-    //     );
-    //     setEditandoEmpresaId(null);
-    //   } else {
-    //     const response = await fetch(process.env.BACKEND_URL + "/api/company", {
-    //       method: 'POST',
-    //       headers: {
-    //         'Content-Type': 'application/json',
-    //       },
-    //       body: JSON.stringify(nuevaEmpresa),
-    //     });
-    //     const addedEmpresa = await response.json();
-    //     setEmpresas(prevEmpresas => [...prevEmpresas, addedEmpresa]);
-    //   }
-
-    //   setNombreEmpresa('');
-    //   setNif('');
-    //   setSucursal('');
-    // } catch (error) {
-    //   console.error('Error saving empresa:', error);
-    // }
+    setNombreEmpresa('');
+    setNif('');
+    setSucursal('');
+    setEditandoEmpresaId(null);
   };
-
 
   const handleEdit = (id) => {
     setEditandoEmpresaId(id);
-    const company = store.listCompany.find(dataCompany => dataCompany.id == id)
+    const company = store.listCompany.find(dataCompany => dataCompany.id == id);
     setNombreEmpresa(company.name);
+    setNif(company.nif);
+    setSucursal(company.sucursal);
   };
 
-  const handleDelete = async (id) => {
-    try {
-      await fetch(process.env.BACKEND_URL + `/api/company/${id}`, {
-        method: 'DELETE',
-      });
-      setEmpresas(prevEmpresas => prevEmpresas.filter(emp => emp.id !== id));
-      if (editandoEmpresaId === id) {
-        setEditandoEmpresaId(null);
-      }
-    } catch (error) {
-      console.error('Error deleting empresa:', error);
-    }
+  const handleDelete = (id) => {
+    actions.deleteCompanies(id);
   };
-
-  console.log("prueba", store)
 
   return (
     <div className="registro">
@@ -162,7 +96,7 @@ export const EmpresaForm = () => {
         <ul>
           {store.listCompany.map((empresa) => (
             <li key={empresa.id}>
-              {empresa.name} - {empresa.id}
+              {empresa.name} - {empresa.nif}
               <button onClick={() => handleEdit(empresa.id)} className="button">Editar</button>
               <button onClick={() => handleDelete(empresa.id)} className="button">Eliminar</button>
             </li>
