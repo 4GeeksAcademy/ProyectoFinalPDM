@@ -15,6 +15,12 @@ export const PerfilUsuario = () => {
     <div className="perfil-container">
       <h2 className="perfil-title">Perfil del Usuario</h2>
       <div className="button-grid">
+      <Link to="/CrearEmpresa" className="button-link">
+          <button className="button-profile">
+            <FaPlusCircle className="button-icon" />
+            Agregar Empresa
+          </button>
+        </Link>
         <Link to="/CrearSucursal" className="button-link">
           <button className="button-profile">
             <FaBuilding className="button-icon" />
@@ -39,12 +45,7 @@ export const PerfilUsuario = () => {
             Crear Empleado
           </button>
         </Link>
-        <Link to="/CrearEmpresa" className="button-link">
-          <button className="button-profile">
-            <FaPlusCircle className="button-icon" />
-            Agregar Empresa
-          </button>
-        </Link>
+        
         <button className="button-profile logout-button-profile" onClick={handleLogout}>
           <FaSignOutAlt className="button-icon" />
           Cerrar Sesión
