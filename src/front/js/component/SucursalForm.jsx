@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-import '/workspaces/ProyectoFinalPDM/src/front/styles/sucursalform.css'; // Asegúrate de que este archivo de estilos esté correctamente importado
+import '/workspaces/ProyectoFinalPDM/src/front/styles/sucursalform.css';
 
 export const SucursalForm = () => {
   const [nombreSucursal, setNombreSucursal] = useState('');
@@ -58,7 +58,7 @@ export const SucursalForm = () => {
     try {
       if (editandoSucursalId) {
         // Actualizar sucursal existente
-        const response = await fetch(process.env.BACKEND_URL + `/branch/<int:branch_id>/${editandoSucursalId}`, {
+        const response = await fetch(process.env.BACKEND_URL + `/branch/${editandoSucursalId}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
