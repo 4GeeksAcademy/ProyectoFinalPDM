@@ -1,87 +1,80 @@
 const getState = ({ getStore, getActions, setStore }) => {
-	return {
-		store: {
-			message: null,
-			// token: localStorage.getItem("token"),
-			user: {},
-			empresa: {},
-			listCompany: [],
-		},
-		actions: {
-			getCompanies: async () =>{
-				try {
-					const store = getStore();
-					const response = await fetch(process.env.BACKEND_URL + "/api/company");
-					const data = await response.json();
-					console.log("getting companies", data)
-					setStore({
-						listCompany: data
-					});
-
-				  } catch (error) {
-					console.error('Error fetching empresas:', error);
-				  }
-				},
-			updateCompany: async (newCompany) => {
-				try {
-					// if (editandoEmpresaId) {
-					const actions = getActions()
-					const response = await fetch(process.env.BACKEND_URL + `/api/company/${newCompany.id}`, {
-						method: 'PUT',
-						headers: {
-							'Content-Type': 'application/json',
-						},
-						body: JSON.stringify(newCompany),
-					});
-					console.log(response)
-					actions.getCompanies()
-					// setEmpresas(prevEmpresas =>
-					// 	prevEmpresas.map(emp => emp.id === editandoEmpresaId ? { ...emp, ...nuevaEmpresa } : emp)
-					// );
-					// setEditandoEmpresaId(null);
-					// } else {
-					// 	const response = await fetch(process.env.BACKEND_URL + "/api/company", {
-					// 		method: 'POST',
-					// 		headers: {
-					// 			'Content-Type': 'application/json',
-					// 		},
-					// 		body: JSON.stringify(nuevaEmpresa),
-					// 	});
-					// 	const addedEmpresa = await response.json();
-					// 	setEmpresas(prevEmpresas => [...prevEmpresas, addedEmpresa]);
-					// }
-
-					// setNombreEmpresa('');
-					// setNif('');
-					// setSucursal('');
-				} catch (error) {
-					console.error('Error saving empresa:', error);
-				}
-			},
-			createCompany: async (name, nif) => {
-				const store = getStore();
-				console.log(store.user)
-				console.log(store)
-				try {
-					let user_id = store.user.id
-					let company_is_active = store.user.is_active
-					const response = await fetch(process.env.BACKEND_URL + "/api/company", {
-						method: 'POST',
-						headers: {
-							'Content-Type': 'application/json',
-						},
-						body: JSON.stringify({ nif: nif, company_is_active: company_is_active, name: name, user_id: user_id }),
-					},
-					);
-					const data = await response.json();
-					console.log(data)
-					setStore({
-						empresa: data.company,
-					});
-				} catch (error) {
-					console.error('Error fetching empresas:', error);
-				}
-			},
+    return {
+        store: {
+            message: null,
+            user: {},
+            empresa: {},
+            listCompany: [],
+        },
+        actions: {
+            deleteCompanies: async (id) => {
+                try {
+                    const response = await fetch(process.env.BACKEND_URL + `/api/company/${id}`, {
+                        method: 'DELETE',
+                    });
+                    if (!response.ok) {
+                        throw new Error('Error deleting empresa');
+                    }
+                    const store = getStore();
+                    setStore({
+                        listCompany: store.listCompany.filter(emp => emp.id !== id)
+                    });
+                    console.log(`success deleting company`);
+                } catch (error) {
+                    console.error('Error deleting empresa:', error);
+                }
+            },
+            getCompanies: async () => {
+                try {
+                    const response = await fetch(process.env.BACKEND_URL + "/api/company");
+                    const data = await response.json();
+                    setStore({
+                        listCompany: data
+                    });
+                } catch (error) {
+                    console.error('Error fetching empresas:', error);
+                }
+            },
+            updateCompany: async (newCompany) => {
+                try {
+                    const response = await fetch(process.env.BACKEND_URL + `/api/company/${newCompany.id}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(newCompany),
+                    });
+                    if (!response.ok) {
+                        throw new Error('Error updating company');
+                    }
+                    console.log(`success updating company`);
+                    getActions().getCompanies();
+                } catch (error) {
+                    console.error('Error updating company:', error);
+                }
+            },
+            createCompany: async (name, nif) => {
+                const store = getStore();
+                try {
+                    let user_id = store.user.id;
+                    let company_is_active = store.user.is_active;
+                    const response = await fetch(process.env.BACKEND_URL + "/api/company", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ nif, company_is_active, name, user_id }),
+                    });
+                    const data = await response.json();
+                    setStore({
+                        empresa: data.company,
+                        listCompany: [...store.listCompany, data.company]
+                    });
+                    console.log(`succes creating company.`);
+                } catch (error) {
+                    console.error('Error creating company:', error);
+                }
+            },
 			fetchSucursales: async () => {
 				try {
 					const response = await fetch(process.env.BACKEND_URL + "/api/branch");
@@ -90,7 +83,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					// setSucursales(data);
 					console.log(data)
 				} catch (error) {
-					console.error('Error al obtener sucursales:', error);
+					console.error('Error getting branches:', error);
 				}
 			},
 			verifyIdentity: async () => {

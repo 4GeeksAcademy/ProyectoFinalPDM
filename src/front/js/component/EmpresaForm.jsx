@@ -8,30 +8,14 @@ export const EmpresaForm = () => {
   const [nombreEmpresa, setNombreEmpresa] = useState('');
   const [nif, setNif] = useState('');
   const [sucursal, setSucursal] = useState('');
-  // const [empresas, setEmpresas] = useState([]);
   const [editandoEmpresaId, setEditandoEmpresaId] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
   const { store, actions } = useContext(Context);
 
   useEffect(() => {
-    actions.getCompanies()
+    actions.getCompanies();
   }, []);
-
-  // useEffect(() => {
-  //   if (editandoEmpresaId) {
-  //     const empresa = empresas.find(emp => emp.id === editandoEmpresaId);
-  //     if (empresa) {
-  //       setNombreEmpresa(empresa.nombre);
-  //       setNif(empresa.nif);
-  //       setSucursal(empresa.sucursal);
-  //     }
-  //   } else {
-  //     setNombreEmpresa('');
-  //     setNif('');
-  //     setSucursal('');
-  //   }
-  // }, [editandoEmpresaId]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -83,7 +67,7 @@ export const EmpresaForm = () => {
 
   const handleEdit = (id) => {
     setEditandoEmpresaId(id);
-    const company = store.listCompany.find(dataCompany => dataCompany.id == id)
+    const company = store.listCompany.find(dataCompany => dataCompany.id == id);
     setNombreEmpresa(company.name);
   };
 
@@ -160,7 +144,7 @@ export const EmpresaForm = () => {
         <ul>
           {store.listCompany.map((empresa) => (
             <li key={empresa.id}>
-              {empresa.name} - {empresa.id}
+              {empresa.name} - {empresa.nif}
               <button onClick={() => handleEdit(empresa.id)} className="button">Editar</button>
               <button onClick={() => handleDelete(empresa.id)} className="button">Eliminar</button>
             </li>
