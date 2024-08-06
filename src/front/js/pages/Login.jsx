@@ -1,39 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import '/workspaces/ProyectoFinalPDM/src/front/styles/login.css';
+import { Context } from "../store/appContext";
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const { store, actions } = useContext(Context);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    try {
-      const response = await fetch(process.env.BACKEND_URL + "/api/login", {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        // Asumiendo que la respuesta contiene un token y un mensaje
-        localStorage.setItem('token', data.token); // Almacena el token en localStorage (o en algún estado global)
-        alert('Inicio de sesión exitoso');
-        setError('');
-        window.location.href = '/PerfilUsuario';
-      } else {
-        setError(data.msg || 'Credenciales incorrectas');
-      }
-    } catch (error) {
-      console.error('Error en la solicitud:', error);
-      setError('Hubo un problema al intentar iniciar sesión');
-    }
+    actions.login(password, email)
   };
 
   return (

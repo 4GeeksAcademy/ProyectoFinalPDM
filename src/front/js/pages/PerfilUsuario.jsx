@@ -1,15 +1,20 @@
-import React from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaPlusCircle, FaUserTie, FaBuilding, FaBox, FaSignOutAlt } from 'react-icons/fa';
 import "/workspaces/ProyectoFinalPDM/src/front/styles/perfilusuario.css";
+import { Context } from "../store/appContext";
 
 export const PerfilUsuario = () => {
   const navigate = useNavigate();
+  const { store, actions } = useContext(Context);
 
   const handleLogout = () => {
     // Aquí puedes agregar la lógica para cerrar sesión, como limpiar el estado de autenticación.
     navigate('/');
   };
+  // useEffect(()=>{
+  //   actions.verifyIdentity()
+  // },[])
 
   return (
     <div className="perfil-container">

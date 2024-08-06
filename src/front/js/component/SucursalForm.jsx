@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import '/workspaces/ProyectoFinalPDM/src/front/styles/sucursalform.css';
+import { Context } from "../store/appContext";
 
 export const SucursalForm = () => {
   const [nombreSucursal, setNombreSucursal] = useState('');
@@ -9,6 +10,7 @@ export const SucursalForm = () => {
   const [telefono, setTelefono] = useState('');
   const [sucursales, setSucursales] = useState([]);
   const [editandoSucursalId, setEditandoSucursalId] = useState(null);
+  const { store, actions } = useContext(Context);
 
   useEffect(() => {
     // Fetch inicial de sucursales
@@ -97,7 +99,7 @@ export const SucursalForm = () => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(process.env.BACKEND_URL + `/branch/<int:branch_id>/${id}`, {
+      const response = await fetch(process.env.BACKEND_URL + `/branch/${id}`, {
         method: 'DELETE',
       });
       if (!response.ok) throw new Error('Error al eliminar sucursal');

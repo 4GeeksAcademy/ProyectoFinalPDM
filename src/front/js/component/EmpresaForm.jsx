@@ -13,7 +13,7 @@ export const EmpresaForm = () => {
   useEffect(() => {
     const fetchEmpresas = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/empresas');
+        const response = await fetch(process.env.BACKEND_URL + "/api/company");
         const data = await response.json();
         setEmpresas(data);
       } catch (error) {
@@ -47,14 +47,14 @@ export const EmpresaForm = () => {
     }
 
     const nuevaEmpresa = {
-      nombre: nombreEmpresa,
+      name: nombreEmpresa,
       nif,
-      sucursal
+      sucursal,
     };
 
     try {
       if (editandoEmpresaId) {
-        await fetch(`http://localhost:5000/api/empresas/${editandoEmpresaId}`, {
+        await fetch(process.env.BACKEND_URL + `/api/company/${editandoEmpresaId}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -66,7 +66,7 @@ export const EmpresaForm = () => {
         );
         setEditandoEmpresaId(null);
       } else {
-        const response = await fetch('http://localhost:5000/api/empresas', {
+        const response = await fetch(process.env.BACKEND_URL + "/api/company", {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -91,7 +91,7 @@ export const EmpresaForm = () => {
 
   const handleDelete = async (id) => {
     try {
-      await fetch(`http://localhost:5000/api/empresas/${id}`, {
+      await fetch(process.env.BACKEND_URL + `/api/company/${id}`, {
         method: 'DELETE',
       });
       setEmpresas(prevEmpresas => prevEmpresas.filter(emp => emp.id !== id));

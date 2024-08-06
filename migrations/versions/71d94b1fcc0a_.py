@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: c368565407c6
+Revision ID: 71d94b1fcc0a
 Revises: 
-Create Date: 2024-08-05 17:27:36.963440
+Create Date: 2024-08-06 16:41:13.879448
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'c368565407c6'
+revision = '71d94b1fcc0a'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -39,18 +39,6 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
-    op.create_table('appointment',
-    sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('appointment_time', sa.DateTime(), nullable=False),
-    sa.Column('first_name_customer', sa.String(length=80), nullable=False),
-    sa.Column('last_name_customer', sa.String(length=80), nullable=False),
-    sa.Column('phone_customer', sa.String(length=15), nullable=False),
-    sa.Column('email_customer', sa.String(length=120), nullable=False),
-    sa.Column('observation_customer', sa.String(length=500), nullable=True),
-    sa.Column('company_id', sa.Integer(), nullable=False),
-    sa.ForeignKeyConstraint(['company_id'], ['company.id'], ),
-    sa.PrimaryKeyConstraint('id')
-    )
     op.create_table('branch',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('branch_name', sa.String(length=250), nullable=False),
@@ -66,8 +54,7 @@ def upgrade():
     sa.Column('name', sa.String(length=80), nullable=False),
     sa.Column('last_name', sa.String(length=80), nullable=False),
     sa.Column('company_id', sa.Integer(), nullable=False),
-    sa.Column('appointment_id', sa.Integer(), nullable=False),
-    sa.ForeignKeyConstraint(['appointment_id'], ['appointment.id'], ),
+    sa.Column('employee_is_active', sa.Boolean(), nullable=False),
     sa.ForeignKeyConstraint(['company_id'], ['company.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -77,8 +64,7 @@ def upgrade():
     sa.Column('product_price', sa.String(length=50), nullable=False),
     sa.Column('image_url', sa.String(length=255), nullable=True),
     sa.Column('company_id', sa.Integer(), nullable=False),
-    sa.Column('appointment_id', sa.Integer(), nullable=False),
-    sa.ForeignKeyConstraint(['appointment_id'], ['appointment.id'], ),
+    sa.Column('product_is_active', sa.Boolean(), nullable=False),
     sa.ForeignKeyConstraint(['company_id'], ['company.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -88,17 +74,17 @@ def upgrade():
     sa.Column('service_price', sa.String(length=50), nullable=False),
     sa.Column('image_url', sa.String(length=255), nullable=True),
     sa.Column('company_id', sa.Integer(), nullable=False),
-    sa.Column('appointment_id', sa.Integer(), nullable=False),
-    sa.ForeignKeyConstraint(['appointment_id'], ['appointment.id'], ),
+    sa.Column('service_is_active', sa.Boolean(), nullable=False),
     sa.ForeignKeyConstraint(['company_id'], ['company.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('available_slot',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('employees_id', sa.Integer(), nullable=False),
+    sa.Column('employee_id', sa.Integer(), nullable=False),
     sa.Column('start_time', sa.DateTime(), nullable=False),
     sa.Column('end_time', sa.DateTime(), nullable=False),
-    sa.ForeignKeyConstraint(['employees_id'], ['employee.id'], ),
+    sa.Column('available_slot_is_active', sa.Boolean(), nullable=False),
+    sa.ForeignKeyConstraint(['employee_id'], ['employee.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('working_hours',
@@ -106,7 +92,29 @@ def upgrade():
     sa.Column('employee_id', sa.Integer(), nullable=False),
     sa.Column('start_time', sa.DateTime(), nullable=False),
     sa.Column('end_time', sa.DateTime(), nullable=False),
+    sa.Column('workinghours_is_active', sa.Boolean(), nullable=False),
     sa.ForeignKeyConstraint(['employee_id'], ['employee.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('appointment',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('appointment_time', sa.DateTime(), nullable=False),
+    sa.Column('first_name_customer', sa.String(length=80), nullable=False),
+    sa.Column('last_name_customer', sa.String(length=80), nullable=False),
+    sa.Column('phone_customer', sa.String(length=15), nullable=False),
+    sa.Column('email_customer', sa.String(length=120), nullable=False),
+    sa.Column('observation_customer', sa.String(length=500), nullable=True),
+    sa.Column('company_id', sa.Integer(), nullable=True),
+    sa.Column('employee_id', sa.Integer(), nullable=True),
+    sa.Column('service_id', sa.Integer(), nullable=True),
+    sa.Column('available_slot_id', sa.Integer(), nullable=True),
+    sa.Column('product_id', sa.Integer(), nullable=True),
+    sa.Column('appointment_is_active', sa.Boolean(), nullable=False),
+    sa.ForeignKeyConstraint(['available_slot_id'], ['available_slot.id'], ),
+    sa.ForeignKeyConstraint(['company_id'], ['company.id'], ),
+    sa.ForeignKeyConstraint(['employee_id'], ['employee.id'], ),
+    sa.ForeignKeyConstraint(['product_id'], ['product.id'], ),
+    sa.ForeignKeyConstraint(['service_id'], ['service.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###
@@ -114,13 +122,13 @@ def upgrade():
 
 def downgrade():
     # ### commands auto generated by Alembic - please adjust! ###
+    op.drop_table('appointment')
     op.drop_table('working_hours')
     op.drop_table('available_slot')
     op.drop_table('service')
     op.drop_table('product')
     op.drop_table('employee')
     op.drop_table('branch')
-    op.drop_table('appointment')
     op.drop_table('company')
     op.drop_table('user')
     # ### end Alembic commands ###
