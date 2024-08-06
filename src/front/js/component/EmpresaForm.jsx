@@ -13,7 +13,7 @@ export const EmpresaForm = () => {
   useEffect(() => {
     const fetchEmpresas = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/empresas');
+        const response = await fetch(process.env.BACKEND_URL + "/api/company");
         const data = await response.json();
         setEmpresas(data);
       } catch (error) {
@@ -54,7 +54,7 @@ export const EmpresaForm = () => {
 
     try {
       if (editandoEmpresaId) {
-        await fetch(`http://localhost:5000/api/empresas/${editandoEmpresaId}`, {
+        await fetch(`http://localhost:5000/api/company/${editandoEmpresaId}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -66,7 +66,7 @@ export const EmpresaForm = () => {
         );
         setEditandoEmpresaId(null);
       } else {
-        const response = await fetch('http://localhost:5000/api/empresas', {
+        const response = await fetch(process.env.BACKEND_URL + "/api/company", {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -91,7 +91,7 @@ export const EmpresaForm = () => {
 
   const handleDelete = async (id) => {
     try {
-      await fetch(`http://localhost:5000/api/empresas/${id}`, {
+      await fetch(process.env.BACKEND_URL + `/api/company/"${id}`, {
         method: 'DELETE',
       });
       setEmpresas(prevEmpresas => prevEmpresas.filter(emp => emp.id !== id));
@@ -133,7 +133,7 @@ export const EmpresaForm = () => {
             name="sucursal"
             value={sucursal}
             onChange={(e) => setSucursal(e.target.value)}
-            required
+            
           >
             <option value="">Selecciona una sucursal</option>
             <option value="Sucursal A">Sucursal A</option>

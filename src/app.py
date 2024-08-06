@@ -5,7 +5,7 @@ import os
 from flask import Flask, request, jsonify, url_for, send_from_directory
 from flask_migrate import Migrate
 from flask_swagger import swagger
-from api.utils import APIException, generate_sitemap
+from api.utils import APIException, generate_sitemap, get_calendar_service
 from api.models import db, User
 from api.routes import api
 from api.admin import setup_admin
@@ -13,6 +13,8 @@ from api.commands import setup_commands
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 from datetime import timedelta
 from flask_mail import Mail, Message
+from google.auth.exceptions import RefreshError
+
 
 # from models import Person
 
@@ -116,6 +118,35 @@ def serve_any_other_file(path):
     response = send_from_directory(static_file_dir, path)
     response.cache_control.max_age = 0  # avoid cache memory
     return response
+
+@app.route('/invite', methods=['POST'])
+def invite_to_event():
+    try:
+        data = request.json
+        service = get_calendar_service()
+        
+        event = {
+            'summary': data['summary'],
+            'location': data.get('location', ''),
+            'description': data.get('description', ''),
+            'start': {
+                'dateTime': data['start_time'],
+                'timeZone': 'UTC',
+            },
+            'end': {
+                'dateTime': data['end_time'],
+                'timeZone': 'UTC',
+            },
+            'attendees': [{'email': attendee} for attendee in data['attendees']],
+        }
+        
+        event = service.events().insert(calendarId='primary', body=event, sendUpdates='all').execute()
+        
+        return jsonify({'message': 'Invitación enviada', 'eventId': event['id']})
+    except RefreshError as e:
+        return jsonify({'error': 'Error de autenticación', 'details': str(e)}), 401
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 
 # this only runs if `$ python src/main.py` is executed

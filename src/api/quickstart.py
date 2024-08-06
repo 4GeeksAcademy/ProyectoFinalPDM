@@ -6,25 +6,21 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
-# If modifying these scopes, delete the file token.json.
+# If modifying these scopes, delete the file claveapi.json.
 SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"]
-
+# path = os.path.dirname(os.path.abspath(__file__))
+# token_path = os.path.join(path,"claveapi.json")
 def main():
     """Shows basic usage of the Google Calendar API.
     Prints the start and name of the next 10 events on the user's calendar.
     """
     creds = None
-    if os.path.exists("token.json"):
-        creds = Credentials.from_authorized_user_file("token.json", SCOPES)
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
         else:
-            flow = InstalledAppFlow.from_client_secrets_file("credentials.json", SCOPES)
+            flow = InstalledAppFlow.from_client_secrets_file("client.json", SCOPES)
             creds = flow.run_local_server(port=0)
-        with open("token.json", "w") as token:
-            token.write(creds.to_json())
-
     try:
         service = build("calendar", "v3", credentials=creds)
         now = datetime.datetime.utcnow().isoformat() + "Z"

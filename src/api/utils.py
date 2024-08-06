@@ -1,4 +1,14 @@
 from flask import jsonify, url_for
+from google.oauth2.credentials import Credentials
+from googleapiclient.discovery import build
+from google.auth.transport.requests import Request
+from google.auth.exceptions import RefreshError
+import os
+
+
+CLIENT_ID = os.getenv("CLIENT_ID") 
+CLIENT_SECRET = os.getenv("CLIENT_SECRET")
+REFRESH_TOKEN = os.getenv("REFRESH_TOKEN")
 
 class APIException(Exception):
     status_code = 400
@@ -39,3 +49,18 @@ def generate_sitemap(app):
         <p>Start working on your project by following the <a href="https://start.4geeksacademy.com/starters/full-stack" target="_blank">Quick Start</a></p>
         <p>Remember to specify a real endpoint path like: </p>
         <ul style="text-align: left;">"""+links_html+"</ul></div>"
+
+def get_calendar_service():
+    creds = Credentials.from_authorized_user_info(info={
+        'client_id': CLIENT_ID,
+        'client_secret': CLIENT_SECRET,
+        'refresh_token': REFRESH_TOKEN,
+    }, scopes=['https://www.googleapis.com/auth/calendar'])
+
+    try:
+        if not creds.valid:
+            creds.refresh(Request())
+        return build('calendar', 'v3', credentials=creds)
+    except RefreshError as e:
+        print(f"Error refreshing credentials: {e}")
+        raise
