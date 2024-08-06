@@ -145,8 +145,10 @@ export const EmpresaForm = () => {
           {store.listCompany.map((empresa) => (
             <li key={empresa.id}>
               {empresa.name} - {empresa.nif}
-              <button onClick={() => handleEdit(empresa.id)} className="button">Editar</button>
-              <button onClick={() => handleDelete(empresa.id)} className="button">Eliminar</button>
+              <div>
+                <button onClick={() => handleEdit(empresa.id)} className="button edit-button">Editar</button>
+                <button onClick={() => handleDelete(empresa.id)} className="button delete-button">Eliminar</button>
+              </div>
             </li>
           ))}
         </ul>

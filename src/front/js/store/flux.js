@@ -19,9 +19,9 @@ const getState = ({ getStore, getActions, setStore }) => {
                     setStore({
                         listCompany: store.listCompany.filter(emp => emp.id !== id)
                     });
-                    console.log(`success deleting company`);
+                    console.log(`success removing company`);
                 } catch (error) {
-                    console.error('Error deleting empresa:', error);
+                    console.error('Error removing empresa:', error);
                 }
             },
             getCompanies: async () => {
