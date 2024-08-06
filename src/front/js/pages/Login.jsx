@@ -2,16 +2,22 @@ import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import '/workspaces/ProyectoFinalPDM/src/front/styles/login.css';
 import { Context } from "../store/appContext";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const { store, actions } = useContext(Context);
+  const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    actions.login(password, email)
+    actions.login(password, email, navigatePerfil)
+  };
+
+  const navigatePerfil = () => {
+    navigate('/PerfilUsuario')
   };
 
   return (

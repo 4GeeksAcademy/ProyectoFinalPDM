@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import "/workspaces/ProyectoFinalPDM/src/front/styles/EmpresaForm.css";
+import { Context } from "../store/appContext";
 
 export const EmpresaForm = () => {
   const [nombreEmpresa, setNombreEmpresa] = useState('');
@@ -9,6 +10,7 @@ export const EmpresaForm = () => {
   const [sucursal, setSucursal] = useState('');
   const [empresas, setEmpresas] = useState([]);
   const [editandoEmpresaId, setEditandoEmpresaId] = useState(null);
+  const { store, actions } = useContext(Context);
 
   useEffect(() => {
     const fetchEmpresas = async () => {
@@ -41,10 +43,11 @@ export const EmpresaForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!nombreEmpresa || !nif || !sucursal) {
-      alert('Por favor completa todos los campos');
-      return;
-    }
+    // if (!nombreEmpresa || !nif || !sucursal) {
+    //   alert('Por favor completa todos los campos');
+    //   return;
+    // }
+    actions.createCompany(nombreEmpresa, nif)
 
     const nuevaEmpresa = {
       name: nombreEmpresa,
@@ -52,37 +55,37 @@ export const EmpresaForm = () => {
       sucursal,
     };
 
-    try {
-      if (editandoEmpresaId) {
-        await fetch(process.env.BACKEND_URL + `/api/company/${editandoEmpresaId}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(nuevaEmpresa),
-        });
-        setEmpresas(prevEmpresas =>
-          prevEmpresas.map(emp => emp.id === editandoEmpresaId ? { ...emp, ...nuevaEmpresa } : emp)
-        );
-        setEditandoEmpresaId(null);
-      } else {
-        const response = await fetch(process.env.BACKEND_URL + "/api/company", {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(nuevaEmpresa),
-        });
-        const addedEmpresa = await response.json();
-        setEmpresas(prevEmpresas => [...prevEmpresas, addedEmpresa]);
-      }
+    // try {
+    //   if (editandoEmpresaId) {
+    //     await fetch(process.env.BACKEND_URL + `/api/company/${editandoEmpresaId}`, {
+    //       method: 'PUT',
+    //       headers: {
+    //         'Content-Type': 'application/json',
+    //       },
+    //       body: JSON.stringify(nuevaEmpresa),
+    //     });
+    //     setEmpresas(prevEmpresas =>
+    //       prevEmpresas.map(emp => emp.id === editandoEmpresaId ? { ...emp, ...nuevaEmpresa } : emp)
+    //     );
+    //     setEditandoEmpresaId(null);
+    //   } else {
+    //     const response = await fetch(process.env.BACKEND_URL + "/api/company", {
+    //       method: 'POST',
+    //       headers: {
+    //         'Content-Type': 'application/json',
+    //       },
+    //       body: JSON.stringify(nuevaEmpresa),
+    //     });
+    //     const addedEmpresa = await response.json();
+    //     setEmpresas(prevEmpresas => [...prevEmpresas, addedEmpresa]);
+    //   }
 
-      setNombreEmpresa('');
-      setNif('');
-      setSucursal('');
-    } catch (error) {
-      console.error('Error saving empresa:', error);
-    }
+    //   setNombreEmpresa('');
+    //   setNif('');
+    //   setSucursal('');
+    // } catch (error) {
+    //   console.error('Error saving empresa:', error);
+    // }
   };
 
   const handleEdit = (id) => {
@@ -102,6 +105,8 @@ export const EmpresaForm = () => {
       console.error('Error deleting empresa:', error);
     }
   };
+
+  console.log("prueba", store)
 
   return (
     <div className="registro">
@@ -133,7 +138,6 @@ export const EmpresaForm = () => {
             name="sucursal"
             value={sucursal}
             onChange={(e) => setSucursal(e.target.value)}
-            required
           >
             <option value="">Selecciona una sucursal</option>
             <option value="Sucursal A">Sucursal A</option>
