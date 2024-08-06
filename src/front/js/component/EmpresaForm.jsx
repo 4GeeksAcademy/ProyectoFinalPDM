@@ -8,40 +8,30 @@ export const EmpresaForm = () => {
   const [nombreEmpresa, setNombreEmpresa] = useState('');
   const [nif, setNif] = useState('');
   const [sucursal, setSucursal] = useState('');
-  const [empresas, setEmpresas] = useState([]);
+  // const [empresas, setEmpresas] = useState([]);
   const [editandoEmpresaId, setEditandoEmpresaId] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
   const { store, actions } = useContext(Context);
 
   useEffect(() => {
-    const fetchEmpresas = async () => {
-      try {
-        const response = await fetch(process.env.BACKEND_URL + "/api/company");
-        const data = await response.json();
-        setEmpresas(data);
-      } catch (error) {
-        console.error('Error fetching empresas:', error);
-      }
-    };
-
-    fetchEmpresas();
+    actions.getCompanies()
   }, []);
 
-  useEffect(() => {
-    if (editandoEmpresaId) {
-      const empresa = empresas.find(emp => emp.id === editandoEmpresaId);
-      if (empresa) {
-        setNombreEmpresa(empresa.nombre);
-        setNif(empresa.nif);
-        setSucursal(empresa.sucursal);
-      }
-    } else {
-      setNombreEmpresa('');
-      setNif('');
-      setSucursal('');
-    }
-  }, [editandoEmpresaId, empresas]);
+  // useEffect(() => {
+  //   if (editandoEmpresaId) {
+  //     const empresa = empresas.find(emp => emp.id === editandoEmpresaId);
+  //     if (empresa) {
+  //       setNombreEmpresa(empresa.nombre);
+  //       setNif(empresa.nif);
+  //       setSucursal(empresa.sucursal);
+  //     }
+  //   } else {
+  //     setNombreEmpresa('');
+  //     setNif('');
+  //     setSucursal('');
+  //   }
+  // }, [editandoEmpresaId]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -90,8 +80,11 @@ export const EmpresaForm = () => {
     setShowModal(true);
   };
 
+
   const handleEdit = (id) => {
     setEditandoEmpresaId(id);
+    const company = store.listCompany.find(dataCompany => dataCompany.id == id)
+    setNombreEmpresa(company.name);
   };
 
   const handleDelete = async (id) => {
@@ -165,9 +158,9 @@ export const EmpresaForm = () => {
       <div className="empresa-list">
         <h2 className="title2">Lista de Empresas</h2>
         <ul>
-          {empresas.map((empresa) => (
+          {store.listCompany.map((empresa) => (
             <li key={empresa.id}>
-              {empresa.nombre} - {empresa.nif} - {empresa.sucursal}
+              {empresa.name} - {empresa.id}
               <button onClick={() => handleEdit(empresa.id)} className="button">Editar</button>
               <button onClick={() => handleDelete(empresa.id)} className="button">Eliminar</button>
             </li>
