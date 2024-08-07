@@ -413,6 +413,7 @@ class Company(db.Model):
             'id': self.id,
             'user_id': self.user_id,
             'name': self.name,
-            'is_active': self.company_is_active
+            'is_active': self.company_is_active,
+            'nif': self.nif
         }
 

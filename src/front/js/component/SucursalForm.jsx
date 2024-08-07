@@ -8,29 +8,16 @@ export const SucursalForm = () => {
   const [nombreSucursal, setNombreSucursal] = useState('');
   const [direccion, setDireccion] = useState('');
   const [telefono, setTelefono] = useState('');
-  const [sucursales, setSucursales] = useState([]);
   const [editandoSucursalId, setEditandoSucursalId] = useState(null);
   const { store, actions } = useContext(Context);
 
   useEffect(() => {
-    // Fetch inicial de sucursales
-    const fetchSucursales = async () => {
-      try {
-        const response = await fetch(process.env.BACKEND_URL + "/api/branch");
-        if (!response.ok) throw new Error('Error al obtener sucursales');
-        const data = await response.json();
-        setSucursales(data);
-      } catch (error) {
-        console.error('Error al obtener sucursales:', error);
-      }
-    };
-
-    fetchSucursales();
+    actions.getSucursales();
   }, []);
 
   useEffect(() => {
     if (editandoSucursalId) {
-      const sucursal = sucursales.find(suc => suc.id === editandoSucursalId);
+      const sucursal = store.listSucursales.find(suc => suc.id === editandoSucursalId);
       if (sucursal) {
         setNombreSucursal(sucursal.nombre);
         setDireccion(sucursal.direccion);
@@ -41,7 +28,7 @@ export const SucursalForm = () => {
       setDireccion('');
       setTelefono('');
     }
-  }, [editandoSucursalId, sucursales]);
+  }, [editandoSucursalId, store.listSucursales]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -59,37 +46,17 @@ export const SucursalForm = () => {
 
     try {
       if (editandoSucursalId) {
-        // Actualizar sucursal existente
-        const response = await fetch(process.env.BACKEND_URL + `/branch/${editandoSucursalId}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(nuevaSucursal),
-        });
-        if (!response.ok) throw new Error('Error al actualizar sucursal');
-        const data = await response.json();
-        setSucursales(sucursales.map(suc => suc.id === editandoSucursalId ? data : suc));
+        await actions.updateSucursal(nuevaSucursal);
       } else {
-        // Crear nueva sucursal
-        const response = await fetch(process.env.BACKEND_URL + "/api/branch", {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(nuevaSucursal),
-        });
-        if (!response.ok) throw new Error('Error al crear sucursal');
-        const data = await response.json();
-        setSucursales([...sucursales, data]);
+        await actions.createSucursal(nombreSucursal, direccion, telefono);
       }
-
       setNombreSucursal('');
       setDireccion('');
       setTelefono('');
       setEditandoSucursalId(null);
     } catch (error) {
       console.error('Error en la solicitud:', error);
+      alert('Hubo un error al procesar la solicitud. Por favor intenta nuevamente.');
     }
   };
 
@@ -98,18 +65,7 @@ export const SucursalForm = () => {
   };
 
   const handleDelete = async (id) => {
-    try {
-      const response = await fetch(process.env.BACKEND_URL + `/branch/${id}`, {
-        method: 'DELETE',
-      });
-      if (!response.ok) throw new Error('Error al eliminar sucursal');
-      setSucursales(sucursales.filter(suc => suc.id !== id));
-      if (editandoSucursalId === id) {
-        setEditandoSucursalId(null);
-      }
-    } catch (error) {
-      console.error('Error al eliminar sucursal:', error);
-    }
+   actions.deleteSucursales(id);
   };
 
   return (
@@ -156,7 +112,7 @@ export const SucursalForm = () => {
         <div className="sucursal-list">
           <h2 className='text-center sucursal-title2'>Lista de Sucursales</h2>
           <ul>
-            {sucursales.map((sucursal) => (
+            {store.listSucursales.map((sucursal) => (
               <li key={sucursal.id} className="sucursal-item">
                 {sucursal.nombre} - {sucursal.direccion} - {sucursal.telefono}
                 <div className="sucursal-actions">
