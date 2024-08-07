@@ -5,7 +5,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			user: {},
 			empresa: {},
 			listCompany: [],
-			listSucursales: []
+			listSucursales: [],
+			appointments: [],
+			listService: []
 		},
 		actions: {
 			deleteCompanies: async (id) => {
@@ -28,7 +30,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			getCompanies: async () => {
 				let token = localStorage.getItem("token");
 				try {
-					const response = await fetch(process.env.BACKEND_URL + "/api/company",{
+					const response = await fetch(process.env.BACKEND_URL + "/api/company", {
 						method: 'GET',
 						headers: {
 							'Content-Type': 'application/json',
@@ -89,12 +91,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 			getSucursales: async () => {
 				let token = localStorage.getItem("token");
 				try {
-					const response = await fetch(process.env.BACKEND_URL + "/api/branch",{
+					const response = await fetch(process.env.BACKEND_URL + "/api/branch", {
 						method: 'GET',
 						headers: {
 							'Content-Type': 'application/json',
 							'Authorization': "Bearer " + token,
-						}});
+						}
+					});
 					if (!response.ok) throw new Error('Error al obtener sucursales');
 					const data = await response.json();
 					setStore({ listSucursales: data });
@@ -118,7 +121,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			createSucursal: async (branch_name, branch_address, branch_phone) => {
 				const store = getStore();
-				console.log({store})
+				console.log({ store })
 				let token = localStorage.getItem("token");
 				if (!store?.user?.id)
 					console.error("no hay usuario en la store")
@@ -253,7 +256,77 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return elm;
 				});
 				setStore({ demo: demo });
-			}
+			},
+
+			fetchAppointments: async () => {
+				let token = localStorage.getItem("token");
+				try {
+					const response = await fetch(process.env.BACKEND_URL + "/api/appointments", {
+						method: 'GET',
+						headers: {
+							'Content-Type': 'application/json',
+							'Authorization': "Bearer " + token,
+						},
+					});
+					if (!response.ok) {
+						throw new Error('Error fetching appointments');
+					}
+					const data = await response.json();
+					console.log(data);
+					setStore({ appointments: data });
+					console.log('Successfully fetched appointments.');
+				} catch (error) {
+					console.error('Error fetching appointments:', error);
+				}
+			},
+			addService: async (service_name, service_price) => {
+				const store = getStore();
+				console.log(store)
+				let token = localStorage.getItem("token");
+				try {
+					let company_id = store.listCompany[0].id
+					const response = await fetch(process.env.BACKEND_URL + "/api/services", {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+							'Authorization': "Bearer " + token,
+						},
+						body: JSON.stringify({ service_name, service_price, company_id}),
+					});
+					const data = await response.json();
+					console.log(data)
+					setStore({
+						listService: [...store.listService, data]
+					});
+					console.log(`succes creating company.`);
+				} catch (error) {
+					console.error('Error creating company:', error);
+				}
+			},
+			
+			fetchServices: async () => {
+				const store = getStore();
+                try {
+                    const response = await fetch(process.env.BACKEND_URL + "/api/services", {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    });
+                    if (!response.ok) {
+                        throw new Error('Error fetching services');
+                    }
+                    const data = await response.json();
+					console.log(data)
+                    setStore({ 
+						listService: data
+					});
+                    console.log('Successfully fetched services.');
+                } catch (error) {
+                    console.error('Error fetching services:', error);
+                }
+            },
+
 		}
 	};
 };

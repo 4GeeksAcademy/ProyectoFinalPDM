@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
 import ServiceForm from '/workspaces/ProyectoFinalPDM/src/front/js/component/ServiceForm.jsx';
 import '/workspaces/ProyectoFinalPDM/src/front/styles/agregarservicio.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-
+import { Context } from '../store/appContext';
 
 const PrevArrow = ({ onClick }) => (
   <button className="slick-prev" onClick={onClick}>
@@ -48,36 +48,31 @@ const carouselSettings = (serviceCount) => ({
 export const AgregarServicio = () => {
   const [services, setServices] = useState([]);
   const [editingService, setEditingService] = useState(null);
+  const { store, actions } = useContext(Context);
 
-  // Cargar servicios desde la API al montar el componente
   useEffect(() => {
-    const fetchServices = async () => {
-      try {
-        const response = await fetch(process.env.BACKEND_URL + "/api/services");
-        const data = await response.json();
-        setServices(data);
-      } catch (error) {
-        console.error('Error fetching services:', error);
-      }
-    };
-
-    fetchServices();
+    actions.getCompanies();
+    actions.getSucursales();
   }, []);
 
+
+  // Cargar servicios desde la API al montar el componente
+  // useEffect(() => {
+  //   const fetchServices = async () => {
+  //     try {
+  //       const response = await fetch(process.env.BACKEND_URL + "/api/services");
+  //       const data = await response.json();
+  //       setServices(data);
+  //     } catch (error) {
+  //       console.error('Error fetching services:', error);
+  //     }
+  //   };
+
+  //   fetchServices();
+  // }, []);
+
   const addService = async (newService) => {
-    try {
-      const response = await fetch('http://localhost:5000/api/services', { 
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newService),
-      });
-      const addedService = await response.json();
-      setServices(prevServices => [...prevServices, addedService]);
-    } catch (error) {
-      console.error('Error adding service:', error);
-    }
+ 
   };
 
   const handleSaveService = async (updatedService) => {

@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { Context } from '../store/appContext';
+
 // import '/workspaces/ProyectoFinalPDM/src/front/styles/agendarCitas.css';  // Asegúrate de crear este archivo CSS
 
 const mockProducts = [
@@ -14,8 +16,18 @@ const mockServices = [
   // Agrega más servicios según sea necesario
 ];
 
+
+
 export const AgendarCita = () => {
   const [cart, setCart] = useState([]);
+  const { store, actions } = useContext(Context);
+
+  useEffect(() => {
+   actions.fetchServices()
+  }, []);
+  useEffect(() => {
+ console.log("prueba",store)
+   }, [store.listService]);
 
   const addToCart = (item) => {
     setCart(prevCart => {
@@ -55,7 +67,7 @@ export const AgendarCita = () => {
 
   return (
     <div className="agendar-cita">
-      <div className="product-list">
+      {/* <div className="product-list">
         <h2 className='centrar_texto'>Productos</h2>
         <div className="card-container">
           {mockProducts.map(product => (
@@ -72,17 +84,17 @@ export const AgendarCita = () => {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
 
       <div className="service-list">
         <h2 className='centrar_texto'>Servicios</h2>
         <div className="card-container">
-          {mockServices.map(service => (
+          {store.listService.map(service => (
             <div className="card" key={service.id}>
               <div className="card-body">
-                <h3 className="card-title">{service.title}</h3>
+                <h3 className="card-title">{service.service_name}</h3>
                 <p className="card-description">{service.description}</p>
-                <p className="card-price">Precio: €{service.price}</p>
+                <p className="card-price">Precio: €{service.service_price}</p>
                 <button onClick={() => addToCart({ ...service, type: 'service' })} className="button add-to-cart">
                   Añadir al Carrito
                 </button>

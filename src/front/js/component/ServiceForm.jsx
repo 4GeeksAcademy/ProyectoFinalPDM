@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import "/workspaces/ProyectoFinalPDM/src/front/styles/serviceform.css"
+import { Context } from '../store/appContext';
 
 const ServiceForm = ({ addService, serviceToEdit, onEditSave }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
+  const { store, actions } = useContext(Context);
 
   useEffect(() => {
     if (serviceToEdit) {
@@ -36,8 +38,8 @@ const ServiceForm = ({ addService, serviceToEdit, onEditSave }) => {
    
       onEditSave({ ...serviceData, id: serviceToEdit.id });
     } else {
-   
-      addService({ ...serviceData, id: uuidv4() });
+      
+     actions.addService(title, price)
     }
 
 

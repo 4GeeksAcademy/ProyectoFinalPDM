@@ -274,7 +274,7 @@ def delete_appointment(id):
         return jsonify({'error': str(e)}), 400
 
 @api.route('/services', methods=['GET'])
-@jwt_required()
+
 def get_services():
     services = Service.query.all()
     services = list(map(lambda services: services.serialize(), services))

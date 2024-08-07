@@ -25,6 +25,8 @@ export const RegisterDate = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      // Comentado: Código para enviar datos a la API
+      /*
       const response = await fetch('http://localhost:5000/api/citas', {
         method: 'POST',
         headers: {
@@ -36,7 +38,12 @@ export const RegisterDate = () => {
         throw new Error('Error en el envío del formulario');
       }
       const data = await response.json();
-      setCitaDetails(data); 
+      */
+      
+      // En vez de enviar a la API, añadir la cita directamente al contexto
+      const data = { ...form }; // Puedes simular una respuesta de API aquí
+      setCitaDetails(data);
+      actions.addCita(data); // Agregar la cita al contexto
       console.log('Cita registrada:', data);
     } catch (error) {
       console.error('Error al registrar la cita:', error);
