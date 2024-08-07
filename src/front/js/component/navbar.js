@@ -1,9 +1,17 @@
-import React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import logo from "/workspaces/ProyectoFinalPDM/src/front/img/logo.png"
 import "/workspaces/ProyectoFinalPDM/src/front/styles/navbar.css"
+import { Context } from "../store/appContext";
+
 
 export const Navbar = () => {
+
+  const { store, actions } = useContext(Context);
+  useEffect(() => {
+    actions.verifyIdentity();
+  }, []);
+  
   return (
     <nav className="custom-navbar">
       <div className='image-container'>

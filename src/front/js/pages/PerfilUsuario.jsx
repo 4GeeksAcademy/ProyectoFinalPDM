@@ -7,9 +7,16 @@ import { Context } from "../store/appContext";
 export const PerfilUsuario = () => {
   const navigate = useNavigate();
   const { store, actions } = useContext(Context);
+  const [empresaCreada, setEmpresaCreada] = useState(false);
+
+  useEffect(() => {
+    if (store.listCompany && store.listCompany.length > 0) {
+      setEmpresaCreada(true);
+    }
+  }, [store.listCompany]);
 
   const handleLogout = () => {
-    // Aquí puedes agregar la lógica para cerrar sesión, como limpiar el estado de autenticación.
+    actions.logout()
     navigate('/');
   };
   // useEffect(()=>{
@@ -20,36 +27,49 @@ export const PerfilUsuario = () => {
     <div className="perfil-container">
       <h2 className="perfil-title">Perfil del Usuario</h2>
       <div className="button-grid">
-        <Link to="/CrearSucursal" className="button-link">
-          <button className="button-profile">
-            <FaBuilding className="button-icon" />
-            Crear Sucursal
-          </button>
-        </Link>
-        <Link to="/AgregarProducto" className="button-link">
-          <button className="button-profile">
-            <FaBox className="button-icon" />
-            Agregar Producto
-          </button>
-        </Link>
-        <Link to="/AgregarServicio" className="button-link">
-          <button className="button-profile">
-            <FaBox className="button-icon" />
-            Agregar Servicio
-          </button>
-        </Link>
-        <Link to="/CrearEmpleado" className="button-link">
-          <button className="button-profile">
-            <FaUserTie className="button-icon" />
-            Crear Empleado
-          </button>
-        </Link>
         <Link to="/CrearEmpresa" className="button-link">
           <button className="button-profile">
             <FaPlusCircle className="button-icon" />
             Agregar Empresa
           </button>
         </Link>
+        <Link to="/CrearSucursal" className="button-link">
+          <button
+            className={`button-profile ${!empresaCreada ? 'button-disabled' : ''}`}
+            disabled={!empresaCreada}
+          >
+            <FaBuilding className="button-icon" />
+            Crear Sucursal
+          </button>
+        </Link>
+        <Link to="/AgregarProducto" className="button-link">
+          <button
+            className={`button-profile ${!empresaCreada ? 'button-disabled' : ''}`}
+            disabled={!empresaCreada}
+          >
+            <FaBox className="button-icon" />
+            Agregar Producto
+          </button>
+        </Link>
+        <Link to="/AgregarServicio" className="button-link">
+          <button
+            className={`button-profile ${!empresaCreada ? 'button-disabled' : ''}`}
+            disabled={!empresaCreada}
+          >
+            <FaBox className="button-icon" />
+            Agregar Servicio
+          </button>
+        </Link>
+        <Link to="/CrearEmpleado" className="button-link">
+          <button
+            className={`button-profile ${!empresaCreada ? 'button-disabled' : ''}`}
+            disabled={!empresaCreada}
+          >
+            <FaUserTie className="button-icon" />
+            Crear Empleado
+          </button>
+        </Link>
+        
         <button className="button-profile logout-button-profile" onClick={handleLogout}>
           <FaSignOutAlt className="button-icon" />
           Cerrar Sesión

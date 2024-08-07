@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-import "/workspaces/ProyectoFinalPDM/src/front/styles/EmpresaForm.css";
+import '/workspaces/ProyectoFinalPDM/src/front/styles/EmpresaForm.css';
 import { Context } from "../store/appContext";
 
 export const EmpresaForm = () => {
   const [nombreEmpresa, setNombreEmpresa] = useState('');
   const [nif, setNif] = useState('');
-  const [sucursal, setSucursal] = useState('');
   const [editandoEmpresaId, setEditandoEmpresaId] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
   const { store, actions } = useContext(Context);
 
   useEffect(() => {
@@ -17,34 +18,74 @@ export const EmpresaForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (editandoEmpresaId) {
-      const newCompany = {
-        id: editandoEmpresaId,
-        name: nombreEmpresa,
-        nif
-      };
-      actions.updateCompany(newCompany);
-    } else {
-      actions.createCompany(nombreEmpresa, nif);
-    }
+    actions.createCompany(nombreEmpresa, nif)
     setNombreEmpresa('');
     setNif('');
-    setSucursal('');
-    setEditandoEmpresaId(null);
+
+
+
+    // try {
+    //   if (editandoEmpresaId) {
+    //     await fetch(`http://localhost:5000/api/company/${editandoEmpresaId}`, {
+    //       method: 'PUT',
+    //       headers: {
+    //         'Content-Type': 'application/json',
+    //       },
+    //       body: JSON.stringify(nuevaEmpresa),
+    //     });
+    //     setEmpresas(prevEmpresas =>
+    //       prevEmpresas.map(emp => emp.id === editandoEmpresaId ? { ...emp, ...nuevaEmpresa } : emp)
+    //     );
+    //     setEditandoEmpresaId(null);
+    //   } else {
+    //     const response = await fetch(process.env.BACKEND_URL + "/api/company", {
+    //       method: 'POST',
+    //       headers: {
+    //         'Content-Type': 'application/json',
+    //       },
+    //       body: JSON.stringify(nuevaEmpresa),
+    //     });
+    //     const addedEmpresa = await response.json();
+    //     setEmpresas(prevEmpresas => [...prevEmpresas, addedEmpresa]);
+    //   }
+
+
+    // } catch (error) {
+    //   console.error('Error saving empresa:', error);
+    // }
+
+    // Mostrar el modal para preguntar si desea agregar una sucursal
+    setShowModal(true);
   };
+
 
   const handleEdit = (id) => {
     setEditandoEmpresaId(id);
     const company = store.listCompany.find(dataCompany => dataCompany.id == id);
     setNombreEmpresa(company.name);
-    setNif(company.nif);
-    setSucursal(company.sucursal);
   };
 
-  const handleDelete = (id) => {
-    actions.deleteCompanies(id);
+  const handleDelete = async (id) => {
+    try {
+      await fetch(process.env.BACKEND_URL + `/api/company/"${id}`, {
+        method: 'DELETE',
+      });
+      setEmpresas(prevEmpresas => prevEmpresas.filter(emp => emp.id !== id));
+      if (editandoEmpresaId === id) {
+        setEditandoEmpresaId(null);
+      }
+    } catch (error) {
+      console.error('Error deleting empresa:', error);
+    }
   };
 
+  const handleModalResponse = (response) => {
+    setShowModal(false);
+    if (response === 'yes') {
+      navigate('/CrearSucursal');
+    }
+  };
+    console.log({store})
   return (
     <div className="registro">
       <form className="form-section" onSubmit={handleSubmit}>
@@ -71,16 +112,6 @@ export const EmpresaForm = () => {
         </div>
         <div className="form-group">
           <label>Sucursal:</label>
-          <select
-            name="sucursal"
-            value={sucursal}
-            onChange={(e) => setSucursal(e.target.value)}
-          >
-            <option value="">Selecciona una sucursal</option>
-            <option value="Sucursal A">Sucursal A</option>
-            <option value="Sucursal B">Sucursal B</option>
-            <option value="Sucursal C">Sucursal C</option>
-          </select>
         </div>
         <div className="button-container">
           <button type="submit" className="create-company">
@@ -110,6 +141,28 @@ export const EmpresaForm = () => {
           <button className="button button-back">Regresar al Perfil</button>
         </Link>
       </div>
+
+      {showModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <h3>¿Desea agregar una sucursal?</h3>
+            <div className="modal-buttons">
+              <button
+                className="modal-button yes"
+                onClick={() => handleModalResponse('yes')}
+              >
+                Sí
+              </button>
+              <button
+                className="modal-button no"
+                onClick={() => handleModalResponse('no')}
+              >
+                No
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

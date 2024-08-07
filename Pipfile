@@ -30,6 +30,9 @@ wtforms = "*"
 email-validator = "*"
 flask-bcrypt = "*"
 flask-jwt-extended = "*"
+google-auth-oauthlib = "*"
+google-auth-httplib2 = "*"
+google-api-python-client = "*"
 
 [requires]
 python_version = "3.10"
