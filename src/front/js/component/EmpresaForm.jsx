@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-import "/workspaces/ProyectoFinalPDM/src/front/styles/EmpresaForm.css";
+import '/workspaces/ProyectoFinalPDM/src/front/styles/EmpresaForm.css';
 import { Context } from "../store/appContext";
 
 export const EmpresaForm = () => {
@@ -10,6 +10,8 @@ export const EmpresaForm = () => {
   const [sucursal, setSucursal] = useState('');
   const [empresas, setEmpresas] = useState([]);
   const [editandoEmpresaId, setEditandoEmpresaId] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
   const { store, actions } = useContext(Context);
 
   useEffect(() => {
@@ -43,10 +45,7 @@ export const EmpresaForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // if (!nombreEmpresa || !nif || !sucursal) {
-    //   alert('Por favor completa todos los campos');
-    //   return;
-    // }
+
     actions.createCompany(nombreEmpresa, nif)
 
     const nuevaEmpresa = {
@@ -80,12 +79,15 @@ export const EmpresaForm = () => {
         setEmpresas(prevEmpresas => [...prevEmpresas, addedEmpresa]);
       }
 
-    //   setNombreEmpresa('');
-    //   setNif('');
-    //   setSucursal('');
-    // } catch (error) {
-    //   console.error('Error saving empresa:', error);
-    // }
+      setNombreEmpresa('');
+      setNif('');
+      setSucursal('');
+    } catch (error) {
+      console.error('Error saving empresa:', error);
+    }
+
+    // Mostrar el modal para preguntar si desea agregar una sucursal
+    setShowModal(true);
   };
 
   const handleEdit = (id) => {
@@ -106,7 +108,12 @@ export const EmpresaForm = () => {
     }
   };
 
-  console.log("prueba", store)
+  const handleModalResponse = (response) => {
+    setShowModal(false);
+    if (response === 'yes') {
+      navigate('/CrearSucursal');
+    }
+  };
 
   return (
     <div className="registro">
@@ -172,6 +179,28 @@ export const EmpresaForm = () => {
           <button className="button button-back">Regresar al Perfil</button>
         </Link>
       </div>
+
+      {showModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <h3>¿Desea agregar una sucursal?</h3>
+            <div className="modal-buttons">
+              <button
+                className="modal-button yes"
+                onClick={() => handleModalResponse('yes')}
+              >
+                Sí
+              </button>
+              <button
+                className="modal-button no"
+                onClick={() => handleModalResponse('no')}
+              >
+                No
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
