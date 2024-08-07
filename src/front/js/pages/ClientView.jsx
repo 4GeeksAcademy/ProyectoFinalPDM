@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useState, useEffect, useContext } from 'react';
 import { Context } from "../store/appContext";
 import "../../styles/clientview.css";
 import { Link } from "react-router-dom";
@@ -6,6 +6,10 @@ import { Link } from "react-router-dom";
 export const ClientView = () => {
     const { store, actions } = useContext(Context);
 
+    useEffect(() => {
+        actions.getCompanies();
+    }, []);
+console.log({store})
     return (
         <div className="container_home">
             <h1 className="text-center mb-5">Explora nuestras empresas registradas</h1>
@@ -14,7 +18,11 @@ export const ClientView = () => {
                     <div className="form-group">
                         <label htmlFor="companySelect">Selecciona una empresa</label>
                         <select id="companySelect" className="form-control">
-                            <option value="">-- Selecciona --</option>
+                             {store.listCompany.map((empresa) => (
+                                <option  value={empresa.name} key={empresa.id}>
+                                    {empresa.name} - {empresa.nif}
+                                </option>
+                            ))}
                         </select>
                     </div>
                     <div className="d-flex justify-content-center">

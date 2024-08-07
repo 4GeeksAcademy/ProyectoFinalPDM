@@ -7,7 +7,6 @@ import { Context } from "../store/appContext";
 export const EmpresaForm = () => {
   const [nombreEmpresa, setNombreEmpresa] = useState('');
   const [nif, setNif] = useState('');
-  const [sucursal, setSucursal] = useState('');
   const [editandoEmpresaId, setEditandoEmpresaId] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
@@ -19,46 +18,41 @@ export const EmpresaForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     actions.createCompany(nombreEmpresa, nif)
+    setNombreEmpresa('');
+    setNif('');
 
-    const nuevaEmpresa = {
-      name: nombreEmpresa,
-      nif,
-      sucursal,
-    };
 
-    try {
-      if (editandoEmpresaId) {
-        await fetch(`http://localhost:5000/api/company/${editandoEmpresaId}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(nuevaEmpresa),
-        });
-        setEmpresas(prevEmpresas =>
-          prevEmpresas.map(emp => emp.id === editandoEmpresaId ? { ...emp, ...nuevaEmpresa } : emp)
-        );
-        setEditandoEmpresaId(null);
-      } else {
-        const response = await fetch(process.env.BACKEND_URL + "/api/company", {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(nuevaEmpresa),
-        });
-        const addedEmpresa = await response.json();
-        setEmpresas(prevEmpresas => [...prevEmpresas, addedEmpresa]);
-      }
 
-      setNombreEmpresa('');
-      setNif('');
-      setSucursal('');
-    } catch (error) {
-      console.error('Error saving empresa:', error);
-    }
+    // try {
+    //   if (editandoEmpresaId) {
+    //     await fetch(`http://localhost:5000/api/company/${editandoEmpresaId}`, {
+    //       method: 'PUT',
+    //       headers: {
+    //         'Content-Type': 'application/json',
+    //       },
+    //       body: JSON.stringify(nuevaEmpresa),
+    //     });
+    //     setEmpresas(prevEmpresas =>
+    //       prevEmpresas.map(emp => emp.id === editandoEmpresaId ? { ...emp, ...nuevaEmpresa } : emp)
+    //     );
+    //     setEditandoEmpresaId(null);
+    //   } else {
+    //     const response = await fetch(process.env.BACKEND_URL + "/api/company", {
+    //       method: 'POST',
+    //       headers: {
+    //         'Content-Type': 'application/json',
+    //       },
+    //       body: JSON.stringify(nuevaEmpresa),
+    //     });
+    //     const addedEmpresa = await response.json();
+    //     setEmpresas(prevEmpresas => [...prevEmpresas, addedEmpresa]);
+    //   }
+
+
+    // } catch (error) {
+    //   console.error('Error saving empresa:', error);
+    // }
 
     // Mostrar el modal para preguntar si desea agregar una sucursal
     setShowModal(true);
@@ -91,7 +85,7 @@ export const EmpresaForm = () => {
       navigate('/CrearSucursal');
     }
   };
-
+    console.log({store})
   return (
     <div className="registro">
       <form className="form-section" onSubmit={handleSubmit}>
@@ -118,17 +112,6 @@ export const EmpresaForm = () => {
         </div>
         <div className="form-group">
           <label>Sucursal:</label>
-          <select
-            name="sucursal"
-            value={sucursal}
-            onChange={(e) => setSucursal(e.target.value)}
-            
-          >
-            <option value="">Selecciona una sucursal</option>
-            <option value="Sucursal A">Sucursal A</option>
-            <option value="Sucursal B">Sucursal B</option>
-            <option value="Sucursal C">Sucursal C</option>
-          </select>
         </div>
         <div className="button-container">
           <button type="submit" className="create-company">

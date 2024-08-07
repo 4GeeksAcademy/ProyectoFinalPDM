@@ -10,12 +10,13 @@ export const PerfilUsuario = () => {
   const [empresaCreada, setEmpresaCreada] = useState(false);
 
   useEffect(() => {
-    if (store.empresas && store.empresas.length > 0) {
+    if (store.listCompany && store.listCompany.length > 0) {
       setEmpresaCreada(true);
     }
-  }, [store.empresas]);
+  }, [store.listCompany]);
 
   const handleLogout = () => {
+    actions.logout()
     navigate('/');
   };
 

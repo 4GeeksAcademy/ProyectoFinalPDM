@@ -12,8 +12,13 @@ export const SucursalForm = () => {
   const { store, actions } = useContext(Context);
 
   useEffect(() => {
+    actions.getCompanies();
     actions.getSucursales();
   }, []);
+
+  // useEffect(() => {
+  //   actions.getSucursales();
+  // }, [store.listSucursales]);
 
   useEffect(() => {
     if (editandoSucursalId) {

@@ -77,7 +77,7 @@ def delete_user():
     return jsonify({"msg": "User deleted"}), 200
 
 @api.route('/register', methods=['POST'])
-@jwt_required()
+
 def register():
     data_user = request.json
     user = User()
@@ -86,7 +86,7 @@ def register():
     return jsonify({"msg": "Your registration has been successful, congratulations!"})
  
 @api.route('/login', methods=['POST'])
-@jwt_required()
+
 def login(): 
     data_user = request.json  
     user = User.query.filter_by(email=data_user["email"]).first()    
@@ -489,7 +489,7 @@ def delete_working_hours(working_hours_id):
         return jsonify({'error': str(e)}), 400
 
 @api.route('/company', methods=['GET'])
-@jwt_required()
+
 def get_company():
     company = Company.query.all()
     company = list(map(lambda company: company.serialize(), company))

@@ -26,8 +26,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 			getCompanies: async () => {
+				let token = localStorage.getItem("token");
 				try {
-					const response = await fetch(process.env.BACKEND_URL + "/api/company");
+					const response = await fetch(process.env.BACKEND_URL + "/api/company",{
+						method: 'GET',
+						headers: {
+							'Content-Type': 'application/json',
+							'Authorization': "Bearer " + token,
+						},
+					});
 					const data = await response.json();
 					console.log({ data })
 					setStore({
@@ -57,6 +64,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			createCompany: async (name, nif) => {
 				const store = getStore();
+				let token = localStorage.getItem("token");
 				try {
 					let user_id = store.user.id;
 					let company_is_active = store.user.is_active;
@@ -64,6 +72,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json',
+							'Authorization': "Bearer " + token,
 						},
 						body: JSON.stringify({ nif, company_is_active, name, user_id }),
 					});
@@ -78,8 +87,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 			getSucursales: async () => {
+				let token = localStorage.getItem("token");
 				try {
-					const response = await fetch(process.env.BACKEND_URL + "/api/branch");
+					const response = await fetch(process.env.BACKEND_URL + "/api/branch",{
+						method: 'GET',
+						headers: {
+							'Content-Type': 'application/json',
+							'Authorization': "Bearer " + token,
+						}});
 					if (!response.ok) throw new Error('Error al obtener sucursales');
 					const data = await response.json();
 					setStore({ listSucursales: data });
@@ -101,8 +116,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error('Error al eliminar sucursal:', error);
 				}
 			},
-			createSucursal: async (name, address, phone) => {
+			createSucursal: async (branch_name, branch_address, branch_phone) => {
 				const store = getStore();
+				console.log({store})
+				let token = localStorage.getItem("token");
 				if (!store?.user?.id)
 					console.error("no hay usuario en la store")
 				try {
@@ -110,12 +127,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 					if (!user_id) console.error("falta el user_id");
 					let branch_is_active = store?.user?.is_active;
 					if (!branch_is_active) console.error("falta el branch_is_active");
+					let company_id = store.listCompany[0].id
 					const response = await fetch(process.env.BACKEND_URL + "/api/branch", {
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json',
+							'Authorization': "Bearer " + token,
 						},
-						body: JSON.stringify({ name, address, phone, branch_is_active, user_id }),
+						body: JSON.stringify({ branch_name, branch_address, branch_phone, branch_is_active, user_id, company_id }),
 					});
 					if (!response.ok) throw new Error('Error al crear sucursal');
 					const data = await response.json();
@@ -190,6 +209,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error('Error en la solicitud:', error);
 				}
 			},
+
+			logout: () => {
+				localStorage.removeItem("token");
+			},
+
+
 			register: async (password, email) => {
 				try {
 					const response = await fetch(process.env.BACKEND_URL + "/api/register", {
