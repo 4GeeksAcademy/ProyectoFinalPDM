@@ -1,4 +1,22 @@
-.perfil-container {
+body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* El contenedor principal debe ocupar todo el espacio disponible menos el espacio del footer */
+  #root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  .main-content {
+    flex: 1;
+  }
+  
+  .perfil-container {
     padding: 2rem;
     background-color: #ffffff;
     border-radius: 10px;
@@ -6,9 +24,9 @@
     max-width: 800px;
     margin: 2rem auto;
     text-align: center;
-}
-
-.perfil-title {
+  }
+  
+  .perfil-title {
     font-family: 'Merriweather', serif;
     font-size: 2.2rem;
     color: #2c3e50;
@@ -21,20 +39,19 @@
     text-transform: uppercase;
     line-height: 1.4;
     position: relative;
-}
-
-.button-grid {
+  }
+  
+  .button-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1rem;
-    
-}
-
-.button-link {
+  }
+  
+  .button-link {
     text-decoration: none;
-}
-
-.button-profile {
+  }
+  
+  .button-profile {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -50,30 +67,30 @@
     height: 100px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: box-shadow 0.3s ease;
-}
-
-.button-profile:hover {
+  }
+  
+  .button-profile:hover {
     background-color: rgb(39, 55, 77);
     transform: scale(1.05);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: box-shadow 0.3s ease;
-}
-
-.button-icon {
+  }
+  
+  .button-icon {
     margin-right: 0.5rem;
     font-size: 1.25rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: box-shadow 0.3s ease;
-}
-
-.logout-button-profile {
+  }
+  
+  .logout-button-profile {
     background-color: rgb(6, 167, 207);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: box-shadow 0.3s ease;
-}
-
-.logout-button-profile:hover {
+  }
+  
+  .logout-button-profile:hover {
     background-color: rgb(0, 204, 255);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: box-shadow 0.3s ease;
-}
+  }
