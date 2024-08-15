@@ -26,9 +26,7 @@ console.log({store})
                         </select>
                     </div>
                     <div className="d-flex justify-content-center">
-                        <button className="button-company mt-3">
-                            Buscar
-                        </button>
+                        <Link to="/RegisterDate"> <button className="button-company mt-3">Aceptar</button></Link>
                     </div>
                 </div>
             </div>

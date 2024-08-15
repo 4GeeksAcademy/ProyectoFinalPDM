@@ -221,7 +221,6 @@ def add_appointment():
     try:
         new_appointment = Appointment.create_appointment(
             company_id=data['company_id'],
-            available_slot_id=data['available_slot_id'],
             appointment_time=data['appointment_time'],
             first_name_customer=data['first_name_customer'],
             last_name_customer=data['last_name_customer'],

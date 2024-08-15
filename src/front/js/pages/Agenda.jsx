@@ -5,6 +5,7 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import Tooltip from 'react-tooltip-lite';
 import "/workspaces/ProyectoFinalPDM/src/front/styles/agenda.css"
 import { Context } from '../store/appContext';
+import { Link } from 'react-router-dom';
 
 const localizer = momentLocalizer(moment);
 
@@ -95,7 +96,6 @@ export const Agenda = () => {
         content={
           <div>
             <strong>Cliente:</strong> {event.title}<br />
-            <strong>Producto:</strong> {event.product}<br />
             <strong>Servicio:</strong> {event.service}
           </div>
         }
@@ -133,6 +133,11 @@ export const Agenda = () => {
           }}
           onView={handleViewChange}
         />
+      </div>
+      <div>
+        <Link to="/PerfilUsuario">
+          <button className="button button-back">Regresar al Perfil</button>
+        </Link>
       </div>
     </div>
   );

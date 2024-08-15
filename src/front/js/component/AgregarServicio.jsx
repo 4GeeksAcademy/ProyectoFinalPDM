@@ -122,7 +122,7 @@ export const AgregarServicio = () => {
           onEditSave={handleSaveService} 
         />
       </div>
-      <div className="service-listAs">
+      {/* <div className="service-listAs">
         <h2>Servicios</h2>
         <Slider {...carouselSettings(services.length)} className="service-carousel">
           {services.map(service => (
@@ -143,7 +143,7 @@ export const AgregarServicio = () => {
             </div>
           ))}
         </Slider>
-      </div>
+      </div> */}
       <div className="back-buttonAs">
         <Link to="/PerfilUsuario">
           <button className="buttonAs button-backAs">Regresar al Perfil</button>

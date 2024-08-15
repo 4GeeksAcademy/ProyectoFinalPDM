@@ -1,15 +1,15 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
-import '/workspaces/ProyectoFinalPDM/src/front/styles/registerdate.css'; 
+import '/workspaces/ProyectoFinalPDM/src/front/styles/registerdate.css';
 
 export const RegisterDate = () => {
   const { store, actions } = useContext(Context);
 
   const [form, setForm] = useState({
-    nombre: "", 
+    nombre: "",
     apellido: "",
-    telefono: "", 
+    telefono: "",
     email: "",
     observaciones: "",
     fecha: ""
@@ -22,32 +22,14 @@ export const RegisterDate = () => {
     setForm({ ...form, [name]: value });
   };
 
+  useEffect(() => {
+    actions.getCompanies();
+    actions.getSucursales();
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      // Comentado: Código para enviar datos a la API
-      /*
-      const response = await fetch('http://localhost:5000/api/citas', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(form),
-      });
-      if (!response.ok) {
-        throw new Error('Error en el envío del formulario');
-      }
-      const data = await response.json();
-      */
-      
-      // En vez de enviar a la API, añadir la cita directamente al contexto
-      const data = { ...form }; // Puedes simular una respuesta de API aquí
-      setCitaDetails(data);
-      actions.addCita(data); // Agregar la cita al contexto
-      console.log('Cita registrada:', data);
-    } catch (error) {
-      console.error('Error al registrar la cita:', error);
-    }
+    actions.createAppointment(form)
   };
 
   return (
@@ -123,8 +105,9 @@ export const RegisterDate = () => {
             />
           </div>
           <div className="button-group">
-            <button type="submit" className="btn-submit">Enviar</button>
+            <Link to={"/Message"}><button type="submit" className="btn-submit">Enviar</button></Link>
             <Link to={"/"} className="btn-cancel">Cancelar</Link>
+            <Link to={"/AgendarCita"} className="btn-cancel">Agregar Productos</Link>
           </div>
         </form>
       </div>
@@ -132,7 +115,7 @@ export const RegisterDate = () => {
         <div className="card-container">
           <div className="card">
             <div className="card-body">
-              <h3>Detalles de la Cita</h3> 
+              <h3>Detalles de la Cita</h3>
               <p className="card-text">Fecha: {citaDetails.fecha}</p>
               <p className="card-text">Nombre: {citaDetails.nombre} {citaDetails.apellido}</p>
               <p className="card-text">Teléfono: {citaDetails.telefono}</p>

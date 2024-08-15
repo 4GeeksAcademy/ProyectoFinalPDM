@@ -279,6 +279,35 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error('Error fetching appointments:', error);
 				}
 			},
+
+			createAppointment: async (appointment) => {
+                const store = getStore();
+				let token = localStorage.getItem("token");
+                try {
+					let company_id = store.listCompany[0].id
+                    const response = await fetch(process.env.BACKEND_URL + "/api/appointments", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+							'Authorization': "Bearer " + token,
+                        },
+                        body: JSON.stringify({...appointment, company_id}),
+                    });
+                    if (!response.ok) {
+                        throw new Error('Error creating appointment');
+                    }
+                    const data = await response.json();
+                    setStore({
+                        appointments: [...store.appointments, data]
+                    });
+                    console.log('Successfully created appointment.');
+                } catch (error) {
+                    console.error('Error creating appointment:', error);
+                }
+            },
+
+
+
 			addService: async (service_name, service_price) => {
 				const store = getStore();
 				console.log(store)

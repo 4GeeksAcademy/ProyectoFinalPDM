@@ -51,7 +51,7 @@ const Layout = () => {
                         <Route element={<Agenda />} path="/Agenda"  />
                         <Route element={<ClientView />} path="/ClientView" />
                     </Routes>
-                    <Footer />
+                    {/* <Footer /> */}
                 </ScrollToTop>
             </BrowserRouter>
         </div>

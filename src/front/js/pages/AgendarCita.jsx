@@ -96,7 +96,7 @@ export const AgendarCita = () => {
                 <p className="card-description">{service.description}</p>
                 <p className="card-price">Precio: €{service.service_price}</p>
                 <button onClick={() => addToCart({ ...service, type: 'service' })} className="button add-to-cart">
-                  Añadir al Carrito
+                  Añadir Servicio
                 </button>
               </div>
             </div>
@@ -105,15 +105,11 @@ export const AgendarCita = () => {
       </div>
 
       <div className="cart">
-        <h2 className='centrar_texto'>Carrito de Compras</h2>
+        <h2 className='centrar_texto'>Servicios Agendados</h2>
         <table className="cart-table">
           <thead>
             <tr>
-              <th>Producto/Servicio</th>
-              <th>Cantidad</th>
-              <th>Precio Unitario</th>
-              <th>Precio Total</th>
-              <th>Acciones</th>
+              <th>Servicio</th>
             </tr>
           </thead>
           <tbody>
@@ -138,7 +134,7 @@ export const AgendarCita = () => {
       </div>
 
       <div className="back-button">
-        <Link to="/PerfilUsuario">
+        <Link to="/RegisterDate">
           <button className="btn btn-primary">Continuar</button>
         </Link>
       </div>

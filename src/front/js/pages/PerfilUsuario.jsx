@@ -39,13 +39,13 @@ export const PerfilUsuario = () => {
             Crear Sucursal
           </button>
         </Link>
-        <Link to="/AgregarProducto" className="button-link">
+        <Link to="/Agenda" className="button-link">
           <button
             className={`button-profile ${!empresaCreada ? 'button-disabled' : ''}`}
             disabled={!empresaCreada}
           >
             <FaBox className="button-icon" />
-            Agregar Producto
+            Agenda
           </button>
         </Link>
         <Link to="/AgregarServicio" className="button-link">
